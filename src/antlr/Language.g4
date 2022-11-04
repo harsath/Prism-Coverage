@@ -7,7 +7,7 @@ package antlr;
 
 /* Parser elements */
 
-prog : (decl | expr)+ EOF                           #Program
+prog : (decl | expr)+ EOF                          #Program
 
 decl : ID ':' INT_TYPE '=' NUM                      #IntVariableDeclaration
      | ID ':' BOOL_TYPE '=' BOOL                    #BoolVariableDeclaration
