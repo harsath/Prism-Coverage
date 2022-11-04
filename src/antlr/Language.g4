@@ -7,36 +7,75 @@ package antlr;
 
 /* Parser elements */
 
-prog : (decl | expr)+ EOF                           #Program
-
-decl : ID ':' INT_TYPE '=' NUM                      #IntVariableDeclaration
-     | ID ':' BOOL_TYPE '=' BOOL                    #BoolVariableDeclaration
-     | CLASS ID                                     #ClassDeclaration
+prog : (stmt NEWLINE)+ EOF
      ;
 
-expr : (arithmetic_expr | logical_expr | relational_expr)+;
+stmt : variable_assignment
+     | class_definition
+     | function_declaration
+     | if_statement
+     | return_statement
+     ;
 
-arithmetic_expr : arithmetic_expr '*' arithmetic_expr    #MultiplicationExpression
-                | arithmetic_expr '+' arithmetic_expr    #AdditionExpression
-                | arithmetic_expr '+' arithmetic_expr    #SubtractionExpression
-                | arithmetic_expr '/' arithmetic_expr    #DivisionExpression
-                | ID                                     #IdentifierArithmeticExpression
-                | NUM                                    #NumericArithemticExpression
-                ;
-                
-logical_expr    : logical_expr '&&' logical_expr         #AndExpression
-                | logical_expr '||' logical_expr         #OrExpression
-                | '!' logical_expr                       #NotExpression
-                | ID                                     #IdentifierLogicalExpression
-                | NUM                                    #NumericArithemticExpression
-                ;
-                
-relational_expr : relational_expr '>' relational_expr    #GTExpression
-                | relational_expr '<' relational_expr    #LTExpression
-                | relational_expr '==' relational_expr   #EQExpression
-                | ID                                     #IdentifierRelationalExpression
-                | NUM                                    #NumericRelationalExpression
-                ;
+variable_assignment : ID ':' id_decl_type '=' expr
+                    ;
+
+class_definition : CLASS_TYPE ID LCURLY class_def RCURLY
+                 ;
+
+function_declaration : FN_TYPE ID LPAREN param_list RPAREN stmt_block
+                     ;
+
+function_invocation : ID LPAREN param_list RPAREN
+                    ;
+
+param_list : id_decl_type ID (',' id_decl_type ID)*
+           ;
+
+return_statement : RETURN expr
+                 ;
+
+if_statement : IF conditional_expr (ELSE IF conditional_expr)* (ELSE stmt_block)?
+             ;
+
+conditional_expr : LPAREN expr RPAREN stmt_block
+                 ;
+
+stmt_block : LCURLY stmt RCURLY
+           ;
+
+id_decl_type : INT_TYPE
+             | BOOL_TYPE
+             ;
+
+class_def : ATTRIBUTES (attributes_def NEWLINE)+ METHODS (method_def NEWLINE)+
+          ;
+
+attributes_def : variable_assignment
+               ;
+
+method_def : function_declaration
+           ;
+
+expr : '-' expr                                   #UnaryMinusExpr
+     | '!' expr                                   #NotExpr
+     | expr '*' expr                              #MultiplicationExpr
+     | expr '/' expr                              #DivisionExpr
+     | expr '+' expr                              #AdditionExpr
+     | expr '-' expr                              #SubtractionExpr
+     | expr op=('<=' | '>=' | '>' | '<') expr     #RelationalExpr
+     | expr op=('==' | '!=')                      #EqualityExpr
+     | expr 'AND' expr                            #AndExpr
+     | expr 'OR' expr                             #OrExpr
+     | function_invocation                        #FnExpr
+     | atom                                       #AtomExpr
+     ;
+
+atom : LPAREN expr RPAREN #ParExpr
+     | INT_TYPE           #IntAtom
+     | BOOL_TYPE          #BoolAtom
+     | ID                 #IdAtom
+     ;
 
 /* Lexical elements */
 
@@ -45,6 +84,17 @@ NUM         :       '0' | '-'?[1-9][0-9]*;
 BOOL        :       'true' | 'false';
 INT_TYPE    :       'INT';
 BOOL_TYPE   :       'BOOL';
+FN_TYPE     :       'FUNCTION';
+CLASS_TYPE  :       'CLASS';
+IF          :       'IF';
+ELSE        :       'ELSE';
+METHODS     :       'METHODS';
+ATTRIBUTES  :       'ATTRIBUTES';
+RETURN      :       'RETURN';
 COMMENT     :       '//' ~[\r\n]* -> skip;
 WS          :       [ \t\n]+ -> skip;
 NEWLINE     :       ('\r'?'\n'|'\r')+ -> skip;
+LCURLY      :       '{';
+RCURLY      :       '}';
+LPAREN      :       '(';
+RPAREN      :       ')';
