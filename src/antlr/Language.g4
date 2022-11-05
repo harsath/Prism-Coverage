@@ -17,19 +17,19 @@ stmt : variable_assignment
      | return_statement
      ;
 
-variable_assignment : ID ':' id_decl_type '=' expr
+variable_assignment : ID ':' decl_type '=' expr
                     ;
 
 class_definition : CLASS_TYPE ID LCURLY class_def RCURLY
                  ;
 
-function_declaration : FN_TYPE ID LPAREN param_list RPAREN stmt_block
+function_declaration : FN_TYPE decl_type ID LPAREN param_list? RPAREN stmt_block
                      ;
 
 function_invocation : ID LPAREN param_list RPAREN
                     ;
 
-param_list : id_decl_type ID (',' id_decl_type ID)*
+param_list : decl_type ID (',' decl_type ID)*
            ;
 
 return_statement : RETURN expr
@@ -44,9 +44,9 @@ conditional_expr : LPAREN expr RPAREN stmt_block
 stmt_block : LCURLY stmt RCURLY
            ;
 
-id_decl_type : INT_TYPE
-             | BOOL_TYPE
-             ;
+decl_type : INT_TYPE
+          | BOOL_TYPE
+          ;
 
 class_def : ATTRIBUTES (attributes_def NEWLINE)+ METHODS (method_def NEWLINE)+
           ;
