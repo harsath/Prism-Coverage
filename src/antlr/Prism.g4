@@ -18,13 +18,11 @@ ATTRIBUTES  :       'ATTRIBUTES';
 RETURN      :       'RETURN';
 COMMENT     :       '//' ~[\r\n]* -> skip;
 WS          :       [ \t\n]+ -> skip;
-NEWLINE     :       ('\r'?'\n'|'\r')+ -> skip;
 LCURLY      :       '{';
 RCURLY      :       '}';
 LPAREN      :       '(';
 RPAREN      :       ')';
 SEMICOLON   :       ';';
-
 
 /* Parser elements */
 
@@ -40,14 +38,8 @@ function_decl : FUNCTION type ID LPAREN param_list? RPAREN stmt_block   #Functio
 class_decl : CLASS ID LCURLY class_body RCURLY                          #ClassDecl
            ;
 
-class_body : ATTRIBUTES attribute_decl+ METHODS method_decl+            #ClassBodyDecl
+class_body : ATTRIBUTES variable_decl+ METHODS function_decl+            #ClassBodyDecl
            ;
-
-attribute_decl : variable_decl NEWLINE                                  #AttributeDecl
-               ;
-
-method_decl : function_decl NEWLINE                                     #MethodDecl
-            ;
 
 type : 'INT' | 'BOOL' | 'VOID'
      ;
@@ -63,7 +55,7 @@ stmt_block : LCURLY stmt* RCURLY
 
 stmt : stmt_block                                       #BlockStmt
      | variable_decl                                    #VariableDeclStmt
-     | IF LPAREN expr RPAREN LCURLY stmt (ELSE stmt)?   #IfElseStmt
+     | IF LPAREN expr RPAREN stmt (ELSE stmt)?          #IfElseStmt
      | RETURN expr? SEMICOLON                           #ReturnStmt
      | expr '=' expr SEMICOLON                          #AssignmentStmt
      | expr SEMICOLON                                   #ExprStmt
