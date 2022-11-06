@@ -1,0 +1,23 @@
+FUNCTION INT some_other_fn(INT val1) {
+	RETURN 100 * val1;
+}
+
+CLASS classNameOne {
+	ATTRIBUTES
+		INT attr_one;
+		BOOL attr_two = false;
+		INT attr_three = 99;
+	METHODS
+		FUNCTION INT methodOne(INT val1) {
+			INT result = attr_one  * val1 + val2;
+			RETURN result;
+		}
+		FUNCTION INT methodTwo() {
+			attr_one = 10;
+			IF (attr_two) {
+				RETURN attr_three;
+			} ELSE {
+				RETURN some_other_fn(attr_one);
+			}
+		}
+}

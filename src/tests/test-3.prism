@@ -1,0 +1,6 @@
+FUNCTION VOID void_test() {
+	// some operation
+	INT foo = 10;
+	BOOL bar = false;
+	return;
+}
