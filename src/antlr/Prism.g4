@@ -38,7 +38,7 @@ function_decl : FUNCTION type ID LPAREN param_list? RPAREN stmt_block   #Functio
 class_decl : CLASS ID LCURLY class_body RCURLY                          #ClassDecl
            ;
 
-class_body : ATTRIBUTES variable_decl+ METHODS function_decl+            #ClassBodyDecl
+class_body : ATTRIBUTES variable_decl+ METHODS function_decl+           #ClassBodyDecl
            ;
 
 type : 'INT' | 'BOOL' | 'VOID'
