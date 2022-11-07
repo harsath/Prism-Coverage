@@ -56,7 +56,8 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	@Override
 	public Expression visitFunctionParamExpr(FunctionParamExprContext ctx) {
 		FunctionParamListExpression fn_param_list_expr = new FunctionParamListExpression();	
-		for (int i = 0; i < ctx.getChildCount(); i++) {
+		// Interleave visits, because we don't want to visit ',' token.
+		for (int i = 0; i < ctx.getChildCount(); i += 2) {
 			fn_param_list_expr.addExpression(visit(ctx.getChild(i)));
 		}
 		return fn_param_list_expr;
