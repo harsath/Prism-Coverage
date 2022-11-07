@@ -47,6 +47,18 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassBodyDecl(PrismParser.ClassBodyDeclContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PrismParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

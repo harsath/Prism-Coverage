@@ -68,6 +68,26 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitClassBodyDecl(PrismParser.ClassBodyDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PrismParser#type}.
 	 * @param ctx the parse tree
 	 */
