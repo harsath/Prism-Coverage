@@ -63,7 +63,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) {
+	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) throws RuntimeException {
 		Expression fn_name_expr = visit(ctx.getChild(0));
 		FunctionCallExpression fn_call_expr = new FunctionCallExpression();
 		// Runtime dynamic bind check
@@ -78,8 +78,8 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		// Invoking function with parameters. Ex: fn(4), fn(foo, bar, 3)
 		else {
 			Expression fn_param_expr = visit(ctx.getChild(2));
-			if (!(fn_name_expr instanceof VariableAtomExpression)) {
-				throw new RuntimeException("fn_name_expr is not instance of VariableAtomExpresssion");
+			if (!(fn_name_expr instanceof FunctionParamListExpression)) {
+				throw new RuntimeException("fn_param_expr is not instance of FunctionParamListExpression");
 			}
 			fn_call_expr.setFunctionParamList((FunctionParamListExpression)fn_param_expr);
 		}
