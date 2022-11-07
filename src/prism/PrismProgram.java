@@ -1,12 +1,13 @@
 package prism;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrismProgram implements Declaration {
        private List<Declaration> program; 
 
        PrismProgram() {
-
+                this.program = new ArrayList<>();
        }
 
        public void addDeclaration(Declaration decl) {
