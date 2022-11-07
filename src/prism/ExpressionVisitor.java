@@ -1,22 +1,7 @@
 package prism;
 
 import antlr.PrismBaseVisitor;
-import antlr.PrismParser.AddSubExprContext;
-import antlr.PrismParser.AndExprContext;
-import antlr.PrismParser.BoolAtomExprContext;
-import antlr.PrismParser.BracketExprContext;
-import antlr.PrismParser.EqExprContext;
-import antlr.PrismParser.FunctionCallExprContext;
-import antlr.PrismParser.GreatherthanEqExprContext;
-import antlr.PrismParser.GreatherthanExprContext;
-import antlr.PrismParser.IntAtomExprContext;
-import antlr.PrismParser.LessthanEqExprContext;
-import antlr.PrismParser.LessthanExprContext;
-import antlr.PrismParser.MulDivExprContext;
-import antlr.PrismParser.NotExprContext;
-import antlr.PrismParser.OrExprContext;
-import antlr.PrismParser.UnaryMinusExprContext;
-import antlr.PrismParser.VariableAtomExprContext;
+import antlr.PrismParser.*;
 
 public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 
@@ -69,9 +54,36 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitFunctionParamExpr(FunctionParamExprContext ctx) {
+		FunctionParamListExpression fn_param_list_expr = new FunctionParamListExpression();	
+		for (int i = 0; i < ctx.getChildCount(); i++) {
+			fn_param_list_expr.addExpression(visit(ctx.getChild(i)));
+		}
+		return fn_param_list_expr;
+	}
+
+	@Override
 	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitFunctionCallExpr(ctx);
+		Expression fn_name_expr = visit(ctx.getChild(0));
+		FunctionCallExpression fn_call_expr = new FunctionCallExpression();
+		// Runtime dynamic bind check
+		if (!(fn_name_expr instanceof VariableAtomExpression)) {
+			throw new RuntimeException("fn_name_expr is not instance of VariableAtomExpresssion");
+		}
+		fn_call_expr.setFunctionName(((VariableAtomExpression) fn_name_expr).getId());
+		// Invoking a function without parameter. Ex: fn()
+		if (ctx.getChildCount() == 3) {
+			return fn_call_expr;
+		} 
+		// Invoking function with parameters. Ex: fn(4), fn(foo, bar, 3)
+		else {
+			Expression fn_param_expr = visit(ctx.getChild(2));
+			if (!(fn_name_expr instanceof VariableAtomExpression)) {
+				throw new RuntimeException("fn_name_expr is not instance of VariableAtomExpresssion");
+			}
+			fn_call_expr.setFunctionParamList((FunctionParamListExpression)fn_param_expr);
+		}
+		return fn_call_expr;
 	}
 
 	@Override
