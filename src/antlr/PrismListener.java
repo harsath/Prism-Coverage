@@ -374,13 +374,15 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PrismParser#expr_list}.
+	 * Enter a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_list(PrismParser.Expr_listContext ctx);
+	void enterFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PrismParser#expr_list}.
+	 * Exit a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_list(PrismParser.Expr_listContext ctx);
+	void exitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 }

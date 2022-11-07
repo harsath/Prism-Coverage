@@ -226,9 +226,10 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PrismParser#expr_list}.
+	 * Visit a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr_list(PrismParser.Expr_listContext ctx);
+	T visitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 }

@@ -1656,27 +1656,36 @@ public class PrismParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Expr_listContext extends ParserRuleContext {
+		public Expr_listContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expr_list; }
+	 
+		public Expr_listContext() { }
+		public void copyFrom(Expr_listContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class FunctionParamExprContext extends Expr_listContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public Expr_listContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expr_list; }
+		public FunctionParamExprContext(Expr_listContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterExpr_list(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterFunctionParamExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitExpr_list(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitFunctionParamExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitExpr_list(this);
+			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitFunctionParamExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1686,6 +1695,7 @@ public class PrismParser extends Parser {
 		enterRule(_localctx, 22, RULE_expr_list);
 		int _la;
 		try {
+			_localctx = new FunctionParamExprContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(169);

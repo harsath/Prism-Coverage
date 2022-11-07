@@ -79,5 +79,5 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | LPAREN expr RPAREN          #BracketExpr
      ;
 
-expr_list : expr (',' expr)*  // function argument list
+expr_list : expr (',' expr)*       #FunctionParamExpr // function argument list
           ;

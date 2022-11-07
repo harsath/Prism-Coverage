@@ -237,5 +237,5 @@ public class PrismBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExpr_list(PrismParser.Expr_listContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx) { return visitChildren(ctx); }
 }

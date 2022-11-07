@@ -391,13 +391,13 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_list(PrismParser.Expr_listContext ctx) { }
+	@Override public void enterFunctionParamExpr(PrismParser.FunctionParamExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr_list(PrismParser.Expr_listContext ctx) { }
+	@Override public void exitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
