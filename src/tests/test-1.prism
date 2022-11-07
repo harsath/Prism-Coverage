@@ -6,3 +6,7 @@ FUNCTION INT add(INT val1, INT val2, BOOL val3) {
              RETURN val1 * 2 + val2 * 2;
        }
 }
+
+FUNCTION INT main() {
+	INT result = add(5, 10, true);
+}

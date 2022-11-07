@@ -68,6 +68,26 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitClassBodyDecl(PrismParser.ClassBodyDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PrismParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -242,6 +262,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code GreaterthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GreaterthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code OrExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -253,18 +285,6 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrExpr(PrismParser.OrExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code GreatherthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterGreatherthanExpr(PrismParser.GreatherthanExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code GreatherthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitGreatherthanExpr(PrismParser.GreatherthanExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code FunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -314,17 +334,17 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLessthanExpr(PrismParser.LessthanExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code GreatherthanEqExpr}
+	 * Enter a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx);
+	void enterGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code GreatherthanEqExpr}
+	 * Exit a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx);
+	void exitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BracketExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -374,13 +394,15 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PrismParser#expr_list}.
+	 * Enter a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_list(PrismParser.Expr_listContext ctx);
+	void enterFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PrismParser#expr_list}.
+	 * Exit a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_list(PrismParser.Expr_listContext ctx);
+	void exitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 }

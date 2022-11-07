@@ -47,6 +47,18 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassBodyDecl(PrismParser.ClassBodyDeclContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PrismParser#attributes_decl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAttributes_decl(PrismParser.Attributes_declContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#methods_decl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethods_decl(PrismParser.Methods_declContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PrismParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -149,19 +161,19 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code GreaterthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code OrExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOrExpr(PrismParser.OrExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code GreatherthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGreatherthanExpr(PrismParser.GreatherthanExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -191,12 +203,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLessthanExpr(PrismParser.LessthanExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code GreatherthanEqExpr}
+	 * Visit a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx);
+	T visitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BracketExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -226,9 +238,10 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PrismParser#expr_list}.
+	 * Visit a parse tree produced by the {@code FunctionParamExpr}
+	 * labeled alternative in {@link PrismParser#expr_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr_list(PrismParser.Expr_listContext ctx);
+	T visitFunctionParamExpr(PrismParser.FunctionParamExprContext ctx);
 }

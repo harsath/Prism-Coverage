@@ -38,8 +38,14 @@ function_decl : FUNCTION type ID LPAREN param_list? RPAREN stmt_block   #Functio
 class_decl : CLASS ID LCURLY class_body RCURLY                          #ClassDecl
            ;
 
-class_body : ATTRIBUTES variable_decl+ METHODS function_decl+            #ClassBodyDecl
+class_body : ATTRIBUTES attributes_decl METHODS methods_decl            #ClassBodyDecl
            ;
+
+attributes_decl : variable_decl+
+                ;
+
+methods_decl : function_decl+
+             ;
 
 type : 'INT' | 'BOOL' | 'VOID'
      ;
@@ -69,9 +75,9 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | expr '==' expr              #EqExpr
      | expr '||' expr              #OrExpr
      | expr '&&' expr              #AndExpr
-     | expr '>' expr               #GreatherthanExpr
+     | expr '>' expr               #GreaterthanExpr
      | expr '<' expr               #LessthanExpr
-     | expr '>=' expr              #GreatherthanEqExpr
+     | expr '>=' expr              #GreaterthanEqExpr
      | expr '<=' expr              #LessthanEqExpr
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr
@@ -79,5 +85,5 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | LPAREN expr RPAREN          #BracketExpr
      ;
 
-expr_list : expr (',' expr)*  // function argument list
+expr_list : expr (',' expr)*       #FunctionParamExpr // function argument list
           ;
