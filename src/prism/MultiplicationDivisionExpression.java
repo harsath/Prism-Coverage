@@ -1,13 +1,37 @@
 package prism;
 
 public class MultiplicationDivisionExpression implements Expression {
-	Expression left;
-	Expression right;
-	boolean multiplication;
+	private Expression left;
+	private Expression right;
+	private boolean multiplication;
 
 	public MultiplicationDivisionExpression(Expression left, Expression right, boolean multiplication) {
 		this.left = left;
 		this.right = right;
+		this.multiplication = multiplication;
+	}
+
+	public Expression getLeft() {
+		return left;
+	}
+
+	public void setLeft(Expression left) {
+		this.left = left;
+	}
+
+	public Expression getRight() {
+		return right;
+	}
+
+	public void setRight(Expression right) {
+		this.right = right;
+	}
+
+	public boolean isMultiplication() {
+		return multiplication;
+	}
+
+	public void setIsMultiplication(boolean multiplication) {
 		this.multiplication = multiplication;
 	}
 

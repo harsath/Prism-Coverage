@@ -1,14 +1,13 @@
 package prism;
 
-public class BooleanAtomExpression implements Expression {
-	boolean value;
+public class BooleanAtomExpression extends BooleanType implements Expression {
 
 	public BooleanAtomExpression(boolean value) {
-		this.value = value;
+		super(value);
 	}
 
 	@Override
 	public String toString() {
-		return Boolean.toString(value);
+		return super.toString();
 	}
 }

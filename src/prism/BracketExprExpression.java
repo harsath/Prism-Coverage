@@ -1,9 +1,17 @@
 package prism;
 
 public class BracketExprExpression implements Expression {
-	Expression expression;
+	private Expression expression;
 
 	public BracketExprExpression(Expression expression) {
+		this.expression = expression;
+	}
+
+	public Expression getExpression() {
+		return expression;
+	}
+
+	public void setExpression(Expression expression) {
 		this.expression = expression;
 	}
 

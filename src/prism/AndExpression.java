@@ -1,8 +1,8 @@
 package prism;
 
 public class AndExpression implements Expression {
-	Expression left;
-	Expression right;
+	private Expression left;
+	private Expression right;
 
 	public AndExpression(Expression left, Expression right) {
 		this.left = left;
@@ -12,5 +12,21 @@ public class AndExpression implements Expression {
 	@Override
 	public String toString() {
 		return left.toString() + " and " + right.toString();
+	}
+	
+	public Expression getLeft() {
+		return left;
+	}
+
+	public void setLeft(Expression left) {
+		this.left = left;
+	}
+
+	public Expression getRight() {
+		return right;
+	}
+
+	public void setRight(Expression right) {
+		this.right = right;
 	}
 }

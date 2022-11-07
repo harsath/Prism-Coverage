@@ -1,14 +1,13 @@
 package prism;
 
-public class IntegerAtomExpression implements Expression {
-	int value;
+public class IntegerAtomExpression extends IntegerType implements Expression {
 
 	public IntegerAtomExpression(int value) {
-		this.value = value;
+		super(value);
 	}
 
 	@Override
 	public String toString() {
-		return Integer.toString(value);
+		return super.toString();
 	}
 }
