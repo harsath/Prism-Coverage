@@ -6,6 +6,10 @@ public class IntegerType implements AtomType {
 	public IntegerType(int value) {
 		this.value = value;
 	}
+
+	public IntegerType() {
+
+	}
 	
 	public int getValue() {
 		return this.value;

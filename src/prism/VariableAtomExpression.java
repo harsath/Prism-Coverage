@@ -7,6 +7,10 @@ public class VariableAtomExpression implements Expression {
 		this.id = id;
 	}
 
+	public VariableAtomExpression() {
+
+	}
+
 	public String getId() {
 		return this.id;
 	}

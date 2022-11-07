@@ -6,6 +6,10 @@ public class BooleanType implements AtomType {
 	public BooleanType(boolean value) {
 		this.value = value;
 	}
+
+	public BooleanType() {
+
+	}
 	
 	public boolean getValue() {
 		return this.value;
