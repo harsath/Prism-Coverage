@@ -1,5 +1,5 @@
 package prism;
 
-public interface Expression {
+public interface Expression extends Statement {
 
 }

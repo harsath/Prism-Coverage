@@ -1,5 +1,5 @@
 package prism;
 
-public interface Statement {
+public interface Statement extends Declaration {
 
 }
