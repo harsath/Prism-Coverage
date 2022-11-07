@@ -69,9 +69,9 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | expr '==' expr              #EqExpr
      | expr '||' expr              #OrExpr
      | expr '&&' expr              #AndExpr
-     | expr '>' expr               #GreatherthanExpr
+     | expr '>' expr               #GreaterthanExpr
      | expr '<' expr               #LessthanExpr
-     | expr '>=' expr              #GreatherthanEqExpr
+     | expr '>=' expr              #GreaterthanEqExpr
      | expr '<=' expr              #LessthanEqExpr
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr

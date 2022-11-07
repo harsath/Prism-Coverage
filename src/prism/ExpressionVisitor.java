@@ -47,7 +47,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitGreatherthanExpr(GreatherthanExprContext ctx) {
+	public Expression visitGreaterthanExpr(GreaterthanExprContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
 		return new GreaterthanExpression(left, right);
@@ -109,7 +109,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitGreatherthanEqExpr(GreatherthanEqExprContext ctx) {
+	public Expression visitGreaterthanEqExpr(GreaterthanEqExprContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
 		return new GreaterthanEqExpression(left, right);

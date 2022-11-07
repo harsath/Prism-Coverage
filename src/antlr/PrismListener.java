@@ -242,6 +242,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code GreaterthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code GreaterthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code OrExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -253,18 +265,6 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrExpr(PrismParser.OrExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code GreatherthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterGreatherthanExpr(PrismParser.GreatherthanExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code GreatherthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitGreatherthanExpr(PrismParser.GreatherthanExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code FunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -314,17 +314,17 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLessthanExpr(PrismParser.LessthanExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code GreatherthanEqExpr}
+	 * Enter a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx);
+	void enterGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code GreatherthanEqExpr}
+	 * Exit a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx);
+	void exitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BracketExpr}
 	 * labeled alternative in {@link PrismParser#expr}.

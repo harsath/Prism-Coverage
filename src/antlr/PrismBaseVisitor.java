@@ -160,14 +160,14 @@ public class PrismBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrExpr(PrismParser.OrExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreatherthanExpr(PrismParser.GreatherthanExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOrExpr(PrismParser.OrExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -202,7 +202,7 @@ public class PrismBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

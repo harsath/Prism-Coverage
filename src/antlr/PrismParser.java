@@ -1142,6 +1142,29 @@ public class PrismParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class GreaterthanExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public GreaterthanExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterGreaterthanExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitGreaterthanExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitGreaterthanExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class OrExprContext extends ExprContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -1161,29 +1184,6 @@ public class PrismParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitOrExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class GreatherthanExprContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public GreatherthanExprContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterGreatherthanExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitGreatherthanExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitGreatherthanExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1281,25 +1281,25 @@ public class PrismParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class GreatherthanEqExprContext extends ExprContext {
+	public static class GreaterthanEqExprContext extends ExprContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public GreatherthanEqExprContext(ExprContext ctx) { copyFrom(ctx); }
+		public GreaterthanEqExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterGreatherthanEqExpr(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterGreaterthanEqExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitGreatherthanEqExpr(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitGreaterthanEqExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitGreatherthanEqExpr(this);
+			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitGreaterthanEqExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1588,7 +1588,7 @@ public class PrismParser extends Parser {
 						break;
 					case 6:
 						{
-						_localctx = new GreatherthanExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new GreaterthanExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(152);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
@@ -1612,7 +1612,7 @@ public class PrismParser extends Parser {
 						break;
 					case 8:
 						{
-						_localctx = new GreatherthanEqExprContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new GreaterthanEqExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(158);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");

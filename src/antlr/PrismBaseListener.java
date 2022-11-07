@@ -259,6 +259,18 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGreaterthanExpr(PrismParser.GreaterthanExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOrExpr(PrismParser.OrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -266,18 +278,6 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOrExpr(PrismParser.OrExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGreatherthanExpr(PrismParser.GreatherthanExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGreatherthanExpr(PrismParser.GreatherthanExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -331,13 +331,13 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx) { }
+	@Override public void enterGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGreatherthanEqExpr(PrismParser.GreatherthanEqExprContext ctx) { }
+	@Override public void exitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
