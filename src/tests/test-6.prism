@@ -1,0 +1,39 @@
+FUNCTION BOOL gt_test(INT val1, INT val2) {
+	IF (val1 > val2) {
+		RETURN true;
+	} ELSE {
+		RETURN false;
+	}
+}
+
+FUNCTION BOOL lt_test(INT val1, INT val2) {
+	IF (val1 < val2) {
+		RETURN true;
+	} ELSE {
+		RETURN false;
+	}
+}
+
+FUNCTION BOOL ge_test(INT val1, INT val2) {
+	IF (val1 >= val2) {
+		RETURN true;
+	} ELSE {
+		RETURN false;
+	}
+}
+
+FUNCTION BOOL le_test(INT val1, INT val2) {
+	IF (val1 <= val2) {
+		RETURN true;
+	} ELSE {
+		RETURN false;
+	}
+}
+
+FUNCTION BOOL eq_test(INT val1, INT val2) {
+	IF (val1 == val2) {
+		RETURN true;
+	} ELSE {
+		RETURN false;
+	}
+}
