@@ -1,0 +1,15 @@
+FUNCTION INT and_test(BOOL val1, BOOL val2, INT val3, INT val4) {
+	IF (val1 && val2) {
+		RETURN val3;
+	} ELSE {
+		RETURN val4;
+	}
+}
+
+FUNCTION INT or_test(BOOL val1, BOOL val2, INT val3, INT val4) {
+	IF (val1 || val2) {
+		RETURN val3;
+	} ELSE {
+		RETURN val4;
+	}
+}
