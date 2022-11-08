@@ -17,7 +17,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) throws RuntimeException {
+	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) {
 		FunctionCallExpression fn_call_expr = new FunctionCallExpression();
 		
 		fn_call_expr.setFunctionName(ctx.getChild(0).getText());
@@ -28,10 +28,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		// Invoking function with parameters. Ex: fn(4), fn(foo, bar, 3)
 		else {
 			Expression fn_param_expr = visit(ctx.getChild(2));
-			if (!(fn_param_expr instanceof FunctionParamListExpression)) {
-				throw new RuntimeException("fn_param_expr is not instance of FunctionParamListExpression");
-			}
-			fn_call_expr.setFunctionParamList((FunctionParamListExpression)fn_param_expr);
+			fn_call_expr.setFunctionParamList((FunctionParamListExpression) fn_param_expr);
 		}
 
 		return fn_call_expr;

@@ -110,15 +110,17 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitType(PrismParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PrismParser#param_list}.
+	 * Enter a parse tree produced by the {@code FunctionParamDecl}
+	 * labeled alternative in {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterParam_list(PrismParser.Param_listContext ctx);
+	void enterFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PrismParser#param_list}.
+	 * Exit a parse tree produced by the {@code FunctionParamDecl}
+	 * labeled alternative in {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitParam_list(PrismParser.Param_listContext ctx);
+	void exitFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PrismParser#param}.
 	 * @param ctx the parse tree

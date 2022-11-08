@@ -33,6 +33,19 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
         }
 
         @Override
+        public Declaration visitFunctionParamDecl(FunctionParamDeclContext ctx) {
+               ParameterListDeclaration fn_param_list_decl = new ParameterListDeclaration();
+		// Interleave visits, because we don't want to visit ',' token.
+		for (int i = 0; i < ctx.getChildCount(); i += 2) {
+                        String type_str = ctx.getChild(i).getChild(0).getText();
+                        String type_id = ctx.getChild(i).getChild(1).getText();
+                        ParameterDeclaration param = new ParameterDeclaration(type_id, strTypeToAtomType(type_str));
+			fn_param_list_decl.addParam(param);
+		}
+		return fn_param_list_decl;
+        }
+
+        @Override
         public Declaration visitFunctionDecl(FunctionDeclContext ctx) throws RuntimeException {
                 FunctionDeclaration fn_decl = new FunctionDeclaration();
                 String fn_id = ctx.getChild(2).getText();
@@ -43,12 +56,8 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
                 Statement stmt_body;
                 // Function declaration has parameters
                 if (ctx.getChildCount() == 7) {
-                        for (int i = 0; i < ctx.getChild(4).getChildCount(); i++) {
-                                String type_str = ctx.getChild(4).getChild(i).getChild(0).getText();
-                                String id = ctx.getChild(4).getChild(i).getChild(1).getText();
-                                ParameterDeclaration param_decl = new ParameterDeclaration(id, strTypeToAtomType(type_str));
-                                fn_decl.addParam(param_decl);
-                        }
+                        Declaration fn_param_list = visit(ctx.getChild(4));
+                        fn_decl.setFunctionParamDecl((ParameterListDeclaration) fn_param_list);
                         stmt_body = stmtVisitor.visit(ctx.getChild(6).getChild(0));
                 } else {
                         stmt_body = stmtVisitor.visit(ctx.getChild(5).getChild(0));

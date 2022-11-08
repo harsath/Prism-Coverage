@@ -72,11 +72,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(PrismParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PrismParser#param_list}.
+	 * Visit a parse tree produced by the {@code FunctionParamDecl}
+	 * labeled alternative in {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParam_list(PrismParser.Param_listContext ctx);
+	T visitFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PrismParser#param}.
 	 * @param ctx the parse tree

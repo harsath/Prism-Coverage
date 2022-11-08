@@ -57,7 +57,7 @@ methods_decl : function_decl+
 type : 'INT' | 'BOOL' | 'VOID'
      ;
 
-param_list : param (',' param)*                                         
+param_list : param (',' param)*                         #FunctionParamDecl               
            ;
 
 param : type ID

@@ -730,27 +730,36 @@ public class PrismParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Param_listContext extends ParserRuleContext {
+		public Param_listContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_param_list; }
+	 
+		public Param_listContext() { }
+		public void copyFrom(Param_listContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class FunctionParamDeclContext extends Param_listContext {
 		public List<ParamContext> param() {
 			return getRuleContexts(ParamContext.class);
 		}
 		public ParamContext param(int i) {
 			return getRuleContext(ParamContext.class,i);
 		}
-		public Param_listContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_param_list; }
+		public FunctionParamDeclContext(Param_listContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterParam_list(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).enterFunctionParamDecl(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitParam_list(this);
+			if ( listener instanceof PrismListener ) ((PrismListener)listener).exitFunctionParamDecl(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitParam_list(this);
+			if ( visitor instanceof PrismVisitor ) return ((PrismVisitor<? extends T>)visitor).visitFunctionParamDecl(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -760,6 +769,7 @@ public class PrismParser extends Parser {
 		enterRule(_localctx, 18, RULE_param_list);
 		int _la;
 		try {
+			_localctx = new FunctionParamDeclContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(82);
