@@ -25,8 +25,11 @@ public class FunctionParamListExpression implements Expression {
         @Override
         public String toString() {
                 String returner = new String();
-                for (Expression expr : paramList) {
-                        returner += expr.toString();
+                for (int i = 0; i < paramList.size(); i++) {
+                        returner += paramList.get(i).toString();
+                        if (i != paramList.size() - 1) {
+                        	returner += ", ";
+                        }
                 }
                 return returner;
         }

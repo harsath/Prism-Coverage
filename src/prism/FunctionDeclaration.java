@@ -1,8 +1,5 @@
 package prism;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FunctionDeclaration implements Declaration {
 	String functionName;
 	ParameterListDeclaration functionParamDecl;
@@ -60,7 +57,7 @@ public class FunctionDeclaration implements Declaration {
 		if (functionBody != null) {
 			returner += functionBody.toString();
 		}
-		returner += "}";
+		returner += "\n}";
 		return returner;
 	}
 }

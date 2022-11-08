@@ -35,7 +35,7 @@ public class ClassDeclaration implements Declaration {
         @Override
         public String toString() {
                 String returner = new String();
-                returner += "CLASS " + className + "{ \n" + classBody.toString() + "\n }";
+                returner += "CLASS " + className + "{ \n" + classBody.toString() + "\n}";
                 return returner;
         }
 }

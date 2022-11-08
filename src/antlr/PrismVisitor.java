@@ -155,19 +155,19 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IntAtomExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BoolAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IntAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code GreaterthanExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -245,6 +245,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#bool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBool(PrismParser.BoolContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FunctionParamExpr}
 	 * labeled alternative in {@link PrismParser#expr_list}.

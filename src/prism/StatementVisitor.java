@@ -31,14 +31,9 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         @Override
         public Statement visitVariableDeclStmt(VariableDeclStmtContext ctx) {
                 String var_id = ctx.getChild(0).getChild(1).getText();
-                VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id);
-                // Variable declaration without initilization
-                if (ctx.getChild(0).getChildCount() == 3) {
-                        return var_decl_stmt;
-                }
-                Statement expr = exprVisitor.visit(ctx.getChild(0));
-                
-                var_decl_stmt.setExpression((Expression)expr);
+                Expression expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
+                VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id, expr);
+                var_decl_stmt.setExpression((Expression) expr);
                 return var_decl_stmt;
         }
 
@@ -68,7 +63,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 }
                 // RETURN expr;
                 Statement expr = exprVisitor.visit(ctx.getChild(1));
-                return_stmt.setExpression((Expression)expr);
+                return_stmt.setExpression((Expression) expr);
                 return return_stmt;
         }
 
@@ -76,12 +71,12 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         public Statement visitAssignmentStmt(AssignmentStmtContext ctx) {
                 Statement lhs_expr = exprVisitor.visit(ctx.getChild(0));
                 Statement rhs_expr = exprVisitor.visit(ctx.getChild(2));
-                return new AssignmentStatement((Expression)lhs_expr, (Expression)rhs_expr);
+                return new AssignmentStatement((Expression) lhs_expr, (Expression) rhs_expr);
         }
 
         @Override
         public Statement visitExprStmt(ExprStmtContext ctx) {
                 Statement expr = exprVisitor.visit(ctx.getChild(0));
-                return new ExpressionStatement((Expression)expr);
+                return new ExpressionStatement((Expression) expr);
         }
 }

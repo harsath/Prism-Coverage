@@ -1,21 +1,16 @@
 package app;
 
 import antlr.*;
-import prism.PrismProgram;
-import prism.PrismProgramVisitor;
+import prism.*;
+import prism_interpreter.PrismInterpreter;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import java.io.*;
 
-public class PrismSourcefileParser {
+public class PrismSourcefileInterpreter {
         public static void main(String[] args) throws Exception {
-                String input_file = null;
-                if (args.length > 0) input_file = args[0];
-                InputStream is = System.in;
-                if (input_file != null) {
-                        is = new FileInputStream(input_file);
-                }
+                InputStream is = new FileInputStream("/Users/harsath/eclipse/EECS4302-Project/src/tests/test-1.prism");
                 ANTLRInputStream input = new ANTLRInputStream(is);
                 PrismLexer lexer = new PrismLexer(input);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -25,6 +20,12 @@ public class PrismSourcefileParser {
 
                 PrismProgramVisitor prismVisitor = new PrismProgramVisitor();
                 PrismProgram prism_program = (PrismProgram) prismVisitor.visit(AST);
-                System.out.println(prism_program);
+
+                PrismInterpreter prism_interpreter = new PrismInterpreter(prism_program.getProgram());
+                AtomType return_value = prism_interpreter.interpret();
+                if (return_value instanceof IntegerType) {
+                        IntegerType return_value_int = (IntegerType) return_value;
+                        System.out.println(return_value_int);
+                }
         }
 }
