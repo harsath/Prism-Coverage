@@ -27,11 +27,11 @@ public class AdditionSubtractionExpression implements Expression {
 		this.right = right;
 	}
 	
-	public boolean isAdditionExpression() {
+	public boolean isAddition() {
 		return addition;
 	}
 	
-	public void setIsAdditionExpression(boolean addition) {
+	public void setIsAddition(boolean addition) {
 		this.addition = addition;
 	}
 
