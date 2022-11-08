@@ -37,7 +37,11 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                         return var_decl_stmt;
                 }
                 Statement expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
+<<<<<<< HEAD
                 var_decl_stmt.setExpression((Expression)expr);
+=======
+                var_decl_stmt.setExpression((Expression) expr);
+>>>>>>> 52cad218f0af1e8cdde33c395c1f3e1a7c9d50e6
                 return var_decl_stmt;
         }
 
@@ -67,7 +71,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 }
                 // RETURN expr;
                 Statement expr = exprVisitor.visit(ctx.getChild(1));
-                return_stmt.setExpression((Expression)expr);
+                return_stmt.setExpression((Expression) expr);
                 return return_stmt;
         }
 
@@ -75,12 +79,12 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         public Statement visitAssignmentStmt(AssignmentStmtContext ctx) {
                 Statement lhs_expr = exprVisitor.visit(ctx.getChild(0));
                 Statement rhs_expr = exprVisitor.visit(ctx.getChild(2));
-                return new AssignmentStatement((Expression)lhs_expr, (Expression)rhs_expr);
+                return new AssignmentStatement((Expression) lhs_expr, (Expression) rhs_expr);
         }
 
         @Override
         public Statement visitExprStmt(ExprStmtContext ctx) {
                 Statement expr = exprVisitor.visit(ctx.getChild(0));
-                return new ExpressionStatement((Expression)expr);
+                return new ExpressionStatement((Expression) expr);
         }
 }
