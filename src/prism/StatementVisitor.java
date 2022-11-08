@@ -38,10 +38,14 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 }
                 Statement expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
 <<<<<<< HEAD
+<<<<<<< HEAD
                 var_decl_stmt.setExpression((Expression)expr);
 =======
                 var_decl_stmt.setExpression((Expression) expr);
 >>>>>>> 52cad218f0af1e8cdde33c395c1f3e1a7c9d50e6
+=======
+                var_decl_stmt.setExpression((Expression) expr);
+>>>>>>> 73d88e1b3fbd04847520ec89babf74efc6823da3
                 return var_decl_stmt;
         }
 
