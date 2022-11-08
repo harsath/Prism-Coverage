@@ -10,15 +10,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface PrismListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link PrismParser#prog}.
+	 * Enter a parse tree produced by the {@code ProgramDecl}
+	 * labeled alternative in {@link PrismParser#prog}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(PrismParser.ProgContext ctx);
+	void enterProgramDecl(PrismParser.ProgramDeclContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PrismParser#prog}.
+	 * Exit a parse tree produced by the {@code ProgramDecl}
+	 * labeled alternative in {@link PrismParser#prog}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(PrismParser.ProgContext ctx);
+	void exitProgramDecl(PrismParser.ProgramDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code VariableDecl}
 	 * labeled alternative in {@link PrismParser#variable_decl}.
@@ -43,6 +45,16 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionDecl(PrismParser.FunctionDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PrismParser#function_body}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction_body(PrismParser.Function_bodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#function_body}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction_body(PrismParser.Function_bodyContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ClassDecl}
 	 * labeled alternative in {@link PrismParser#class_decl}.
@@ -98,17 +110,17 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitType(PrismParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ParamList}
+	 * Enter a parse tree produced by the {@code FunctionParamDecl}
 	 * labeled alternative in {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterParamList(PrismParser.ParamListContext ctx);
+	void enterFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ParamList}
+	 * Exit a parse tree produced by the {@code FunctionParamDecl}
 	 * labeled alternative in {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitParamList(PrismParser.ParamListContext ctx);
+	void exitFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PrismParser#param}.
 	 * @param ctx the parse tree
@@ -120,15 +132,17 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitParam(PrismParser.ParamContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PrismParser#stmt_block}.
+	 * Enter a parse tree produced by the {@code StmtBlockStmt}
+	 * labeled alternative in {@link PrismParser#stmt_block}.
 	 * @param ctx the parse tree
 	 */
-	void enterStmt_block(PrismParser.Stmt_blockContext ctx);
+	void enterStmtBlockStmt(PrismParser.StmtBlockStmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PrismParser#stmt_block}.
+	 * Exit a parse tree produced by the {@code StmtBlockStmt}
+	 * labeled alternative in {@link PrismParser#stmt_block}.
 	 * @param ctx the parse tree
 	 */
-	void exitStmt_block(PrismParser.Stmt_blockContext ctx);
+	void exitStmtBlockStmt(PrismParser.StmtBlockStmtContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BlockStmt}
 	 * labeled alternative in {@link PrismParser#stmt}.

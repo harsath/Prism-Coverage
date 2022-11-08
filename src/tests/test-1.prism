@@ -9,4 +9,5 @@ FUNCTION INT add(INT val1, INT val2, BOOL val3) {
 
 FUNCTION INT main() {
 	INT result = add(5, 10, true);
+	RETURN result;
 }

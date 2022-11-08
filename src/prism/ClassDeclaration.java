@@ -31,4 +31,11 @@ public class ClassDeclaration implements Declaration {
         public void setClassBody(ClassBodyDeclaration classBody) {
                 this.classBody = classBody;
         }
+
+        @Override
+        public String toString() {
+                String returner = new String();
+                returner += "CLASS " + className + "{ \n" + classBody.toString() + "\n }";
+                return returner;
+        }
 }

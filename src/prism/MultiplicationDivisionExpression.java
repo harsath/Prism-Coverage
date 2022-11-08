@@ -37,6 +37,6 @@ public class MultiplicationDivisionExpression implements Expression {
 
 	@Override
 	public String toString() {
-		return left.toString() + (multiplication ? " * " : " \\ ") + right.toString();
+		return left.toString() + (multiplication ? " * " : " / ") + right.toString();
 	}
 }

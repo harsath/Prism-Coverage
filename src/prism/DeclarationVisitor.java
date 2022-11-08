@@ -33,6 +33,19 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
         }
 
         @Override
+        public Declaration visitFunctionParamDecl(FunctionParamDeclContext ctx) {
+               ParameterListDeclaration fn_param_list_decl = new ParameterListDeclaration();
+		// Interleave visits, because we don't want to visit ',' token.
+		for (int i = 0; i < ctx.getChildCount(); i += 2) {
+                        String type_str = ctx.getChild(i).getChild(0).getText();
+                        String type_id = ctx.getChild(i).getChild(1).getText();
+                        ParameterDeclaration param = new ParameterDeclaration(type_id, strTypeToAtomType(type_str));
+			fn_param_list_decl.addParam(param);
+		}
+		return fn_param_list_decl;
+        }
+
+        @Override
         public Declaration visitFunctionDecl(FunctionDeclContext ctx) throws RuntimeException {
                 FunctionDeclaration fn_decl = new FunctionDeclaration();
                 String fn_id = ctx.getChild(2).getText();
@@ -43,13 +56,11 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
                 Statement stmt_body;
                 // Function declaration has parameters
                 if (ctx.getChildCount() == 7) {
-                        for (int i = 0; i < ctx.getChild(4).getChildCount(); i++) {
-                                Declaration param_decl = visit(ctx.getChild(4).getChild(i));
-                                fn_decl.addParam((ParameterDeclaration) param_decl);
-                        }
-                        stmt_body = stmtVisitor.visit(ctx.getChild(6));
+                        Declaration fn_param_list = visit(ctx.getChild(4));
+                        fn_decl.setFunctionParamDecl((ParameterListDeclaration) fn_param_list);
+                        stmt_body = stmtVisitor.visit(ctx.getChild(6).getChild(0));
                 } else {
-                        stmt_body = stmtVisitor.visit(ctx.getChild(5));
+                        stmt_body = stmtVisitor.visit(ctx.getChild(5).getChild(0));
                 }
                 fn_decl.setFunctionBody((BlockStatement)stmt_body);
                 return fn_decl;
@@ -76,12 +87,5 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
                         class_body_decl.addMethod((FunctionDeclaration) method_decl);
                 }
                 return class_body_decl;
-        }
-
-        @Override
-        public Declaration visitParamList(ParamListContext ctx) {
-                String type_str = ctx.getChild(0).getChild(0).getText();
-                String id = ctx.getChild(1).getText();
-                return new ParameterDeclaration(id, strTypeToAtomType(type_str));
         }
 }

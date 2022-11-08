@@ -5,12 +5,20 @@ import java.util.List;
 
 public class FunctionDeclaration implements Declaration {
 	String functionName;
-	List<ParameterDeclaration> functionParamDecl;
+	ParameterListDeclaration functionParamDecl;
 	AtomType returnType;
 	BlockStatement functionBody;
 
 	public FunctionDeclaration() {
-		this.functionParamDecl = new ArrayList<>();		
+		this.functionParamDecl = null;		
+	}
+
+	public ParameterListDeclaration getFunctionParamDecl() {
+		return this.functionParamDecl;
+	}
+
+	public void setFunctionParamDecl(ParameterListDeclaration functionParamDecl) {
+		this.functionParamDecl = functionParamDecl;
 	}
 
 	public BlockStatement getFunctionBody() {
@@ -30,7 +38,7 @@ public class FunctionDeclaration implements Declaration {
 	}
 
 	public void addParam(ParameterDeclaration param) {
-		this.functionParamDecl.add(param);
+		this.functionParamDecl.addParam(param);
 	}
 
 	public String getFunctionName() {
@@ -41,11 +49,18 @@ public class FunctionDeclaration implements Declaration {
 		this.functionName = functionName;
 	}
 
-	public List<ParameterDeclaration> getFunctionParamDecl() {
-		return this.functionParamDecl;
-	}
-
-	public void setFunctionParamDecl(List<ParameterDeclaration> functionParamDecl) {
-		this.functionParamDecl = functionParamDecl;
+	@Override
+	public String toString() {
+		String returner = new String();
+		returner += "FUNCTION " + returnType.toString() + " " + functionName + " (";
+		if (functionParamDecl != null) {
+			returner += functionParamDecl.toString();
+		}
+		returner += ") {\n";
+		if (functionBody != null) {
+			returner += functionBody.toString();
+		}
+		returner += "}";
+		return returner;
 	}
 }

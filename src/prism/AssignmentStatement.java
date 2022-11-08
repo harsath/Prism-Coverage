@@ -24,4 +24,9 @@ public class AssignmentStatement implements Statement {
         public void setRhs(Expression rhs) {
                 this.rhs = rhs;
         }
+
+        @Override
+        public String toString() {
+                return lhs.toString() + " = " + rhs.toString();
+        }
 }

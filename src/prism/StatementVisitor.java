@@ -7,14 +7,16 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         private ExpressionVisitor exprVisitor = new ExpressionVisitor();
 
         @Override
-        public Statement visitBlockStmt(BlockStmtContext ctx) {
+        public Statement visitStmtBlockStmt(StmtBlockStmtContext ctx) {
                 BlockStatement block_stmt = new BlockStatement();
                 // Empty body
                 if (ctx.getChildCount() == 2) {
                         return block_stmt;
                 }
                 // We don't want to visit '{' and '}'
-                for (int i = 1; i <= ctx.getChildCount() - 2; i++) {
+                //System.out.println("METHOD : " + ctx.getParent().getChild(2).getText());
+                // System.out.println("NUM CHILD OF 1st CHILD : " + ctx.getChild(0).getChildCount());
+                for (int i = 1; i < ctx.getChildCount() - 1; i++) {
                         Statement stmt = visit(ctx.getChild(i));
                         block_stmt.addStatement(stmt);
                 }
@@ -22,14 +24,20 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         }
 
         @Override
+        public Statement visitBlockStmt(BlockStmtContext ctx) {
+                return visit(ctx.getChild(0));
+        }
+
+        @Override
         public Statement visitVariableDeclStmt(VariableDeclStmtContext ctx) {
-                String var_id = ctx.getChild(1).getText();
+                String var_id = ctx.getChild(0).getChild(1).getText();
                 VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id);
                 // Variable declaration without initilization
-                if (ctx.getChildCount() == 3) {
+                if (ctx.getChild(0).getChildCount() == 3) {
                         return var_decl_stmt;
                 }
-                Statement expr = exprVisitor.visit(ctx.getChild(3));
+                Statement expr = exprVisitor.visit(ctx.getChild(0));
+                
                 var_decl_stmt.setExpression((Expression)expr);
                 return var_decl_stmt;
         }

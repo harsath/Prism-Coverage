@@ -23,16 +23,23 @@ RCURLY      :       '}';
 LPAREN      :       '(';
 RPAREN      :       ')';
 SEMICOLON   :       ';';
+MUL         :       '*';
+DIV         :       '/';
+ADD         :       '+';
+SUB         :       '-';
 
 /* Parser elements */
 
-prog : (function_decl | variable_decl | class_decl)+ EOF
+prog : (function_decl | variable_decl | class_decl)+ EOF                #ProgramDecl
      ;
 
 variable_decl : type ID ('=' expr)? SEMICOLON                           #VariableDecl
               ;
 
-function_decl : FUNCTION type ID LPAREN param_list? RPAREN stmt_block   #FunctionDecl
+function_decl : FUNCTION type ID LPAREN param_list? RPAREN function_body   #FunctionDecl
+              ;
+
+function_body : stmt_block
               ;
 
 class_decl : CLASS ID LCURLY class_body RCURLY                          #ClassDecl
@@ -50,13 +57,13 @@ methods_decl : function_decl+
 type : 'INT' | 'BOOL' | 'VOID'
      ;
 
-param_list : param (',' param)*                                         #ParamList
+param_list : param (',' param)*                         #FunctionParamDecl               
            ;
 
 param : type ID
       ;
 
-stmt_block : LCURLY stmt* RCURLY                
+stmt_block : LCURLY stmt* RCURLY                        #StmtBlockStmt
            ;             
 
 stmt : stmt_block                                       #BlockStmt

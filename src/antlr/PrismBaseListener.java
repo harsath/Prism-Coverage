@@ -19,13 +19,13 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(PrismParser.ProgContext ctx) { }
+	@Override public void enterProgramDecl(PrismParser.ProgramDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(PrismParser.ProgContext ctx) { }
+	@Override public void exitProgramDecl(PrismParser.ProgramDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -50,6 +50,18 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionDecl(PrismParser.FunctionDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunction_body(PrismParser.Function_bodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunction_body(PrismParser.Function_bodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -115,13 +127,13 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParamList(PrismParser.ParamListContext ctx) { }
+	@Override public void enterFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParamList(PrismParser.ParamListContext ctx) { }
+	@Override public void exitFunctionParamDecl(PrismParser.FunctionParamDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -139,13 +151,13 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStmt_block(PrismParser.Stmt_blockContext ctx) { }
+	@Override public void enterStmtBlockStmt(PrismParser.StmtBlockStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStmt_block(PrismParser.Stmt_blockContext ctx) { }
+	@Override public void exitStmtBlockStmt(PrismParser.StmtBlockStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
