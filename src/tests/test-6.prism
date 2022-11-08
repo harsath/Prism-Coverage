@@ -38,7 +38,7 @@ FUNCTION BOOL eq_test(INT val1, INT val2) {
 	}
 }
 
-INT main() {
+FUNCTION INT main() {
 	BOOL val1 = gt_test(10, 20);
 	BOOL val2 = lt_test(10, 20);
 	BOOL val3 = ge_test(20, 30);
