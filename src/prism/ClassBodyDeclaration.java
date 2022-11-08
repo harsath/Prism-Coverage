@@ -36,7 +36,7 @@ public class ClassBodyDeclaration implements Declaration {
         @Override
         public String toString() {
                 String returner = new String();
-                returner += "ATTRIBUTES \n" + attributes.toString() + "\n METHODS \n" + methods.toString();
+                returner += "ATTRIBUTES \n" + attributes.toString() + "METHODS \n" + methods.toString();
                 return returner;
         }
 }

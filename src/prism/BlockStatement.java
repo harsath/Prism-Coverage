@@ -25,11 +25,12 @@ public class BlockStatement implements Statement {
         @Override
         public String toString() {
                 String returner = new String();
-                returner += "{ \n";
+                //returner += "{ \n";
                 for (Statement stmt : statements) {
+                		returner += "\t";
                         returner += stmt.toString();
                 }
-                returner += "} \n";
+                //returner += "} \n";
                 return returner;
         }
 }

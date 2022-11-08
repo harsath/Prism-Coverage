@@ -36,8 +36,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 if (ctx.getChild(0).getChildCount() == 3) {
                         return var_decl_stmt;
                 }
-                Statement expr = exprVisitor.visit(ctx.getChild(0));
-                
+                Statement expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
                 var_decl_stmt.setExpression((Expression)expr);
                 return var_decl_stmt;
         }

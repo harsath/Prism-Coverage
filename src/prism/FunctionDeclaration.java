@@ -60,7 +60,7 @@ public class FunctionDeclaration implements Declaration {
 		if (functionBody != null) {
 			returner += functionBody.toString();
 		}
-		returner += "}";
+		returner += "\n}";
 		return returner;
 	}
 }

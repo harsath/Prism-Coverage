@@ -36,9 +36,9 @@ public class IfElseStatement implements Statement {
         @Override
         public String toString() {
                 String returner = new String();
-                returner += "IF (" + expr_condition.toString() + ") { \n" + if_statement_block.toString() + "}\n";
+                returner += "IF (" + expr_condition.toString() + ") { \n\t" + if_statement_block.toString() + "\n\t}";
                 if (else_statement_block != null) {
-                        returner += "ELSE { \n" + else_statement_block.toString() + "}\n";
+                        returner += "ELSE { \n\t" + else_statement_block.toString() + "\n\t} ";
                 }
                 return returner;
         }

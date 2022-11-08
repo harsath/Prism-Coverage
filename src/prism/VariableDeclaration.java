@@ -29,7 +29,7 @@ public class VariableDeclaration implements Declaration {
         @Override
         public String toString() {
                 if (expression != null) {
-                        return id + " = " + expression.toString() + "\n";
+                        return id + " = " + expression.toString()+ "\n";
                 }
                 return id + "\n";
         }
