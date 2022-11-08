@@ -21,4 +21,13 @@ public class FunctionParamListExpression implements Expression {
         public void addExpression(Expression expr) {
                 paramList.add(expr);
         }
+        
+        @Override
+        public String toString() {
+                String returner = new String();
+                for (Expression expr : paramList) {
+                        returner += expr.toString();
+                }
+                return returner;
+        }
 }

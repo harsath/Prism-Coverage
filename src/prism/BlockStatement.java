@@ -21,4 +21,15 @@ public class BlockStatement implements Statement {
         public void setStatements(List<Statement> statements) {
                 this.statements = statements;
         }
+
+        @Override
+        public String toString() {
+                String returner = new String();
+                returner += "{ \n";
+                for (Statement stmt : statements) {
+                        returner += stmt.toString();
+                }
+                returner += "} \n";
+                return returner;
+        }
 }

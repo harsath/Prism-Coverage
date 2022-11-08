@@ -5,7 +5,8 @@ public class ClassBodyDeclaration implements Declaration {
         private MethodDeclaration methods;
 
         ClassBodyDeclaration() {
-
+                this.attributes = new AttributeDeclaration();
+                this.methods = new MethodDeclaration();
         }
 
         public void addAttribute(VariableDeclaration attribute) {
@@ -30,5 +31,12 @@ public class ClassBodyDeclaration implements Declaration {
 
         public void setMethods(MethodDeclaration methods) {
                 this.methods = methods;
+        }
+
+        @Override
+        public String toString() {
+                String returner = new String();
+                returner += "ATTRIBUTES \n" + attributes.toString() + "\n METHODS \n" + methods.toString();
+                return returner;
         }
 }

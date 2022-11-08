@@ -27,6 +27,6 @@ public class OrExpression implements Expression {
 
 	@Override
 	public String toString() {
-		return left.toString() + " or " + right.toString();
+		return left.toString() + " || " + right.toString();
 	}
 }

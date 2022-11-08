@@ -48,4 +48,22 @@ public class FunctionDeclaration implements Declaration {
 	public void setFunctionParamDecl(List<ParameterDeclaration> functionParamDecl) {
 		this.functionParamDecl = functionParamDecl;
 	}
+
+	@Override
+	public String toString() {
+		String returner = new String();
+		returner += "FUNCTION " + returnType.toString() + " " + functionName + " (";
+		for (int i = 0; i < functionParamDecl.size(); i++) {
+			returner += functionParamDecl.get(i).toString();
+			if (!(i == (functionParamDecl.size() - 1))) {
+				returner += ", ";
+			}
+		}
+		returner += ") {\n";
+		if (functionBody != null) {
+			returner += functionBody.toString();
+		}
+		returner += "}";
+		return returner;
+	}
 }

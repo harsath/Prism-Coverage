@@ -32,4 +32,14 @@ public class IfElseStatement implements Statement {
         public void setElse_statement_block(Statement else_statement_block) {
                 this.else_statement_block = else_statement_block;
         }
+
+        @Override
+        public String toString() {
+                String returner = new String();
+                returner += "IF (" + expr_condition.toString() + ") { \n" + if_statement_block.toString() + "}\n";
+                if (else_statement_block != null) {
+                        returner += "ELSE { \n" + else_statement_block.toString() + "}\n";
+                }
+                return returner;
+        }
 }

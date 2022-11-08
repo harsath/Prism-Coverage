@@ -14,4 +14,12 @@ public class ReturnStatement implements Statement {
         public void setExpression(Expression expression) {
                 this.expression = expression;
         }
+
+        @Override
+        public String toString() {
+                if (expression != null) {
+                        return "RETURN " + expression.toString();
+                }
+                return "RETURN";
+        }
 }

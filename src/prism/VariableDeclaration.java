@@ -26,4 +26,11 @@ public class VariableDeclaration implements Declaration {
         public void setId(String id) {
                 this.id = id;
         }
+        @Override
+        public String toString() {
+                if (expression != null) {
+                        return id + " = " + expression.toString() + "\n";
+                }
+                return id + "\n";
+        }
 }

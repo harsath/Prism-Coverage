@@ -25,4 +25,15 @@ public class FunctionCallExpression implements Expression {
         public void setFunctionName(String functionName) {
                 this.functionName = functionName;
         }
+
+        @Override
+        public String toString() {
+                String returner = new String();
+                returner += functionName + "(";
+                if (functionParam != null){
+                        returner += functionParam.toString();
+                }
+                returner += ")";
+                return returner;
+        }
 }

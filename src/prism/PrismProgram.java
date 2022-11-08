@@ -22,4 +22,14 @@ public class PrismProgram implements Declaration {
                 this.program = program;
         }
 
+        @Override
+        public String toString() {
+                String returner = new String();
+                for (Declaration decl : program) {
+                        returner += decl.toString();
+                        returner += "\n";
+                }
+                return returner;
+        }
+
 }

@@ -24,4 +24,9 @@ public class ParameterDeclaration implements Declaration {
         public void setType(AtomType type) {
                 this.type = type;
         }
+
+        @Override
+        public String toString() {
+                return type.toString() + " " + id;
+        }
 }

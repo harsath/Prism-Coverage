@@ -11,11 +11,6 @@ public class AdditionSubtractionExpression implements Expression {
 		this.addition = addition;
 	}
 
-	@Override
-	public String toString() {
-		return left.toString() + (addition ? " + " : " - ") + right.toString();
-	}
-	
 	public Expression getLeft() {
 		return left;
 	}
@@ -38,5 +33,10 @@ public class AdditionSubtractionExpression implements Expression {
 	
 	public void setIsAdditionExpression(boolean addition) {
 		this.addition = addition;
+	}
+
+	@Override
+	public String toString() {
+		return left.toString() + (addition ? " + " : " - ") + right.toString();
 	}
 }

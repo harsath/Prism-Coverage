@@ -13,11 +13,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link PrismParser#prog}.
+	 * Visit a parse tree produced by the {@code ProgramDecl}
+	 * labeled alternative in {@link PrismParser#prog}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProg(PrismParser.ProgContext ctx);
+	T visitProgramDecl(PrismParser.ProgramDeclContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code VariableDecl}
 	 * labeled alternative in {@link PrismParser#variable_decl}.
@@ -32,6 +33,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionDecl(PrismParser.FunctionDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#function_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction_body(PrismParser.Function_bodyContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ClassDecl}
 	 * labeled alternative in {@link PrismParser#class_decl}.
@@ -65,12 +72,11 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(PrismParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ParamList}
-	 * labeled alternative in {@link PrismParser#param_list}.
+	 * Visit a parse tree produced by {@link PrismParser#param_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParamList(PrismParser.ParamListContext ctx);
+	T visitParam_list(PrismParser.Param_listContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PrismParser#param}.
 	 * @param ctx the parse tree
@@ -78,11 +84,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParam(PrismParser.ParamContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PrismParser#stmt_block}.
+	 * Visit a parse tree produced by the {@code StmtBlockStmt}
+	 * labeled alternative in {@link PrismParser#stmt_block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStmt_block(PrismParser.Stmt_blockContext ctx);
+	T visitStmtBlockStmt(PrismParser.StmtBlockStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BlockStmt}
 	 * labeled alternative in {@link PrismParser#stmt}.

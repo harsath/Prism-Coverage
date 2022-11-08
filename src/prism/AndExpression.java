@@ -9,11 +9,6 @@ public class AndExpression implements Expression {
 		this.right = right;
 	}
 
-	@Override
-	public String toString() {
-		return left.toString() + " and " + right.toString();
-	}
-	
 	public Expression getLeft() {
 		return left;
 	}
@@ -28,5 +23,10 @@ public class AndExpression implements Expression {
 
 	public void setRight(Expression right) {
 		this.right = right;
+	}
+
+	@Override
+	public String toString() {
+		return left.toString() + " and " + right.toString();
 	}
 }

@@ -1,6 +1,7 @@
 package prism;
 
 import antlr.PrismBaseVisitor;
+import antlr.PrismParser;
 import antlr.PrismParser.*;
 
 public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
@@ -17,13 +18,9 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitFunctionCallExpr(FunctionCallExprContext ctx) throws RuntimeException {
-		Expression fn_name_expr = visit(ctx.getChild(0));
 		FunctionCallExpression fn_call_expr = new FunctionCallExpression();
-		// Runtime dynamic bind check
-		if (!(fn_name_expr instanceof VariableAtomExpression)) {
-			throw new RuntimeException("fn_name_expr is not instance of VariableAtomExpresssion");
-		}
-		fn_call_expr.setFunctionName(((VariableAtomExpression) fn_name_expr).getId());
+		
+		fn_call_expr.setFunctionName(ctx.getChild(0).getText());
 		// Invoking a function without parameter. Ex: fn()
 		if (ctx.getChildCount() == 3) {
 			return fn_call_expr;
@@ -31,11 +28,12 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		// Invoking function with parameters. Ex: fn(4), fn(foo, bar, 3)
 		else {
 			Expression fn_param_expr = visit(ctx.getChild(2));
-			if (!(fn_name_expr instanceof FunctionParamListExpression)) {
+			if (!(fn_param_expr instanceof FunctionParamListExpression)) {
 				throw new RuntimeException("fn_param_expr is not instance of FunctionParamListExpression");
 			}
 			fn_call_expr.setFunctionParamList((FunctionParamListExpression)fn_param_expr);
 		}
+
 		return fn_call_expr;
 	}
 
@@ -55,7 +53,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	public Expression visitMulDivExpr(MulDivExprContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		boolean multiplication = ctx.getChild(1).getText() == "*";
+		boolean multiplication = (ctx.op.getType() == PrismParser.MUL);
 		return new MultiplicationDivisionExpression(left, right, multiplication);
 	}
 
@@ -63,7 +61,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	public Expression visitAddSubExpr(AddSubExprContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
-		boolean addition = ctx.getChild(1).getText() == "+";
+		boolean addition = (ctx.op.getType() == PrismParser.ADD);
 		return new AdditionSubtractionExpression(left, right, addition);
 	}
 
