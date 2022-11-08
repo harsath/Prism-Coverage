@@ -44,7 +44,16 @@ public class DeclarationExecutor {
                                 VariableDeclaration fn_decl = (VariableDeclaration) declaration;
                                 // Since on global scope, we don't have any other scope identifiers other than global ones
                                 // so we're just passing `globalIdentifiers` for both parameters.
-                                // globalIdentifiers.put(fn_decl.getId(), expr_executor.executeExpression(globalIdentifiers, globalIdentifiers, fn_decl.getExpression()));
+                                Expression expr = expr_executor.executeExpression(globalIdentifiers, globalIdentifiers, fn_decl.getExpression());
+                                if (expr instanceof IntegerAtomExpression) {
+                                        IntegerType int_type = new IntegerType(((IntegerAtomExpression) expr).getValue());
+                                        globalIdentifiers.put(fn_decl.getId(), int_type);
+                                } else if (expr instanceof BooleanAtomExpression) {
+                                        BooleanAtomExpression bool_type = new BooleanAtomExpression(((BooleanAtomExpression) expr).getValue());
+                                        globalIdentifiers.put(fn_decl.getId(), bool_type);
+                                } else {
+                                        throw new RuntimeException("Undefined type");
+                                }
                         }
                 }
         }

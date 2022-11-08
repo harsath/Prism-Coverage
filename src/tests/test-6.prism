@@ -37,3 +37,12 @@ FUNCTION BOOL eq_test(INT val1, INT val2) {
 		RETURN false;
 	}
 }
+
+INT main() {
+	BOOL val1 = gt_test(10, 20);
+	BOOL val2 = lt_test(10, 20);
+	BOOL val3 = ge_test(20, 30);
+	BOOL val4 = le_test(20, 30);
+	BOOL val5 = eq_test(20, 30);
+	RETURN 0;
+}
