@@ -117,7 +117,6 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		return new VariableAtomExpression(id);
 	}
 
-
 	@Override
 	public Expression visitIntAtomExpr(IntAtomExprContext ctx) {
 		String valueText = ctx.getChild(0).getText();

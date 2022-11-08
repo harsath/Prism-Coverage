@@ -1,7 +1,5 @@
 package prism;
 
-import java.util.List;
-
 public class FunctionCallExpression implements Expression {
         private FunctionParamListExpression functionParam;
         private String functionName;

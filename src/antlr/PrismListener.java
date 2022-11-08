@@ -252,18 +252,6 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IntAtomExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntAtomExpr(PrismParser.IntAtomExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code IntAtomExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code BoolAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -275,6 +263,18 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IntAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntAtomExpr(PrismParser.IntAtomExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IntAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code GreaterthanExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -407,6 +407,16 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PrismParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool(PrismParser.BoolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PrismParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool(PrismParser.BoolContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code FunctionParamExpr}
 	 * labeled alternative in {@link PrismParser#expr_list}.

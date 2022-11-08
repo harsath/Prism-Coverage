@@ -1,0 +1,51 @@
+package prism_interpreter;
+
+import prism.*;
+import java.util.*;
+
+public class DeclarationExecutor {
+        private List<Declaration> declarations;
+        private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;
+        private Map<String, AtomType> globalIdentifiers;
+
+        public DeclarationExecutor(List<Declaration> declarations) throws Exception { 
+                this.declarations = declarations;
+                populateFunctionSymbolTable();
+                populateGlobalIdentifiers();
+        }
+
+        public AtomType executeMain() throws Exception {
+                if (!functionDeclarationSymbolTable.containsKey("main")) {
+                        throw new RuntimeException("Source file does not contain main() function");
+                }
+                List<Statement> main_stmt = functionDeclarationSymbolTable.get("main").getFunctionBody().getStatements();
+                StatementExecutor stmt_executor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, globalIdentifiers, main_stmt);
+                return stmt_executor.executeStatements();
+        }
+
+        private void populateFunctionSymbolTable() {
+                functionDeclarationSymbolTable = new HashMap<>();
+                for (Declaration declaration : declarations) {
+                        if (declaration instanceof FunctionDeclaration) {
+                                FunctionDeclaration fn_decl = (FunctionDeclaration) declaration;
+                                functionDeclarationSymbolTable.put(fn_decl.getFunctionName(), fn_decl);
+                        }
+                }
+        }
+
+        private void populateGlobalIdentifiers() throws Exception {
+                globalIdentifiers = new HashMap<>();
+                for (Declaration declaration : declarations) {
+                        // We're creating an object inside the loop everytime becase the `globalIdentifiers` gets modified within this
+                        // loop. So that when one global variable references another global variable, ExpressionExecutor has the latest version
+                        // We are also not copying the whole object, we are passing references, which is computationally cheap.
+                        if (declaration instanceof VariableDeclaration) {
+                                ExpressionExecutor expr_executor = new ExpressionExecutor(functionDeclarationSymbolTable);
+                                VariableDeclaration fn_decl = (VariableDeclaration) declaration;
+                                // Since on global scope, we don't have any other scope identifiers other than global ones
+                                // so we're just passing `globalIdentifiers` for both parameters.
+                                // globalIdentifiers.put(fn_decl.getId(), expr_executor.executeExpression(globalIdentifiers, globalIdentifiers, fn_decl.getExpression()));
+                        }
+                }
+        }
+}

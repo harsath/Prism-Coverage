@@ -6,9 +6,9 @@ public class VariableDeclaration implements Declaration {
         private Expression expression;
         private String id;
 
-        VariableDeclaration(String id) {
+        VariableDeclaration(String id, Expression expression) {
                 this.id = id;
-                this.expression = null;
+                this.expression = expression;
         }
 
         public Expression getExpression() {
