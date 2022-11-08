@@ -27,8 +27,8 @@ public class AttributeDeclaration implements Declaration {
         public String toString() {
                 String returner = new String();
                 for (VariableDeclaration attrs : attributes) {
+                		returner += "\t";
                         returner += attrs.toString();
-                        returner += "\n";
                 }
                 return returner;
         }

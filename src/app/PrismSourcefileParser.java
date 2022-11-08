@@ -1,6 +1,7 @@
 package app;
 
 import antlr.*;
+import prism.PrismProgram;
 import prism.PrismProgramVisitor;
 
 import org.antlr.v4.runtime.*;
@@ -23,6 +24,7 @@ public class PrismSourcefileParser {
                 ParseTree AST = parser.prog();
 
                 PrismProgramVisitor prismVisitor = new PrismProgramVisitor();
-                prismVisitor.visit(AST);
+                PrismProgram prism_program = (PrismProgram) prismVisitor.visit(AST);
+                System.out.println(prism_program);
         }
 }

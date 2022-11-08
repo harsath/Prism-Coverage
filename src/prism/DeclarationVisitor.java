@@ -28,6 +28,7 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
                         return var_decl_stmt;
                 }
                 Statement expr = exprVisitor.visit(ctx.getChild(3));
+                
                 var_decl_stmt.setExpression((Expression)expr);
                 return var_decl_stmt;
         }
