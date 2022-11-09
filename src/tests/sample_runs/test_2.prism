@@ -3,7 +3,7 @@ FUNCTION INT boo(INT x, INT y, BOOL val) {
 	IF (val) {
 		result = x*y;
 	} ELSE {
-			result = x/y;
+		result = x/y;
 	}
 	RETURN result;
 }
