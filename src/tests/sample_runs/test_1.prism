@@ -2,7 +2,7 @@ FUNCTION INT max(INT val1, INT val2) {
 	IF (val1>val2) {
 		RETURN val1;
 	} ELSE {
-			RETURN val2;
+		RETURN val2;
 	}
 }
 
@@ -15,7 +15,7 @@ FUNCTION INT test_max(INT expected) {
 }
 
 FUNCTION INT main() {
-	INT n = 12
+	INT n = 12;
 	INT result = test_max(n);
 	RETURN result;
 }
