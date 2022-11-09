@@ -44,5 +44,5 @@ FUNCTION INT main() {
 	BOOL val3 = ge_test(20, 30);
 	BOOL val4 = le_test(20, 30);
 	BOOL val5 = eq_test(20, 30);
-	RETURN 0;
+	RETURN 10;
 }
