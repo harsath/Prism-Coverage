@@ -24,7 +24,7 @@ public class StatementExecutor {
 
         // Execution functions returns a value, we return that as AtomType
         public AtomType executeStatements() throws Exception {
-                AtomType return_value;
+                AtomType return_value = new VoidType();
                 for (Statement statement : statements) {
                         if (statement instanceof VariableDeclarationStatement) {
                                 VariableDeclarationStatement var_decl_stmt = (VariableDeclarationStatement) statement;
@@ -56,16 +56,15 @@ public class StatementExecutor {
                         } else if (statement instanceof ReturnStatement) {
                                 ReturnStatement return_stmt = (ReturnStatement) statement;
                                 if (return_stmt.getExpression() == null) {
-                                        return new VoidType();
+                                        break;
                                 }
                                 Expression expression = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, return_stmt.getExpression());
-                                if (expression instanceof IntegerAtomExpression) {
-                                        return new IntegerType(((IntegerAtomExpression) expression).getValue());
-                                }
+                                return_value = getAtomTypeFromExpression(expression);
+                                break;
                         } else if (statement instanceof IfElseStatement) {
                                 IfElseStatement if_else_stmt = (IfElseStatement) statement;
                                 Expression expr_condition = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, if_else_stmt.getExpr_condition());
-                                if (!(expr_condition instanceof BooleanType)) {
+                                if (!(expr_condition instanceof BooleanAtomExpression)) {
                                         throw new RuntimeException("Expression condition of If-Else statement should be a logical expression");
                                 }
                                 if (!(if_else_stmt.getIf_statement_block() instanceof BlockStatement)) {
@@ -78,11 +77,13 @@ public class StatementExecutor {
                                 if (expr_condition_cast.getValue()) {
                                         BlockStatement block_stmt = (BlockStatement) if_else_stmt.getIf_statement_block();
                                         StatementExecutor stmt_exec = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, scopeIdentifiers, block_stmt.getStatements());
-                                        stmt_exec.executeStatements();
+                                        return_value = stmt_exec.executeStatements();
                                 } else if (if_else_stmt.getElse_statement_block() != null) {
                                         BlockStatement block_stmt = (BlockStatement) if_else_stmt.getElse_statement_block();
                                         StatementExecutor stmt_exec = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, scopeIdentifiers, block_stmt.getStatements());
-                                        stmt_exec.executeStatements();
+                                        return_value = stmt_exec.executeStatements();
+                                } else {
+                                        throw new RuntimeException("Undefined type");
                                 }
                         } else if (statement instanceof BlockStatement) {
                                 BlockStatement block_stmt = (BlockStatement) statement;
@@ -95,7 +96,6 @@ public class StatementExecutor {
                                 throw new RuntimeException("Undefined statement");
                         }
                 }
-                return_value = new IntegerType(0);
                 return return_value;
         }
         
@@ -106,6 +106,16 @@ public class StatementExecutor {
                         globalIdentifiers.put(id, value);
                 } else {
                         throw new RuntimeException("Assignment to undefined variable");
+                }
+        }
+
+        public AtomType getAtomTypeFromExpression(Expression expression) throws Exception {
+                if (expression instanceof IntegerAtomExpression) {
+                        return new IntegerType(((IntegerAtomExpression) expression).getValue());
+                } else if (expression instanceof BooleanAtomExpression) {
+                        return new BooleanType(((BooleanAtomExpression) expression).getValue());
+                } else {
+                        throw new RuntimeException("Undefined type");
                 }
         }
 }

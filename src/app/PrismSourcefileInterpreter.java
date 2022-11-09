@@ -10,7 +10,12 @@ import java.io.*;
 
 public class PrismSourcefileInterpreter {
         public static void main(String[] args) throws Exception {
-                InputStream is = new FileInputStream("/Users/harsath/eclipse/EECS4302-Project/src/tests/test-1.prism");
+                String input_file = null;
+                if (args.length > 0) input_file = args[0];
+                InputStream is = System.in;
+                if (input_file != null) {
+                        is = new FileInputStream(input_file);
+                }
                 ANTLRInputStream input = new ANTLRInputStream(is);
                 PrismLexer lexer = new PrismLexer(input);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);

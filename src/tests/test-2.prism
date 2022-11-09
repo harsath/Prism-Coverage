@@ -21,3 +21,7 @@ CLASS classNameOne {
 			}
 		}
 }
+
+FUNCTION INT main() {
+	RETURN some_other_fn(3);
+}
