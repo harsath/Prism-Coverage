@@ -1,0 +1,8 @@
+FUNCTION VOID fn_without_body() {
+
+}
+
+FUNCTION INT main() {
+	fn_without_body();
+	RETURN 0;
+}

@@ -1,0 +1,13 @@
+FUNCTION VOID void_test() {
+	// some operation
+	INT foo = 10;
+	BOOL bar = false;
+	return;
+}
+
+FUNCTION VOID main() {
+	// We can't invoke a function outside. It has to be invoked inside a function,
+	// class method declaration or variable declaration
+	void_test();
+	RETURN 99;
+}
