@@ -9,7 +9,7 @@ How to Use Our Language!:
 java -jar prism.jar test1.prism
 
 To run on eclipse:
-    Once you import the zip file, run the PrismSourcefileParser.java found in app using a file prompt argument set in run configuration.
+    Once you import the zip file, run the PrismSourcefileInterpreter.java found in app using a file prompt argument set in run configuration.
     When you are prompted for a file choose any of the three given test files found in the tests folder.
 
 
