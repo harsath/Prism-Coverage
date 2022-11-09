@@ -1,7 +1,6 @@
 package prism;
 
 import antlr.PrismBaseVisitor;
-import antlr.PrismParser.ProgContext;
 import antlr.PrismParser.ProgramDeclContext;
 
 public class PrismProgramVisitor extends PrismBaseVisitor<Declaration> {

@@ -35,18 +35,16 @@ public class ExpressionExecutor {
                                         String param_name_in_fn_decl = fn_decl_params.get(i).getId();
                                         Expression expr_in_fn_call = executeExpression(globalIdentifiers, scopeIdentifiers, params.get(i));
                                         if (expr_in_fn_call instanceof IntegerAtomExpression) {
-                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, (IntegerAtomExpression) expr_in_fn_call);
+                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, new IntegerType(((IntegerAtomExpression) expr_in_fn_call).getValue()));
                                         } else if (expr_in_fn_call instanceof BooleanAtomExpression) {
-                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, (BooleanAtomExpression) expr_in_fn_call);
+                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, new BooleanType(((BooleanAtomExpression) expr_in_fn_call).getValue()));
                                         }
                                 }
                                 List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
                                 StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
                                 AtomType ret = statementExecutor.executeStatements();
                                 if (ret instanceof IntegerType) {
-                                        IntegerAtomExpression here= new IntegerAtomExpression(((IntegerType) ret).getValue());
-                                        System.out.println(here);
-                                        return here;
+                                        return new IntegerAtomExpression(((IntegerType) ret).getValue());
                                 } else if (ret instanceof BooleanType) {
                                         return new BooleanAtomExpression(((BooleanType) ret).getValue());
                                 } else if (ret instanceof VoidType) {
@@ -102,7 +100,6 @@ public class ExpressionExecutor {
                                 IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
                                 IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
                                 if (is_addition) {
-                                        System.out.println("HERE BRU: " + lhs_cast.getValue() + " : " + rhs_cast.getValue());
                                         return new IntegerAtomExpression((lhs_cast.getValue() + rhs_cast.getValue()));
                                 } else {
                                         return new IntegerAtomExpression((lhs_cast.getValue() - rhs_cast.getValue()));
@@ -174,7 +171,6 @@ public class ExpressionExecutor {
                         VariableAtomExpression expr = (VariableAtomExpression) expression;
                         return lookupIdentifier(globalIdentifiers, scopeIdentifiers, expr.getId());
                 } else if (expression instanceof IntegerAtomExpression) {
-                        System.out.println((IntegerAtomExpression) expression);
                         return (IntegerAtomExpression) expression;
                 } else if (expression instanceof BooleanAtomExpression) {
                         return (BooleanAtomExpression) expression;
@@ -187,8 +183,9 @@ public class ExpressionExecutor {
         }
 
         private Expression lookupIdentifier(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, String id) throws Exception {
-                if (globalIdentifiers.containsKey(id)) {
-                        AtomType atom_value = globalIdentifiers.get(id);
+                // Local scope is given high presidence when looking up variables
+                if (scopeIdentifiers.containsKey(id)) {
+                        AtomType atom_value = scopeIdentifiers.get(id);
                         if (atom_value instanceof IntegerType) {
                                 IntegerType atom_value_cast = (IntegerType) atom_value;
                                 return new IntegerAtomExpression(atom_value_cast.getValue());
@@ -198,8 +195,8 @@ public class ExpressionExecutor {
                         } else {
                                 throw new RuntimeException("Undefined type");
                         }
-                } else if (scopeIdentifiers.containsKey(id)) {
-                        AtomType atom_value = scopeIdentifiers.get(id);
+                } else if (globalIdentifiers.containsKey(id)) {
+                        AtomType atom_value = globalIdentifiers.get(id);
                         if (atom_value instanceof IntegerType) {
                                 IntegerType atom_value_cast = (IntegerType) atom_value;
                                 return new IntegerAtomExpression(atom_value_cast.getValue());
