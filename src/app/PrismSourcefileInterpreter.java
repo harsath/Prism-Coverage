@@ -10,7 +10,7 @@ import java.io.*;
 
 public class PrismSourcefileInterpreter {
         public static void main(String[] args) throws Exception {
-                String input_file = null;
+                String input_file = "";
                 if (args.length > 0) input_file = args[0];
                 InputStream is = System.in;
                 if (input_file != null) {
