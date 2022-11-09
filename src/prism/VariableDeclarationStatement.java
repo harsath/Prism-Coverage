@@ -1,8 +1,8 @@
 package prism;
 
 public class VariableDeclarationStatement extends VariableDeclaration implements Statement {
-        VariableDeclarationStatement(String id) {
-                super(id);
+        VariableDeclarationStatement(String id, Expression expression) {
+                super(id, expression);
         }
 
         @Override

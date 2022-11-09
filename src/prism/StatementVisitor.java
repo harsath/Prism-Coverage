@@ -31,6 +31,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         @Override
         public Statement visitVariableDeclStmt(VariableDeclStmtContext ctx) {
                 String var_id = ctx.getChild(0).getChild(1).getText();
+<<<<<<< HEAD
                 VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id);
                 // Variable declaration without initilization
                 if (ctx.getChild(0).getChildCount() == 3) {
@@ -41,6 +42,10 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
 <<<<<<< HEAD
                 var_decl_stmt.setExpression((Expression)expr);
 =======
+=======
+                Expression expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
+                VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id, expr);
+>>>>>>> 6f8ed012a12c979ca7b1a80df7c4a17e0122dc0b
                 var_decl_stmt.setExpression((Expression) expr);
 >>>>>>> 52cad218f0af1e8cdde33c395c1f3e1a7c9d50e6
 =======

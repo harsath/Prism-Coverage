@@ -8,7 +8,6 @@ package antlr;
 
 ID          :       [a-z][a-zA-Z0-9_]*;
 INT         :       '0' | '-'?[1-9][0-9]*;
-BOOL        :       'true' | 'false';
 FUNCTION    :       'FUNCTION';
 CLASS       :       'CLASS';
 IF          :       'IF';
@@ -33,7 +32,7 @@ SUB         :       '-';
 prog : (function_decl | variable_decl | class_decl)+ EOF                  #ProgramDecl
      ;
 
-variable_decl : type ID ('=' expr)? SEMICOLON                             #VariableDecl
+variable_decl : type ID '=' expr SEMICOLON                             #VariableDecl
               ;
 
 function_decl : FUNCTION type ID LPAREN param_list? RPAREN function_body   #FunctionDecl
@@ -86,11 +85,13 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | expr '<' expr               #LessthanExpr
      | expr '>=' expr              #GreaterthanEqExpr
      | expr '<=' expr              #LessthanEqExpr
+     | bool                        #BoolAtomExpr
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr
-     | BOOL                        #BoolAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
      ;
+
+bool        :       'true' | 'false';
 
 expr_list : expr (',' expr)*       #FunctionParamExpr // function argument list
           ;

@@ -13,3 +13,12 @@ FUNCTION INT or_test(BOOL val1, BOOL val2, INT val3, INT val4) {
 		RETURN val4;
 	}
 }
+
+FUNCTION INT main() {
+	INT ret1 = and_test(false, true, 10, 20);
+	INT ret2 = or_test(true, false, 30, 40);
+	//			         true           true                     20           
+	INT return_value = and_test(((ret1 == 20) && !(ret2 == 40)), true, or_test(false, false, 10, 20), 30);
+	// Should be 20
+	RETURN return_value;
+}
