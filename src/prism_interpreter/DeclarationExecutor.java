@@ -19,7 +19,8 @@ public class DeclarationExecutor {
                         throw new RuntimeException("Source file does not contain main() function");
                 }
                 List<Statement> main_stmt = functionDeclarationSymbolTable.get("main").getFunctionBody().getStatements();
-                StatementExecutor stmt_executor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, globalIdentifiers, main_stmt);
+                Map<String, AtomType> scopeIdentifiers = new HashMap<>();
+                StatementExecutor stmt_executor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, scopeIdentifiers, main_stmt);
                 return stmt_executor.executeStatements();
         }
 
@@ -44,7 +45,8 @@ public class DeclarationExecutor {
                                 VariableDeclaration fn_decl = (VariableDeclaration) declaration;
                                 // Since on global scope, we don't have any other scope identifiers other than global ones
                                 // so we're just passing `globalIdentifiers` for both parameters.
-                                Expression expr = expr_executor.executeExpression(globalIdentifiers, globalIdentifiers, fn_decl.getExpression());
+                                Map<String, AtomType> scopeIdentifiers = new HashMap<>();
+                                Expression expr = expr_executor.executeExpression(globalIdentifiers, scopeIdentifiers, fn_decl.getExpression());
                                 if (expr instanceof IntegerAtomExpression) {
                                         IntegerType int_type = new IntegerType(((IntegerAtomExpression) expr).getValue());
                                         globalIdentifiers.put(fn_decl.getId(), int_type);
