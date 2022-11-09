@@ -1,0 +1,24 @@
+FUNCTION INT boo(INT x, INT y, BOOL val) {
+	INT result = 5;
+	IF (val) {
+		result = x*y;
+	} ELSE {
+			result = x/y;
+	}
+	RETURN result;
+}
+
+FUNCTION INT test_boo(BOOL test) {
+	INT c = 2;
+	INT a = 8;
+	INT b = 20;
+	a = 4;
+	b = 3;
+	c = boo(a, b, true);
+	RETURN c;
+}
+
+FUNCTION INT main() {
+	INT a = test_boo(false);
+	RETURN a;
+}
