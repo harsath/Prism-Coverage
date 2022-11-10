@@ -37,7 +37,7 @@ public class StatementExecutor {
                                 } else if (expr instanceof BooleanAtomExpression) {
                                         scopeIdentifiers.put(var_decl_stmt.getId(), new BooleanType(((BooleanAtomExpression) expr).getValue()));
                                 } else {
-                                        throw new RuntimeException("Unsupported type");
+                                        throw new RuntimeException("Unsupported type in variable declaration");
                                 }
                         } else if (statement instanceof AssignmentStatement) {
                                 AssignmentStatement assign_stmt = (AssignmentStatement) statement;
@@ -51,7 +51,7 @@ public class StatementExecutor {
                                 } else if (rhs instanceof BooleanAtomExpression) {
                                         setIdentifier(lhs.getId(), new BooleanType(((BooleanAtomExpression) rhs).getValue()));
                                 } else {
-                                        throw new RuntimeException("Undefined type");
+                                        throw new RuntimeException("Undefined type variable assignment");
                                 }
                         } else if (statement instanceof ReturnStatement) {
                                 ReturnStatement return_stmt = (ReturnStatement) statement;
@@ -83,7 +83,7 @@ public class StatementExecutor {
                                         StatementExecutor stmt_exec = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, scopeIdentifiers, block_stmt.getStatements());
                                         return_value = stmt_exec.executeStatements();
                                 } else {
-                                        throw new RuntimeException("Undefined type");
+                                        throw new RuntimeException("Undefined type in if else block");
                                 }
                         } else if (statement instanceof BlockStatement) {
                                 BlockStatement block_stmt = (BlockStatement) statement;
@@ -115,7 +115,7 @@ public class StatementExecutor {
                 } else if (expression instanceof BooleanAtomExpression) {
                         return new BooleanType(((BooleanAtomExpression) expression).getValue());
                 } else {
-                        throw new RuntimeException("Undefined type");
+                        throw new RuntimeException("Undefined type in get atom from expession");
                 }
         }
 }

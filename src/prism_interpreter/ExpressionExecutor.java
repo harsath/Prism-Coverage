@@ -43,17 +43,13 @@ public class ExpressionExecutor {
                                 List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
                                 StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
                                 AtomType ret = statementExecutor.executeStatements();
-                                if (ret instanceof IntegerType) {
-                                        return new IntegerAtomExpression(((IntegerType) ret).getValue());
-                                } else if (ret instanceof BooleanType) {
-                                        return new BooleanAtomExpression(((BooleanType) ret).getValue());
-                                } else if (ret instanceof VoidType) {
-                                        return new VoidAtomExpression();
-                                } else {
-                                        throw new RuntimeException("Unsupported type");
-                                }
+                                return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
                         } else {
-                                return new VoidAtomExpression();
+                                String function_name = fn_call_expr.getFunctionName();
+                                List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
+                                StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
+                                AtomType ret = statementExecutor.executeStatements();
+                                return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
                         }
                 } else if (expression instanceof UnaryMinusExpression) {
                         UnaryMinusExpression expr = (UnaryMinusExpression) expression;
@@ -186,26 +182,10 @@ public class ExpressionExecutor {
                 // Local scope is given high presidence when looking up variables
                 if (scopeIdentifiers.containsKey(id)) {
                         AtomType atom_value = scopeIdentifiers.get(id);
-                        if (atom_value instanceof IntegerType) {
-                                IntegerType atom_value_cast = (IntegerType) atom_value;
-                                return new IntegerAtomExpression(atom_value_cast.getValue());
-                        } else if (atom_value instanceof BooleanType) {
-                                BooleanType atom_value_cast = (BooleanType) atom_value;
-                                return new BooleanAtomExpression(atom_value_cast.getValue());
-                        } else {
-                                throw new RuntimeException("Undefined type");
-                        }
+                        return getAtomExpressionFromAtomType(atom_value, "Undefined type on scope variable reference");
                 } else if (globalIdentifiers.containsKey(id)) {
                         AtomType atom_value = globalIdentifiers.get(id);
-                        if (atom_value instanceof IntegerType) {
-                                IntegerType atom_value_cast = (IntegerType) atom_value;
-                                return new IntegerAtomExpression(atom_value_cast.getValue());
-                        } else if (atom_value instanceof BooleanType) {
-                                BooleanType atom_value_cast = (BooleanType) atom_value;
-                                return new BooleanAtomExpression(atom_value_cast.getValue());
-                        } else {
-                                throw new RuntimeException("Undefined type");
-                        }
+                        return getAtomExpressionFromAtomType(atom_value, "Undefined type on global variable reference");
                 } else {
                         throw new RuntimeException("Undefined variable");
                 }
@@ -226,6 +206,16 @@ public class ExpressionExecutor {
                         return;
                 } else {
                         throw new RuntimeException("Logical expressions can be executed between two Bools");
+                }
+        }
+
+        private Expression getAtomExpressionFromAtomType(AtomType atom_type, String exception_str) {
+                if (atom_type instanceof IntegerType) {
+                        return new IntegerAtomExpression(((IntegerType) atom_type).getValue());
+                } else if (atom_type instanceof BooleanType) {
+                        return new BooleanAtomExpression(((BooleanType) atom_type).getValue());
+                } else {
+                        throw new RuntimeException(exception_str);
                 }
         }
 
