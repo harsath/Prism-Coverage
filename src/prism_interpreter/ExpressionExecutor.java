@@ -18,151 +18,35 @@ public class ExpressionExecutor {
         // the global variable so we make sure we get the latest version everytime we execute an expression.
         public Expression executeExpression(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Expression expression) throws Exception {
                 if (expression instanceof FunctionCallExpression){
-                        // Initialize the call stack with parameter values
-                        FunctionCallExpression fn_call_expr = (FunctionCallExpression) expression;
-                        if (!functionDeclarationSymbolTable.containsKey(fn_call_expr.getFunctionName())) {
-                                throw new RuntimeException("Call to undefined function");
-                        }
-                        Map<String, AtomType> fn_call_scope_identifiers = new HashMap<>();
-                        if (fn_call_expr.getFunctionParamList() != null) {
-                                String function_name = fn_call_expr.getFunctionName();
-                                List<ParameterDeclaration> fn_decl_params = functionDeclarationSymbolTable.get(function_name).getFunctionParamDecl().getParamList();
-                                List<Expression> params = fn_call_expr.getFunctionParamList().getParamList();
-                                if (params.size() != fn_decl_params.size()) {
-                                        throw new RuntimeException("Invalid number of parameters on function call");
-                                }
-                                for (int i = 0; i < params.size(); i++) {
-                                        String param_name_in_fn_decl = fn_decl_params.get(i).getId();
-                                        Expression expr_in_fn_call = executeExpression(globalIdentifiers, scopeIdentifiers, params.get(i));
-                                        if (expr_in_fn_call instanceof IntegerAtomExpression) {
-                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, new IntegerType(((IntegerAtomExpression) expr_in_fn_call).getValue()));
-                                        } else if (expr_in_fn_call instanceof BooleanAtomExpression) {
-                                                fn_call_scope_identifiers.put(param_name_in_fn_decl, new BooleanType(((BooleanAtomExpression) expr_in_fn_call).getValue()));
-                                        }
-                                }
-                                List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                                StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                                AtomType ret = statementExecutor.executeStatements();
-                                return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
-                        } else {
-                                String function_name = fn_call_expr.getFunctionName();
-                                List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                                StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                                AtomType ret = statementExecutor.executeStatements();
-                                return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
-                        }
+                        return functionCallExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof UnaryMinusExpression) {
-                        UnaryMinusExpression expr = (UnaryMinusExpression) expression;
-                        Expression expr_val = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getExpression());
-                        if (expr_val instanceof BooleanAtomExpression) {
-                                BooleanAtomExpression expr_val_cast = (BooleanAtomExpression) expr_val;
-                                return new BooleanAtomExpression((!expr_val_cast.getValue()));
-                        } else {
-                                throw new RuntimeException("Unary not can only be used with Bool type");
-                        }
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.UNARYMINUS, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof NotExpression) {
-                        NotExpression expr = (NotExpression) expression;
-                        Expression expr_val = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getExpression());
-                        if (expr_val instanceof BooleanAtomExpression) {
-                                BooleanAtomExpression expr_val_cast = (BooleanAtomExpression) expr_val;
-                                return new BooleanAtomExpression((!expr_val_cast.getValue()));
-                        } else {
-                                throw new RuntimeException("Unary not can only be used with Bool type");
-                        }
+                        return logicalExpressionTypeHandler(expression, LogicalExpressionType.NOT, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof MultiplicationDivisionExpression) {
-                        MultiplicationDivisionExpression expr = (MultiplicationDivisionExpression) expression;
-                        boolean is_multiplication = expr.isMultiplication();
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        if (lhs instanceof IntegerAtomExpression) {
-                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                                if (is_multiplication) {
-                                        return new IntegerAtomExpression((lhs_cast.getValue() * rhs_cast.getValue()));
-                                } else {
-                                        return new IntegerAtomExpression((lhs_cast.getValue() / rhs_cast.getValue()));
-                                }
-                        } else {
-                                throw new RuntimeException("Unsupported type in MultiplicationDivisionExpression");
+                        if (((MultiplicationDivisionExpression) expression).isMultiplication()) {
+                                return relationalExpressionTypeHandler(expression, RelationalExpressionType.MULTIPLICATION, globalIdentifiers, scopeIdentifiers);
                         }
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.DIVISION, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof AdditionSubtractionExpression) {
-                        AdditionSubtractionExpression expr = (AdditionSubtractionExpression) expression;
-                        boolean is_addition = expr.isAddition();
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        if (lhs instanceof IntegerAtomExpression) {
-                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                                if (is_addition) {
-                                        return new IntegerAtomExpression((lhs_cast.getValue() + rhs_cast.getValue()));
-                                } else {
-                                        return new IntegerAtomExpression((lhs_cast.getValue() - rhs_cast.getValue()));
-                                }
-                        } else {
-                                throw new RuntimeException("Unsupported type in AdditionSubtractionExpression");
+                        if (((AdditionSubtractionExpression) expression).isAddition()) {
+                                return relationalExpressionTypeHandler(expression, RelationalExpressionType.ADDITION, globalIdentifiers, scopeIdentifiers);
                         }
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.SUBTRACTION, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof EqualityExpression) {
-                        EqualityExpression expr = (EqualityExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        if (lhs instanceof IntegerAtomExpression) {
-                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                                return new BooleanAtomExpression((lhs_cast.getValue() == rhs_cast.getValue()));
-                        } else {
-                                throw new RuntimeException("Unsupported type in EqualityExpression");
-                        }
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.EQUALITY, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof OrExpression) {
-                        OrExpression expr = (OrExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckLogicalExpression(lhs, rhs);
-                        BooleanAtomExpression lhs_cast = (BooleanAtomExpression) lhs;
-                        BooleanAtomExpression rhs_cast = (BooleanAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() || rhs_cast.getValue()));
+                        return logicalExpressionTypeHandler(expression, LogicalExpressionType.OR, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof AndExpression) {
-                        AndExpression expr = (AndExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckLogicalExpression(lhs, rhs);
-                        BooleanAtomExpression lhs_cast = (BooleanAtomExpression) lhs;
-                        BooleanAtomExpression rhs_cast = (BooleanAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() && rhs_cast.getValue()));
+                        return logicalExpressionTypeHandler(expression, LogicalExpressionType.AND, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof GreaterthanExpression) {
-                        GreaterthanExpression expr = (GreaterthanExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() > rhs_cast.getValue()));
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHAN, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof LessthanExpression) {
-                        LessthanExpression expr = (LessthanExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() < rhs_cast.getValue()));
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHAN, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof GreaterthanEqExpression) {
-                        GreaterthanEqExpression expr = (GreaterthanEqExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() >= rhs_cast.getValue()));
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHANEQ, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof LessthanEqExpression) {
-                        LessthanEqExpression expr = (LessthanEqExpression) expression;
-                        Expression lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getLeft());
-                        Expression rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr.getRight());
-                        typeCheckRelationalExpression(lhs, rhs);
-                        IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-                        return new BooleanAtomExpression((lhs_cast.getValue() <= rhs_cast.getValue()));
+                        return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHANEQ, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof VariableAtomExpression) {
                         VariableAtomExpression expr = (VariableAtomExpression) expression;
                         return lookupIdentifier(globalIdentifiers, scopeIdentifiers, expr.getId());
@@ -217,6 +101,196 @@ public class ExpressionExecutor {
                 } else {
                         throw new RuntimeException(exception_str);
                 }
+        }
+
+        private Expression functionCallExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
+                // Initialize the call stack with parameter values
+                FunctionCallExpression fn_call_expr = (FunctionCallExpression) expr;
+                if (!functionDeclarationSymbolTable.containsKey(fn_call_expr.getFunctionName())) {
+                        throw new RuntimeException("Call to undefined function");
+                }
+                Map<String, AtomType> fn_call_scope_identifiers = new HashMap<>();
+                if (fn_call_expr.getFunctionParamList() != null) {
+                        String function_name = fn_call_expr.getFunctionName();
+                        List<ParameterDeclaration> fn_decl_params = functionDeclarationSymbolTable.get(function_name).getFunctionParamDecl().getParamList();
+                        List<Expression> params = fn_call_expr.getFunctionParamList().getParamList();
+                        if (params.size() != fn_decl_params.size()) {
+                                throw new RuntimeException("Invalid number of parameters on function call");
+                        }
+                        for (int i = 0; i < params.size(); i++) {
+                                String param_name_in_fn_decl = fn_decl_params.get(i).getId();
+                                Expression expr_in_fn_call = executeExpression(globalIdentifiers, scopeIdentifiers, params.get(i));
+                                if (expr_in_fn_call instanceof IntegerAtomExpression) {
+                                        fn_call_scope_identifiers.put(param_name_in_fn_decl, new IntegerType(((IntegerAtomExpression) expr_in_fn_call).getValue()));
+                                } else if (expr_in_fn_call instanceof BooleanAtomExpression) {
+                                        fn_call_scope_identifiers.put(param_name_in_fn_decl, new BooleanType(((BooleanAtomExpression) expr_in_fn_call).getValue()));
+                                }
+                        }
+                        List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
+                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
+                        AtomType ret = statementExecutor.executeStatements();
+                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                } else {
+                        String function_name = fn_call_expr.getFunctionName();
+                        List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
+                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
+                        AtomType ret = statementExecutor.executeStatements();
+                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                }
+        }
+
+        private Expression relationalExpressionTypeHandler(Expression expr, RelationalExpressionType type, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
+                Expression lhs, rhs;
+                switch (type) {
+                        case MULTIPLICATION: {
+                                MultiplicationDivisionExpression expr_cast = (MultiplicationDivisionExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression((lhs_cast.getValue() * rhs_cast.getValue()));
+                        }
+                        case DIVISION: {
+                                MultiplicationDivisionExpression expr_cast = (MultiplicationDivisionExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression((lhs_cast.getValue() / rhs_cast.getValue()));
+                        }
+                        case ADDITION: {
+                                AdditionSubtractionExpression expr_cast = (AdditionSubtractionExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression((lhs_cast.getValue() + rhs_cast.getValue()));
+                        }
+                        case SUBTRACTION: {
+                                AdditionSubtractionExpression expr_cast = (AdditionSubtractionExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression((lhs_cast.getValue() - rhs_cast.getValue()));
+                        }
+                        case EQUALITY: {
+                                EqualityExpression expr_cast = (EqualityExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() == rhs_cast.getValue()));
+                        }
+                        case GREATERTHAN: {
+                                GreaterthanExpression expr_cast = (GreaterthanExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() > rhs_cast.getValue()));
+                        }
+                        case LESSTHAN: {
+                                LessthanExpression expr_cast = (LessthanExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() < rhs_cast.getValue()));
+                        }
+                        case GREATERTHANEQ: {
+                                GreaterthanEqExpression expr_cast = (GreaterthanEqExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() >= rhs_cast.getValue()));
+                        }
+                        case LESSTHANEQ: {
+                                LessthanEqExpression expr_cast = (LessthanEqExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckRelationalExpression(lhs, rhs);
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() <= rhs_cast.getValue()));
+                        }
+                        case UNARYMINUS: {
+                                UnaryMinusExpression expr_cast = (UnaryMinusExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpression());
+                                if (!(lhs instanceof IntegerAtomExpression)) {
+                                        throw new RuntimeException("Unary relational expressions can be executed in Int");
+                                }
+                                IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                return new IntegerAtomExpression((-lhs_cast.getValue()));
+
+                        }
+                        default:
+                                throw new Exception("Invalid relational expression");
+                }
+        }
+
+        private Expression logicalExpressionTypeHandler(Expression expr, LogicalExpressionType type, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
+                Expression lhs, rhs;
+                switch(type) {
+                        case OR: {
+                                OrExpression expr_cast = (OrExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckLogicalExpression(lhs, rhs);
+                                BooleanAtomExpression lhs_cast = (BooleanAtomExpression) lhs;
+                                BooleanAtomExpression rhs_cast = (BooleanAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() || rhs_cast.getValue()));
+                        }
+                        case AND: {
+                                AndExpression expr_cast = (AndExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+                                rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                typeCheckLogicalExpression(lhs, rhs);
+                                BooleanAtomExpression lhs_cast = (BooleanAtomExpression) lhs;
+                                BooleanAtomExpression rhs_cast = (BooleanAtomExpression) rhs;
+                                return new BooleanAtomExpression((lhs_cast.getValue() && rhs_cast.getValue()));
+                        }
+                        case NOT: {
+                                NotExpression expr_cast = (NotExpression) expr;
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpression());
+                                if (!(lhs instanceof BooleanAtomExpression)) {
+                                        throw new RuntimeException("Logical expressions can be executed between two Bools");
+                                }
+                                BooleanAtomExpression lhs_cast = (BooleanAtomExpression) lhs;
+                                return new BooleanAtomExpression((!lhs_cast.getValue()));
+                        }
+                        default:
+                                throw new Exception("Invalid relational expression");
+
+                }
+        }
+
+        private enum RelationalExpressionType {
+                MULTIPLICATION,
+                DIVISION,
+                ADDITION,
+                SUBTRACTION,
+                EQUALITY,
+                GREATERTHAN,
+                LESSTHAN,
+                GREATERTHANEQ,
+                LESSTHANEQ,
+                UNARYMINUS
+        };
+
+        private enum LogicalExpressionType {
+                OR,
+                AND,
+                NOT
         }
 
 }
