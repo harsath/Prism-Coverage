@@ -29,10 +29,10 @@ SUB         :       '-';
 
 /* Parser elements */
 
-prog : (function_decl | variable_decl | class_decl)+ EOF                  #ProgramDecl
+prog : (function_decl | variable_decl | class_decl)+ EOF                   #ProgramDecl
      ;
 
-variable_decl : type ID '=' expr SEMICOLON                             #VariableDecl
+variable_decl : type ID '=' expr SEMICOLON                                 #VariableDecl
               ;
 
 function_decl : FUNCTION type ID LPAREN param_list? RPAREN function_body   #FunctionDecl
