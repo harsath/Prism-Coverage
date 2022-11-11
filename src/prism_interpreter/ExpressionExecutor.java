@@ -241,31 +241,31 @@ public class ExpressionExecutor {
 
                         }
                         case MAX: {
-	                        	MaxFunctionCallExpression expr_cast = (MaxFunctionCallExpression) expr;
-	                        	lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
-	                        	rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
-	                        	typeCheckRelationalExpression(lhs, rhs);
-	                        	IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				MaxFunctionCallExpression expr_cast = (MaxFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
                                 IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
                                 return new IntegerAtomExpression(Math.max(lhs_cast.getValue(),  rhs_cast.getValue()));   	
                         }
                         case MIN: {
-		                    	MinFunctionCallExpression expr_cast = (MinFunctionCallExpression) expr;
-		                    	lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
-		                    	rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
-		                    	typeCheckRelationalExpression(lhs, rhs);
-		                    	IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-		                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-		                        return new IntegerAtomExpression(Math.min(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+				MinFunctionCallExpression expr_cast = (MinFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression(Math.min(lhs_cast.getValue(),  rhs_cast.getValue()));   	
                         }
                         case POW: {
-		                    	PowFunctionCallExpression expr_cast = (PowFunctionCallExpression) expr;
-		                    	lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
-		                    	rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
-		                    	typeCheckRelationalExpression(lhs, rhs);
-		                    	IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
-		                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
-		                        return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+				PowFunctionCallExpression expr_cast = (PowFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
                         }
                         default:
                                 throw new Exception("Invalid relational expression");
