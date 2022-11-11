@@ -141,6 +141,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAndExpr(PrismParser.AndExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code BuiltinFunctionCallExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code VariableAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -245,6 +252,27 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MaxFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MinFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PowFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PrismParser#bool}.
 	 * @param ctx the parse tree

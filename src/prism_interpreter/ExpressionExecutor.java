@@ -57,6 +57,13 @@ public class ExpressionExecutor {
                 } else if (expression instanceof BracketExprExpression) {
                         BracketExprExpression expr = (BracketExprExpression) expression;
                         return executeExpression(globalIdentifiers, scopeIdentifiers, expr.getExpression());
+                } else if (expression instanceof MaxFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MAX, globalIdentifiers, scopeIdentifiers);
+                } else if (expression instanceof MinFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MIN, globalIdentifiers, scopeIdentifiers);
+                	
+                } else if (expression instanceof PowFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers, scopeIdentifiers);
                 } else {
                         throw new RuntimeException("Undefined Expression type");
                 }
@@ -233,6 +240,33 @@ public class ExpressionExecutor {
                                 return new IntegerAtomExpression((-lhs_cast.getValue()));
 
                         }
+                        case MAX: {
+				MaxFunctionCallExpression expr_cast = (MaxFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression(Math.max(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
+                        case MIN: {
+				MinFunctionCallExpression expr_cast = (MinFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression(Math.min(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
+                        case POW: {
+				PowFunctionCallExpression expr_cast = (PowFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
                         default:
                                 throw new Exception("Invalid relational expression");
                 }
@@ -284,7 +318,10 @@ public class ExpressionExecutor {
                 LESSTHAN,
                 GREATERTHANEQ,
                 LESSTHANEQ,
-                UNARYMINUS
+                UNARYMINUS,
+                MAX,
+                MIN,
+                POW
         };
 
         private enum LogicalExpressionType {

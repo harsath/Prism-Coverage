@@ -247,6 +247,18 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableAtomExpr(PrismParser.VariableAtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -422,6 +434,42 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

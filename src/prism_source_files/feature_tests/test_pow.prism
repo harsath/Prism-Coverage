@@ -1,0 +1,9 @@
+FUNCTION INT test_pow(INT val1, INT val2) {
+       INT x = POW(val1, val2);
+       RETURN x;
+}
+
+FUNCTION INT main() {
+	INT result = test_pow(2, 2); //2 to the power of 2, 2^2
+	RETURN result;
+}
