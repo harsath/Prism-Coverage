@@ -31,6 +31,32 @@ public class InterpreterExprTest {
 			TestHelpers.assertTrue((return_value_int.getValue() == -10), "test_unary_minus_expr failed. Return value: " + return_value_int.getValue());
                 }
         }
+	public void test_max() throws Exception {
+        String input_file = test_root + "test_max.prism";
+        AtomType return_value = interpretGetAtomType(input_file);
+        if (return_value instanceof IntegerType) {
+                IntegerType return_value_int = (IntegerType) return_value;
+                TestHelpers.assertTrue((return_value_int.getValue() == 15), "test_max failed. Return value: " + return_value_int.getValue());
+        }
+	}
+	
+	public void test_min() throws Exception {
+        String input_file = test_root + "test_min.prism";
+        AtomType return_value = interpretGetAtomType(input_file);
+        if (return_value instanceof IntegerType) {
+                IntegerType return_value_int = (IntegerType) return_value;
+                TestHelpers.assertTrue((return_value_int.getValue() == -6), "test_min failed. Return value: " + return_value_int.getValue());
+        }
+	}
+	
+	public void test_pow() throws Exception {
+        String input_file = test_root + "test_pow.prism";
+        AtomType return_value = interpretGetAtomType(input_file);
+        if (return_value instanceof IntegerType) {
+                IntegerType return_value_int = (IntegerType) return_value;
+                TestHelpers.assertTrue((return_value_int.getValue() == 4), "test_pow failed. Return value: " + return_value_int.getValue());
+        }
+	}
 
 	public AtomType interpretGetAtomType(String file_path) throws Exception {
                 InputStream is = new FileInputStream(file_path);
