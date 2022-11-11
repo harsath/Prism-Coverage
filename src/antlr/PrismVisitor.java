@@ -239,6 +239,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBracketExpr(PrismParser.BracketExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPow(PrismParser.PowContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree

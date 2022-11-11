@@ -396,6 +396,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitBracketExpr(PrismParser.BracketExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPow(PrismParser.PowContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPow(PrismParser.PowContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree

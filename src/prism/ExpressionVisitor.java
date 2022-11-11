@@ -150,5 +150,12 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		Expression right = visit(ctx.getChild(4));		
 		return new Min(left,right);
 	}
+
+	@Override
+	public Expression visitPow(PowContext ctx) {
+		Expression left = visit(ctx.getChild(2));
+		Expression right = visit(ctx.getChild(4));		
+		return new Pow(left,right);
+	}
 	
 }

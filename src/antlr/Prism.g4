@@ -28,6 +28,7 @@ ADD         :       '+';
 SUB         :       '-';
 MAX			:		'MAX';
 MIN			:		'MIN';
+POW			: 		'POW';
 
 /* Parser elements */
 
@@ -93,6 +94,7 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | LPAREN expr RPAREN          #BracketExpr
      | MAX LPAREN expr ',' expr RPAREN #Max
      | MIN LPAREN expr ',' expr RPAREN #Min
+     | POW LPAREN expr ',' expr RPAREN #Pow
      ;
 
 bool        :       'true' | 'false';

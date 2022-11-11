@@ -415,6 +415,18 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPow(PrismParser.PowContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPow(PrismParser.PowContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNotExpr(PrismParser.NotExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

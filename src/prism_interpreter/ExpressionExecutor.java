@@ -61,6 +61,9 @@ public class ExpressionExecutor {
                 	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MAX, globalIdentifiers, scopeIdentifiers);
                 } else if (expression instanceof Min) {
                 	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MIN, globalIdentifiers, scopeIdentifiers);
+                	
+                } else if (expression instanceof Pow) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers, scopeIdentifiers);
                 } else {
                         throw new RuntimeException("Undefined Expression type");
                 }
@@ -254,7 +257,16 @@ public class ExpressionExecutor {
 		                    	IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
 		                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
 		                        return new IntegerAtomExpression(Math.min(lhs_cast.getValue(),  rhs_cast.getValue()));   	
-                    }
+                        }
+                        case POW: {
+	                    	Pow expr_cast = (Pow) expr;
+	                    	lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+	                    	rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+	                    	typeCheckRelationalExpression(lhs, rhs);
+	                    	IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+	                        IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+	                        return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
                         default:
                                 throw new Exception("Invalid relational expression");
                 }
@@ -308,7 +320,8 @@ public class ExpressionExecutor {
                 LESSTHANEQ,
                 UNARYMINUS,
                 MAX,
-                MIN
+                MIN,
+                POW
         };
 
         private enum LogicalExpressionType {
