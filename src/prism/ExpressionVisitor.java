@@ -138,24 +138,25 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitMax(MaxContext ctx) {
+	public Expression visitMaxFunctionCallExpression(MaxFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
 		Expression right = visit(ctx.getChild(4));		
-		return new Max(left,right);
+		return new MaxFunctionCallExpression(left,right);
 	}
 
 	@Override
-	public Expression visitMin(MinContext ctx) {
+	public Expression visitMinFunctionCallExpression(MinFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
 		Expression right = visit(ctx.getChild(4));		
-		return new Min(left,right);
+		return new MinFunctionCallExpression(left,right);
 	}
 
 	@Override
-	public Expression visitPow(PowContext ctx) {
+	public Expression visitPowFunctionCallExpression(PowFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
 		Expression right = visit(ctx.getChild(4));		
-		return new Pow(left,right);
+		return new PowFunctionCallExpression(left,right);
+		
 	}
 	
 }

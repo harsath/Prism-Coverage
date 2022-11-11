@@ -1,10 +1,10 @@
 package prism;
 
-public class Pow implements Expression {
+public class MaxFunctionCallExpression implements Expression {
 	private Expression left;
 	private Expression right;
 	
-	public Pow(Expression left, Expression right) {
+	public MaxFunctionCallExpression(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
 	}
@@ -27,6 +27,11 @@ public class Pow implements Expression {
 
 	@Override
 	public String toString() {
-		return "POW(" + left + ", " + right + ")";
+		return "MAX(" + left + ", " + right + ")";
 	}
+	
+	
+
+	
+	
 }

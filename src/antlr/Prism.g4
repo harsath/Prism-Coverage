@@ -77,6 +77,7 @@ stmt : stmt_block                                       #BlockStmt
      ;
 
 expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
+	 | builtin_function_call_expr  #BuiltinFunctionCallExpr
      | '-' expr                    #UnaryMinusExpr
      | '!' expr                    #NotExpr
      | expr op=('*' | '/') expr    #MulDivExpr
@@ -92,10 +93,12 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
-     | MAX LPAREN expr ',' expr RPAREN #Max
-     | MIN LPAREN expr ',' expr RPAREN #Min
-     | POW LPAREN expr ',' expr RPAREN #Pow
      ;
+     
+builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression
+						   | MIN LPAREN expr ',' expr RPAREN #MinFunctionCallExpression
+						   | POW LPAREN expr ',' expr RPAREN #PowFunctionCallExpression
+						   ;
 
 bool        :       'true' | 'false';
 

@@ -247,6 +247,18 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableAtomExpr(PrismParser.VariableAtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -254,18 +266,6 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariableAtomExpr(PrismParser.VariableAtomExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMax(PrismParser.MaxContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMax(PrismParser.MaxContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -343,18 +343,6 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMin(PrismParser.MinContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMin(PrismParser.MinContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterMulDivExpr(PrismParser.MulDivExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -415,18 +403,6 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPow(PrismParser.PowContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPow(PrismParser.PowContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNotExpr(PrismParser.NotExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -458,6 +434,42 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

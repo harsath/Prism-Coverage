@@ -228,6 +228,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitAndExpr(PrismParser.AndExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code BuiltinFunctionCallExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BuiltinFunctionCallExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code VariableAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -239,18 +251,6 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariableAtomExpr(PrismParser.VariableAtomExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Max}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMax(PrismParser.MaxContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Max}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMax(PrismParser.MaxContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code LessthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -324,18 +324,6 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitFunctionCallExpr(PrismParser.FunctionCallExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Min}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMin(PrismParser.MinContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Min}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMin(PrismParser.MinContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code MulDivExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -396,18 +384,6 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitBracketExpr(PrismParser.BracketExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Pow}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterPow(PrismParser.PowContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Pow}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitPow(PrismParser.PowContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -443,6 +419,42 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MaxFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MaxFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MinFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MinFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PowFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PowFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PrismParser#bool}.
 	 * @param ctx the parse tree

@@ -1,10 +1,10 @@
 package prism;
 
-public class Min implements Expression{
+public class MinFunctionCallExpression implements Expression{
 	private Expression left;
 	private Expression right;
 	
-	public Min(Expression left, Expression right) {
+	public MinFunctionCallExpression(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
 	}
