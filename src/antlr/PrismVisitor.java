@@ -148,6 +148,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableAtomExpr(PrismParser.VariableAtomExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Max}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMax(PrismParser.MaxContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code LessthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -189,6 +196,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionCallExpr(PrismParser.FunctionCallExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Min}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMin(PrismParser.MinContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MulDivExpr}
 	 * labeled alternative in {@link PrismParser#expr}.

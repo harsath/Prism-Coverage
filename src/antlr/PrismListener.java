@@ -240,6 +240,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitVariableAtomExpr(PrismParser.VariableAtomExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Max}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMax(PrismParser.MaxContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Max}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMax(PrismParser.MaxContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code LessthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -311,6 +323,18 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionCallExpr(PrismParser.FunctionCallExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Min}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMin(PrismParser.MinContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Min}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMin(PrismParser.MinContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MulDivExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
