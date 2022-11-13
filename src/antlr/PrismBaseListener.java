@@ -175,6 +175,30 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterWhileStmt(PrismParser.WhileStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileStmt(PrismParser.WhileStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForStmt(PrismParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStmt(PrismParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableDeclStmt(PrismParser.VariableDeclStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -230,6 +254,78 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprStmt(PrismParser.ExprStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVariableAssignmentStmt(PrismParser.VariableAssignmentStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariableAssignmentStmt(PrismParser.VariableAssignmentStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhileLoopStmt(PrismParser.WhileLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileLoopStmt(PrismParser.WhileLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForLoopStmt(PrismParser.ForLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForLoopStmt(PrismParser.ForLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopInitBlockStmt(PrismParser.LoopInitBlockStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopInitBlockStmt(PrismParser.LoopInitBlockStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopConditionStmt(PrismParser.LoopConditionStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopConditionStmt(PrismParser.LoopConditionStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

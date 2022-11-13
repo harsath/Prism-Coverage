@@ -2,7 +2,7 @@ package tests;
 
 import antlr.*;
 import prism.*;
-import prism_interpreter.PrismInterpreter;
+import prism_interpreter.*;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;

@@ -20,8 +20,9 @@ public class DeclarationExecutor {
                 }
                 List<Statement> main_stmt = functionDeclarationSymbolTable.get("main").getFunctionBody().getStatements();
                 Map<String, AtomType> scopeIdentifiers = new HashMap<>();
-                StatementExecutor stmt_executor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, scopeIdentifiers, main_stmt);
-                return stmt_executor.executeStatements();
+                StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
+                Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers, main_stmt);
+                return ret.a;
         }
 
         private void populateFunctionSymbolTable() {

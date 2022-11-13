@@ -136,15 +136,15 @@ public class ExpressionExecutor {
                                 }
                         }
                         List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                        AtomType ret = statementExecutor.executeStatements();
-                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                        StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable);
+                        Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers, fn_call_scope_identifiers, block_stmt);
+                        return getAtomExpressionFromAtomType(ret.a, "Unsupported type in function call execution");
                 } else {
                         String function_name = fn_call_expr.getFunctionName();
                         List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                        AtomType ret = statementExecutor.executeStatements();
-                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                        StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable);
+                        Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers, fn_call_scope_identifiers, block_stmt);
+                        return getAtomExpressionFromAtomType(ret.a, "Unsupported type in function call execution");
                 }
         }
 
@@ -189,7 +189,7 @@ public class ExpressionExecutor {
                         }
                         case EQUALITY: {
                                 EqualityExpression expr_cast = (EqualityExpression) expr;
-                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
                                 rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
                                 typeCheckRelationalExpression(lhs, rhs);
                                 IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
