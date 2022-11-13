@@ -26,6 +26,9 @@ MUL         :       '*';
 DIV         :       '/';
 ADD         :       '+';
 SUB         :       '-';
+MAX			:		'MAX';
+MIN			:		'MIN';
+POW			: 		'POW';
 
 /* Parser elements */
 
@@ -53,7 +56,7 @@ attributes_decl : variable_decl+
 methods_decl : function_decl+
              ;
 
-type : 'INT' | 'BOOL' | 'VOID'
+type : 'INT' | 'BOOL' | 'VOID' | 'STRING'
      ;
 
 param_list : param (',' param)*                         #FunctionParamDecl               
@@ -66,14 +69,35 @@ stmt_block : LCURLY stmt* RCURLY                        #StmtBlockStmt
            ;             
 
 stmt : stmt_block                                       #BlockStmt
+     | while_loop                                       #WhileStmt
+     | for_loop                                         #ForStmt
      | variable_decl                                    #VariableDeclStmt
      | IF LPAREN expr RPAREN stmt (ELSE stmt)?          #IfElseStmt
      | RETURN expr? SEMICOLON                           #ReturnStmt
-     | expr '=' expr SEMICOLON                          #AssignmentStmt
+     | variable_assignment                              #AssignmentStmt
      | expr SEMICOLON                                   #ExprStmt
      ;
 
+variable_assignment : expr '=' expr SEMICOLON           #VariableAssignmentStmt
+                    ;
+
+while_loop : 'WHILE' '(' expr ')' stmt_block            #WhileLoopStmt
+           ;
+
+for_loop : 'FOR' '(' loop_decl_block loop_condition_block loop_updation_block ')' stmt_block #ForLoopStmt
+         ;
+
+loop_decl_block : type ID '=' expr SEMICOLON                         #LoopInitBlockStmt
+                   ;
+
+loop_condition_block : expr SEMICOLON                                #LoopConditionStmt
+                     ;
+
+loop_updation_block : variable_assignment                            #LoopUpdationStmt
+                    ;
+
 expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
+	| builtin_function_call_expr  #BuiltinFunctionCallExpr
      | '-' expr                    #UnaryMinusExpr
      | '!' expr                    #NotExpr
      | expr op=('*' | '/') expr    #MulDivExpr
@@ -90,8 +114,14 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | INT                         #IntAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
      ;
+     
+builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression
+					  | MIN LPAREN expr ',' expr RPAREN #MinFunctionCallExpression
+					  | POW LPAREN expr ',' expr RPAREN #PowFunctionCallExpression
+				       ;
 
-bool        :       'true' | 'false';
+bool : 'true' | 'false'
+     ;
 
 expr_list : expr (',' expr)*       #FunctionParamExpr // function argument list
           ;

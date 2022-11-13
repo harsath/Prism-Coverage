@@ -57,6 +57,13 @@ public class ExpressionExecutor {
                 } else if (expression instanceof BracketExprExpression) {
                         BracketExprExpression expr = (BracketExprExpression) expression;
                         return executeExpression(globalIdentifiers, scopeIdentifiers, expr.getExpression());
+                } else if (expression instanceof MaxFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MAX, globalIdentifiers, scopeIdentifiers);
+                } else if (expression instanceof MinFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.MIN, globalIdentifiers, scopeIdentifiers);
+                	
+                } else if (expression instanceof PowFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers, scopeIdentifiers);
                 } else {
                         throw new RuntimeException("Undefined Expression type");
                 }
@@ -98,7 +105,9 @@ public class ExpressionExecutor {
                         return new IntegerAtomExpression(((IntegerType) atom_type).getValue());
                 } else if (atom_type instanceof BooleanType) {
                         return new BooleanAtomExpression(((BooleanType) atom_type).getValue());
-                } else {
+                } else if (atom_type instanceof VoidType) {
+                        return new VoidAtomExpression();
+                }else {
                         throw new RuntimeException(exception_str);
                 }
         }
@@ -127,15 +136,15 @@ public class ExpressionExecutor {
                                 }
                         }
                         List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                        AtomType ret = statementExecutor.executeStatements();
-                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                        StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable);
+                        Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers, fn_call_scope_identifiers, block_stmt);
+                        return getAtomExpressionFromAtomType(ret.a, "Unsupported type in function call execution");
                 } else {
                         String function_name = fn_call_expr.getFunctionName();
                         List<Statement> block_stmt = functionDeclarationSymbolTable.get(function_name).getFunctionBody().getStatements();
-                        StatementExecutor statementExecutor = new StatementExecutor(globalIdentifiers, functionDeclarationSymbolTable, fn_call_scope_identifiers, block_stmt);
-                        AtomType ret = statementExecutor.executeStatements();
-                        return getAtomExpressionFromAtomType(ret, "Unsupported type in function call execution");
+                        StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable);
+                        Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers, fn_call_scope_identifiers, block_stmt);
+                        return getAtomExpressionFromAtomType(ret.a, "Unsupported type in function call execution");
                 }
         }
 
@@ -180,7 +189,7 @@ public class ExpressionExecutor {
                         }
                         case EQUALITY: {
                                 EqualityExpression expr_cast = (EqualityExpression) expr;
-                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+                                lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
                                 rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
                                 typeCheckRelationalExpression(lhs, rhs);
                                 IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
@@ -233,6 +242,33 @@ public class ExpressionExecutor {
                                 return new IntegerAtomExpression((-lhs_cast.getValue()));
 
                         }
+                        case MAX: {
+				MaxFunctionCallExpression expr_cast = (MaxFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+                                IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+                                return new IntegerAtomExpression(Math.max(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
+                        case MIN: {
+				MinFunctionCallExpression expr_cast = (MinFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression(Math.min(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
+                        case POW: {
+				PowFunctionCallExpression expr_cast = (PowFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
+                        }
                         default:
                                 throw new Exception("Invalid relational expression");
                 }
@@ -284,7 +320,10 @@ public class ExpressionExecutor {
                 LESSTHAN,
                 GREATERTHANEQ,
                 LESSTHANEQ,
-                UNARYMINUS
+                UNARYMINUS,
+                MAX,
+                MIN,
+                POW
         };
 
         private enum LogicalExpressionType {

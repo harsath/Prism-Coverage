@@ -137,4 +137,26 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		return new BracketExprExpression(e);
 	}
 
+	@Override
+	public Expression visitMaxFunctionCallExpression(MaxFunctionCallExpressionContext ctx) {
+		Expression left = visit(ctx.getChild(2));
+		Expression right = visit(ctx.getChild(4));		
+		return new MaxFunctionCallExpression(left,right);
+	}
+
+	@Override
+	public Expression visitMinFunctionCallExpression(MinFunctionCallExpressionContext ctx) {
+		Expression left = visit(ctx.getChild(2));
+		Expression right = visit(ctx.getChild(4));		
+		return new MinFunctionCallExpression(left,right);
+	}
+
+	@Override
+	public Expression visitPowFunctionCallExpression(PowFunctionCallExpressionContext ctx) {
+		Expression left = visit(ctx.getChild(2));
+		Expression right = visit(ctx.getChild(4));		
+		return new PowFunctionCallExpression(left,right);
+		
+	}
+	
 }

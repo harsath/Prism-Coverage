@@ -99,6 +99,20 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlockStmt(PrismParser.BlockStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code WhileStmt}
+	 * labeled alternative in {@link PrismParser#stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStmt(PrismParser.WhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ForStmt}
+	 * labeled alternative in {@link PrismParser#stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForStmt(PrismParser.ForStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code VariableDeclStmt}
 	 * labeled alternative in {@link PrismParser#stmt}.
 	 * @param ctx the parse tree
@@ -134,12 +148,61 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprStmt(PrismParser.ExprStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code VariableAssignmentStmt}
+	 * labeled alternative in {@link PrismParser#variable_assignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableAssignmentStmt(PrismParser.VariableAssignmentStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code WhileLoopStmt}
+	 * labeled alternative in {@link PrismParser#while_loop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileLoopStmt(PrismParser.WhileLoopStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ForLoopStmt}
+	 * labeled alternative in {@link PrismParser#for_loop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoopStmt(PrismParser.ForLoopStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LoopInitBlockStmt}
+	 * labeled alternative in {@link PrismParser#loop_decl_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopInitBlockStmt(PrismParser.LoopInitBlockStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LoopConditionStmt}
+	 * labeled alternative in {@link PrismParser#loop_condition_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopConditionStmt(PrismParser.LoopConditionStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LoopUpdationStmt}
+	 * labeled alternative in {@link PrismParser#loop_updation_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code AndExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAndExpr(PrismParser.AndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BuiltinFunctionCallExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code VariableAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -245,6 +308,27 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MaxFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MinFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PowFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PrismParser#bool}.
 	 * @param ctx the parse tree
