@@ -105,7 +105,9 @@ public class ExpressionExecutor {
                         return new IntegerAtomExpression(((IntegerType) atom_type).getValue());
                 } else if (atom_type instanceof BooleanType) {
                         return new BooleanAtomExpression(((BooleanType) atom_type).getValue());
-                } else {
+                } else if (atom_type instanceof VoidType) {
+                        return new VoidAtomExpression();
+                }else {
                         throw new RuntimeException(exception_str);
                 }
         }
