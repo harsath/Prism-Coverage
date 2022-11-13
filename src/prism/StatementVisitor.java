@@ -106,8 +106,8 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
 
         @Override
         public Statement visitLoopInitBlockStmt(LoopInitBlockStmtContext ctx) {
-                Expression expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
-                String id = ctx.getChild(0).getChild(1).getText();
+                Expression expr = exprVisitor.visit(ctx.getChild(3));
+                String id = ctx.getChild(1).getText();
                 return new VariableDeclarationStatement(id, expr);
         }
 

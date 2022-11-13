@@ -90,10 +90,10 @@ for_loop : 'FOR' '(' loop_decl_block loop_condition_block loop_updation_block ')
 loop_decl_block : type ID '=' expr SEMICOLON                         #LoopInitBlockStmt
                    ;
 
-loop_condition_block : expr SEMICOLON                        #LoopConditionStmt
+loop_condition_block : expr SEMICOLON                                #LoopConditionStmt
                      ;
 
-loop_updation_block : variable_assignment              #LoopUpdationStmt
+loop_updation_block : variable_assignment                            #LoopUpdationStmt
                     ;
 
 expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
