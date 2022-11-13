@@ -1,0 +1,13 @@
+FUNCTION INT for_loop(INT value1) {
+	INT returner = value1;
+	FOR (INT i = 0; i < 5; i = i + 1;) {
+		returner = returner * 2;
+	}
+	RETURN returner;
+}
+
+FUNCTION INT main() {
+	INT result = for_loop(1);
+	
+	RETURN result;
+}

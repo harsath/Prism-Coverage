@@ -1,0 +1,14 @@
+FUNCTION INT while_loop(INT value1) {
+	INT returner = value1;
+	INT i = 1;
+	WHILE (i <= 5) {
+		returner = returner * 2;	
+	}
+	RETURN returner;
+}
+
+FUNCTION INT main() {
+	INT result = while_loop(1);
+
+	RETURN result;
+}

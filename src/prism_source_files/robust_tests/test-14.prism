@@ -1,0 +1,17 @@
+FUNCTION INT test_ret(INT input_value) {
+	INT val1 = 5;
+	IF (input_value > val1) {
+		RETURN 20;
+	} ELSE {
+		val1 = val1 + 20;
+	}
+
+	RETURN val1;
+}
+
+FUNCTION INT main() {
+	INT return_value = test_ret(2);
+
+	// expected: 25
+	RETURN return_value;
+}
