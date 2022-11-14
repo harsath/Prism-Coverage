@@ -29,6 +29,8 @@ SUB         :       '-';
 MAX			:		'MAX';
 MIN			:		'MIN';
 POW			: 		'POW';
+PRINT		: 		'PRINT';
+PRINTLN		: 		'PRINTLN';
 
 /* Parser elements */
 
@@ -118,6 +120,8 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
 builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression
 					  | MIN LPAREN expr ',' expr RPAREN #MinFunctionCallExpression
 					  | POW LPAREN expr ',' expr RPAREN #PowFunctionCallExpression
+					  | PRINT LPAREN expr RPAREN #PrintFunctionCallExpression
+					  | PRINTLN LPAREN expr RPAREN #PrintlnFunctionCallExpression
 				       ;
 
 bool : 'true' | 'false'

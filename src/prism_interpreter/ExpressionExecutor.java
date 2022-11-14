@@ -64,10 +64,18 @@ public class ExpressionExecutor {
                 	
                 } else if (expression instanceof PowFunctionCallExpression) {
                 	return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers, scopeIdentifiers);
+                	
+                } else if (expression instanceof PrintFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.PRINT, globalIdentifiers, scopeIdentifiers);
+                }else if (expression instanceof PrintlnFunctionCallExpression) {
+                	return relationalExpressionTypeHandler(expression, RelationalExpressionType.PRINTLN, globalIdentifiers, scopeIdentifiers);
                 } else {
-                        throw new RuntimeException("Undefined Expression type");
+                	throw new RuntimeException("Undefined Expression type");
                 }
+                        
+                
         }
+        
 
         private Expression lookupIdentifier(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, String id) throws Exception {
                 // Local scope is given high presidence when looking up variables
@@ -269,6 +277,53 @@ public class ExpressionExecutor {
 				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
 				return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(),  rhs_cast.getValue()));   	
                         }
+                        case PRINT: {
+				PrintFunctionCallExpression expr_cast = (PrintFunctionCallExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+				
+				if (lhs instanceof IntegerAtomExpression) { //INT 
+					typeCheckRelationalExpression(lhs, lhs);
+					IntegerAtomExpression expr_int_cast = (IntegerAtomExpression) lhs;
+					System.out.print(lhs.toString());
+					return new IntegerAtomExpression(expr_int_cast.getValue());
+				} else if (lhs instanceof BooleanAtomExpression) { //BOOL
+					typeCheckLogicalExpression(lhs, lhs);
+					BooleanAtomExpression expr_bool_cast = (BooleanAtomExpression) lhs;
+					System.out.print(lhs.toString());
+					return new BooleanAtomExpression(expr_bool_cast.getValue());
+				} else if (lhs instanceof VariableAtomExpression) { //VARIABLE
+					VariableAtomExpression expr_var_cast = (VariableAtomExpression) lhs;
+					String var_id = expr_var_cast.getId();
+					System.out.print(var_id);
+					return new VariableAtomExpression(var_id);
+				}
+				
+				return null;
+                }
+                        case PRINTLN: {
+    				PrintlnFunctionCallExpression expr_cast = (PrintlnFunctionCallExpression) expr;
+    				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+    				
+    				if (lhs instanceof IntegerAtomExpression) { //INT 
+    					typeCheckRelationalExpression(lhs, lhs);
+    					IntegerAtomExpression expr_int_cast = (IntegerAtomExpression) lhs;
+    					System.out.println(lhs.toString());
+    					return new IntegerAtomExpression(expr_int_cast.getValue());
+    				} else if (lhs instanceof BooleanAtomExpression) { //BOOL
+    					typeCheckLogicalExpression(lhs, lhs);
+    					BooleanAtomExpression expr_bool_cast = (BooleanAtomExpression) lhs;
+    					System.out.println(lhs.toString());
+    					return new BooleanAtomExpression(expr_bool_cast.getValue());
+    				} else if (lhs instanceof VariableAtomExpression) { //VARIABLE
+    					VariableAtomExpression expr_var_cast = (VariableAtomExpression) lhs;
+    					String var_id = expr_var_cast.getId();
+    					System.out.println(var_id);
+    					return new VariableAtomExpression(var_id);
+    				}
+    				
+    				return null;
+                    }
+                 
                         default:
                                 throw new Exception("Invalid relational expression");
                 }
@@ -323,7 +378,9 @@ public class ExpressionExecutor {
                 UNARYMINUS,
                 MAX,
                 MIN,
-                POW
+                POW,
+                PRINT,
+                PRINTLN
         };
 
         private enum LogicalExpressionType {

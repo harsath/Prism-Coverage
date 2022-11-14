@@ -156,7 +156,19 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		Expression left = visit(ctx.getChild(2));
 		Expression right = visit(ctx.getChild(4));		
 		return new PowFunctionCallExpression(left,right);
-		
 	}
+
+	@Override
+	public Expression visitPrintFunctionCallExpression(PrintFunctionCallExpressionContext ctx) {
+		Expression expr = visit(ctx.getChild(2));
+		return new PrintFunctionCallExpression(expr);
+	}
+
+	@Override
+	public Expression visitPrintlnFunctionCallExpression(PrintlnFunctionCallExpressionContext ctx) {
+		Expression expr = visit(ctx.getChild(2));
+		return new PrintlnFunctionCallExpression(expr);
+	}
+	
 	
 }
