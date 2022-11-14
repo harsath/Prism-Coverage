@@ -74,7 +74,7 @@ public class InterpreterExprTest {
 	public void test_println() throws Exception {
 		String input_file = test_root + "test_println.prism";
 		AtomType return_value = interpretGetAtomType(input_file);
-		TestHelpers.assertTrue((return_value.toString() == "9\nfalse\n60\nfalse\n"),
+		TestHelpers.assertTrue((return_value.toString() == "9\nfalse\n60\ntrue\n"),
 					"test_print_ln failed. Return value: " + return_value.toString());
 	}
 	
