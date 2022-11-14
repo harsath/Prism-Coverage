@@ -3,6 +3,6 @@ FUNCTION VOID main() {
 	PRINTLN(true && false);
 	INT x = 60;
 	PRINTLN(x);
-	BOOL y = false;
+	BOOL y = true;
 	PRINTLN(y);
 }

@@ -64,7 +64,20 @@ public class InterpreterExprTest {
 					"test_pow failed. Return value: " + return_value_int.getValue());
 		}
 	}
+	public void test_print() throws Exception {
+		String input_file = test_root + "test_print.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		TestHelpers.assertTrue((return_value.toString() == "9false60false"),
+					"test_print failed. Return value: " + return_value.toString());
+	}
 
+	public void test_println() throws Exception {
+		String input_file = test_root + "test_println.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		TestHelpers.assertTrue((return_value.toString() == "9\nfalse\n60\nfalse\n"),
+					"test_print_ln failed. Return value: " + return_value.toString());
+	}
+	
 	public AtomType interpretGetAtomType(String file_path) throws Exception {
 		InputStream is = new FileInputStream(file_path);
 		ANTLRInputStream input = new ANTLRInputStream(is);

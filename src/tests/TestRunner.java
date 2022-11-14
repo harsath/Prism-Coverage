@@ -9,6 +9,8 @@ public class TestRunner {
                 interpreter_expr_test.test_max();
                 interpreter_expr_test.test_min();
                 interpreter_expr_test.test_pow();
+                interpreter_expr_test.test_print();
+                interpreter_expr_test.test_println();
 
                 InterpreterStatementTest interpreter_stmt_test = new InterpreterStatementTest(test_root); 
                 interpreter_stmt_test.test_for_loop_stmt();
