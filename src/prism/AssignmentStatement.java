@@ -27,6 +27,6 @@ public class AssignmentStatement implements Statement {
 
         @Override
         public String toString() {
-                return lhs.toString() + " = " + rhs.toString();
+                return lhs.toString() + " = " + rhs.toString() + ";";
         }
 }
