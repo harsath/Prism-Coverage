@@ -218,6 +218,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code StringAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringAtomExpr(PrismParser.StringAtomExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BoolAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree

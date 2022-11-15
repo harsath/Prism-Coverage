@@ -360,6 +360,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code StringAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringAtomExpr(PrismParser.StringAtomExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringAtomExpr(PrismParser.StringAtomExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BoolAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree

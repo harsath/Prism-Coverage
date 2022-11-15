@@ -2,13 +2,33 @@ package prism;
 
 import antlr.PrismBaseVisitor;
 import antlr.PrismParser;
-import antlr.PrismParser.*;
+import antlr.PrismParser.AddSubExprContext;
+import antlr.PrismParser.AndExprContext;
+import antlr.PrismParser.BoolAtomExprContext;
+import antlr.PrismParser.BracketExprContext;
+import antlr.PrismParser.EqExprContext;
+import antlr.PrismParser.FunctionCallExprContext;
+import antlr.PrismParser.FunctionParamExprContext;
+import antlr.PrismParser.GreaterthanEqExprContext;
+import antlr.PrismParser.GreaterthanExprContext;
+import antlr.PrismParser.IntAtomExprContext;
+import antlr.PrismParser.LessthanEqExprContext;
+import antlr.PrismParser.LessthanExprContext;
+import antlr.PrismParser.MaxFunctionCallExpressionContext;
+import antlr.PrismParser.MinFunctionCallExpressionContext;
+import antlr.PrismParser.MulDivExprContext;
+import antlr.PrismParser.NotExprContext;
+import antlr.PrismParser.OrExprContext;
+import antlr.PrismParser.PowFunctionCallExpressionContext;
+import antlr.PrismParser.StringAtomExprContext;
+import antlr.PrismParser.UnaryMinusExprContext;
+import antlr.PrismParser.VariableAtomExprContext;
 
 public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitFunctionParamExpr(FunctionParamExprContext ctx) {
-		FunctionParamListExpression fn_param_list_expr = new FunctionParamListExpression();	
+		FunctionParamListExpression fn_param_list_expr = new FunctionParamListExpression();
 		// Interleave visits, because we don't want to visit ',' token.
 		for (int i = 0; i < ctx.getChildCount(); i += 2) {
 			fn_param_list_expr.addExpression(visit(ctx.getChild(i)));
@@ -23,11 +43,11 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		// Invoking a function without parameter. Ex: fn()
 		if (ctx.getChildCount() == 3) {
 			return fn_call_expr;
-		} 
+		}
 		// Invoking function with parameters. Ex: fn(4), fn(foo, bar, 3)
 		else {
 			Expression fn_param_expr = visit(ctx.getChild(2));
-			
+
 			fn_call_expr.setFunctionParamList((FunctionParamListExpression) fn_param_expr);
 		}
 
@@ -132,6 +152,12 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitStringAtomExpr(StringAtomExprContext ctx) {
+		String value = ctx.getChild(1).getText();
+		return new StringAtomExpression(value);
+	}
+
+	@Override
 	public Expression visitBracketExpr(BracketExprContext ctx) {
 		Expression e = visit(ctx.getChild(1));
 		return new BracketExprExpression(e);
@@ -140,23 +166,23 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	@Override
 	public Expression visitMaxFunctionCallExpression(MaxFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
-		Expression right = visit(ctx.getChild(4));		
-		return new MaxFunctionCallExpression(left,right);
+		Expression right = visit(ctx.getChild(4));
+		return new MaxFunctionCallExpression(left, right);
 	}
 
 	@Override
 	public Expression visitMinFunctionCallExpression(MinFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
-		Expression right = visit(ctx.getChild(4));		
-		return new MinFunctionCallExpression(left,right);
+		Expression right = visit(ctx.getChild(4));
+		return new MinFunctionCallExpression(left, right);
 	}
 
 	@Override
 	public Expression visitPowFunctionCallExpression(PowFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
-		Expression right = visit(ctx.getChild(4));		
-		return new PowFunctionCallExpression(left,right);
-		
+		Expression right = visit(ctx.getChild(4));
+		return new PowFunctionCallExpression(left, right);
+
 	}
-	
+
 }
