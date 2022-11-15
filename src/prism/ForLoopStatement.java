@@ -50,7 +50,7 @@ public class ForLoopStatement implements Statement {
                 String returner = "FOR (";
                 String init_block_str = initBlock.toString();
                 init_block_str = init_block_str.substring(0, init_block_str.length() - 1);
-                returner += init_block_str + "; " + conditionalBlock.toString() + "; " + updationBlock.toString();
+                returner += init_block_str + " " + conditionalBlock.toString() + "; " + updationBlock.toString();
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
                         returner += "\t\t";

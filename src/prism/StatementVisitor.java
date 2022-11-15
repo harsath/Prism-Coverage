@@ -43,6 +43,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 String var_id = ctx.getChild(0).getChild(1).getText();
                 Expression expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
                 VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id, expr);
+                var_decl_stmt.setType(ctx.getChild(0).getChild(0).getText());
                 var_decl_stmt.setExpression((Expression) expr);
                 return var_decl_stmt;
         }

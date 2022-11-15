@@ -1,10 +1,9 @@
 package prism;
 
 public class VariableDeclaration implements Declaration {
-        // The type of variable is deduced from the Expression (IntegerType or VoidType or BooleanType).
-        // If expression is null, it is deduced as VoidType.
         private Expression expression;
         private String id;
+        private String type;
 
         public VariableDeclaration(String id, Expression expression) {
                 this.id = id;
@@ -26,10 +25,21 @@ public class VariableDeclaration implements Declaration {
         public void setId(String id) {
                 this.id = id;
         }
+
+        public String getType() {
+                return this.type;
+        }
+
+        public void setType(String type) {
+                this.type = type;
+        }
+
         @Override
         public String toString() {
+                String returner = "";
                 if (expression != null) {
-                        return id + " = " + expression.toString()+ ";\n";
+                        returner += type + " " + id + " = " + expression.toString()+ ";\n";
+                        return returner;
                 }
                 return id + ";\n";
         }
