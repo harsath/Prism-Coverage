@@ -48,14 +48,16 @@ public class ForLoopStatement implements Statement {
         @Override
         public String toString() {
                 String returner = "FOR (";
-                returner += initBlock.toString() + " " + conditionalBlock.toString() + " " + updationBlock.toString();
+                String init_block_str = initBlock.toString();
+                init_block_str = init_block_str.substring(0, init_block_str.length() - 1);
+                returner += init_block_str + " " + conditionalBlock.toString() + "; " + updationBlock.toString();
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
-                        returner += "\t";
+                        returner += "\t\t";
                         returner += stmt.toString();
                         returner += "\n";
                 }
-                returner += "}";
+                returner += "\t}";
                 return returner;
         }
 

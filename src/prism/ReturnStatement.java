@@ -18,8 +18,8 @@ public class ReturnStatement implements Statement {
         @Override
         public String toString() {
                 if (expression != null) {
-                        return "RETURN " + expression.toString();
+                        return "RETURN " + expression.toString() + ";";
                 }
-                return "RETURN";
+                return "RETURN;";
         }
 }
