@@ -29,13 +29,13 @@ public class WhileLoopStatement implements Statement {
         public String toString() {
                 String returner = "WHILE (";
                 returner += expressionBlock.toString();
-                returner += ") {";
+                returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
-                        returner += "\t";
+                        returner += "\t\t";
                         returner += stmt.toString();
                         returner += "\n";
                 }
-                returner += "}";
+                returner += "\t}";
                 return returner;
         }
 }
