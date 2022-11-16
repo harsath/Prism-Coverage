@@ -83,7 +83,11 @@ public class ExpressionExecutor {
 		} else if (expression instanceof PowFunctionCallExpression) {
 			return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers,
 					scopeIdentifiers);
-		} else {
+		} else if (expression instanceof PrintFunctionCallExpression) {
+        	return relationalExpressionTypeHandler(expression, RelationalExpressionType.PRINT, globalIdentifiers, scopeIdentifiers);
+        }else if (expression instanceof PrintlnFunctionCallExpression) {
+        	return relationalExpressionTypeHandler(expression, RelationalExpressionType.PRINTLN, globalIdentifiers, scopeIdentifiers);
+        }else {
 			throw new RuntimeException("Undefined Expression type");
 		}
 	}
@@ -303,6 +307,37 @@ public class ExpressionExecutor {
 			IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
 			return new IntegerAtomExpression((int) Math.pow(lhs_cast.getValue(), rhs_cast.getValue()));
 		}
+		case PRINT: {
+			
+			PrintFunctionCallExpression expr_cast = (PrintFunctionCallExpression) expr;
+			lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+			
+			if (lhs instanceof VariableAtomExpression) { //VARIABLE
+				VariableAtomExpression expr_var_cast = (VariableAtomExpression) lhs;
+				String var_id = expr_var_cast.getId();
+				System.out.print(var_id);
+				return new StringAtomExpression(var_id);
+			} else {
+				
+				System.out.print(lhs.toString());
+				return new StringAtomExpression(expr_cast.toString());
+			}
+			
+        }
+		case PRINTLN: {
+			PrintlnFunctionCallExpression expr_cast = (PrintlnFunctionCallExpression) expr;
+			lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+			
+			if (lhs instanceof VariableAtomExpression) { //VARIABLE
+				VariableAtomExpression expr_var_cast = (VariableAtomExpression) lhs;
+				String var_id = expr_var_cast.getId();
+				System.out.println(var_id);
+				return new StringAtomExpression(var_id);
+			} else {
+				System.out.println(lhs.toString());
+				return new StringAtomExpression(expr_cast.toString());
+			}
+		}
 		default:
 			throw new Exception("Invalid relational expression");
 		}
@@ -347,7 +382,7 @@ public class ExpressionExecutor {
 
 	private enum RelationalExpressionType {
 		MULTIPLICATION, DIVISION, ADDITION, SUBTRACTION, EQUALITY, GREATERTHAN, LESSTHAN, GREATERTHANEQ, LESSTHANEQ,
-		UNARYMINUS, MAX, MIN, POW
+		UNARYMINUS, MAX, MIN, POW, PRINT, PRINTLN
 	};
 
 	private enum LogicalExpressionType {
