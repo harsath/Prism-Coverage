@@ -31,7 +31,7 @@ public class InterpreterExprTest {
 		AtomType return_value = interpretGetAtomType(input_file);
 		if (return_value instanceof StringType) {
 			StringType return_value_string = (StringType) return_value;
-			TestHelpers.assertTrue((return_value_string.equals("HelloWorld")),
+			TestHelpers.assertTrue((return_value_string.getValue().equals("HelloWorld")),
 					"test_string failed. Return value: " + return_value_string.getValue());
 		}
 	}
