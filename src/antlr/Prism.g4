@@ -29,7 +29,7 @@ SUB         :       '-';
 MAX			:		'MAX';
 MIN			:		'MIN';
 POW			: 		'POW';
-Text           :         [a-zA-Z_]+;
+TEXT           :         [a-zA-Z0-9_]+;
 /* Parser elements */
 
 prog : (function_decl | variable_decl | class_decl)+ EOF                   #ProgramDecl
@@ -113,7 +113,7 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
-     | '"'Text'"'                        #StringAtomExpr
+     | '"'TEXT'"'                        #StringAtomExpr
      ;
      
 builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression

@@ -40,7 +40,7 @@ SUB=39
 MAX=40
 MIN=41
 POW=42
-Text=43
+TEXT=43
 '='=1
 'INT'=2
 'BOOL'=3

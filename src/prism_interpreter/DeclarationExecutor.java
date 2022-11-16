@@ -1,20 +1,8 @@
 package prism_interpreter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import prism.AtomType;
-import prism.BooleanAtomExpression;
-import prism.Declaration;
-import prism.Expression;
-import prism.FunctionDeclaration;
-import prism.IntegerAtomExpression;
-import prism.IntegerType;
-import prism.Pair;
-import prism.Statement;
-import prism.StringAtomExpression;
-import prism.VariableDeclaration;
+import prism.*;
 
 public class DeclarationExecutor {
 	private List<Declaration> declarations;

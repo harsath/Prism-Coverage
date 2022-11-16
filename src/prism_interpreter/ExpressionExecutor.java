@@ -1,40 +1,8 @@
 package prism_interpreter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import prism.AdditionSubtractionExpression;
-import prism.AndExpression;
-import prism.AtomType;
-import prism.BooleanAtomExpression;
-import prism.BooleanType;
-import prism.BracketExprExpression;
-import prism.EqualityExpression;
-import prism.Expression;
-import prism.FunctionCallExpression;
-import prism.FunctionDeclaration;
-import prism.GreaterthanEqExpression;
-import prism.GreaterthanExpression;
-import prism.IntegerAtomExpression;
-import prism.IntegerType;
-import prism.LessthanEqExpression;
-import prism.LessthanExpression;
-import prism.MaxFunctionCallExpression;
-import prism.MinFunctionCallExpression;
-import prism.MultiplicationDivisionExpression;
-import prism.NotExpression;
-import prism.OrExpression;
-import prism.Pair;
-import prism.ParameterDeclaration;
-import prism.PowFunctionCallExpression;
-import prism.Statement;
-import prism.StringAtomExpression;
-import prism.StringType;
-import prism.UnaryMinusExpression;
-import prism.VariableAtomExpression;
-import prism.VoidAtomExpression;
-import prism.VoidType;
+import prism.*;
 
 public class ExpressionExecutor {
 	private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;

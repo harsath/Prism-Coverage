@@ -1,29 +1,8 @@
 package prism_interpreter;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import prism.AssignmentStatement;
-import prism.AtomType;
-import prism.BlockStatement;
-import prism.BooleanAtomExpression;
-import prism.BooleanType;
-import prism.Expression;
-import prism.ExpressionStatement;
-import prism.ForLoopStatement;
-import prism.FunctionDeclaration;
-import prism.IfElseStatement;
-import prism.IntegerAtomExpression;
-import prism.IntegerType;
-import prism.Pair;
-import prism.ReturnStatement;
-import prism.Statement;
-import prism.StringAtomExpression;
-import prism.StringType;
-import prism.VariableAtomExpression;
-import prism.VariableDeclarationStatement;
-import prism.VoidType;
-import prism.WhileLoopStatement;
+import prism.*;
 
 public class StatementExecutor {
 	private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;

@@ -24,7 +24,7 @@ public class PrismParser extends Parser {
 		T__17=18, T__18=19, ID=20, INT=21, FUNCTION=22, CLASS=23, IF=24, ELSE=25, 
 		METHODS=26, ATTRIBUTES=27, RETURN=28, COMMENT=29, WS=30, LCURLY=31, RCURLY=32, 
 		LPAREN=33, RPAREN=34, SEMICOLON=35, MUL=36, DIV=37, ADD=38, SUB=39, MAX=40, 
-		MIN=41, POW=42, Text=43;
+		MIN=41, POW=42, TEXT=43;
 	public static final int
 		RULE_prog = 0, RULE_variable_decl = 1, RULE_function_decl = 2, RULE_function_body = 3, 
 		RULE_class_decl = 4, RULE_class_body = 5, RULE_attributes_decl = 6, RULE_methods_decl = 7, 
@@ -61,7 +61,7 @@ public class PrismParser extends Parser {
 			null, null, null, null, null, null, null, null, "ID", "INT", "FUNCTION", 
 			"CLASS", "IF", "ELSE", "METHODS", "ATTRIBUTES", "RETURN", "COMMENT", 
 			"WS", "LCURLY", "RCURLY", "LPAREN", "RPAREN", "SEMICOLON", "MUL", "DIV", 
-			"ADD", "SUB", "MAX", "MIN", "POW", "Text"
+			"ADD", "SUB", "MAX", "MIN", "POW", "TEXT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -1724,7 +1724,7 @@ public class PrismParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StringAtomExprContext extends ExprContext {
-		public TerminalNode Text() { return getToken(PrismParser.Text, 0); }
+		public TerminalNode TEXT() { return getToken(PrismParser.TEXT, 0); }
 		public StringAtomExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2154,7 +2154,7 @@ public class PrismParser extends Parser {
 				setState(189);
 				match(T__16);
 				setState(190);
-				match(Text);
+				match(TEXT);
 				setState(191);
 				match(T__16);
 				}

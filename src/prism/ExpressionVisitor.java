@@ -1,28 +1,7 @@
 package prism;
 
-import antlr.PrismBaseVisitor;
-import antlr.PrismParser;
-import antlr.PrismParser.AddSubExprContext;
-import antlr.PrismParser.AndExprContext;
-import antlr.PrismParser.BoolAtomExprContext;
-import antlr.PrismParser.BracketExprContext;
-import antlr.PrismParser.EqExprContext;
-import antlr.PrismParser.FunctionCallExprContext;
-import antlr.PrismParser.FunctionParamExprContext;
-import antlr.PrismParser.GreaterthanEqExprContext;
-import antlr.PrismParser.GreaterthanExprContext;
-import antlr.PrismParser.IntAtomExprContext;
-import antlr.PrismParser.LessthanEqExprContext;
-import antlr.PrismParser.LessthanExprContext;
-import antlr.PrismParser.MaxFunctionCallExpressionContext;
-import antlr.PrismParser.MinFunctionCallExpressionContext;
-import antlr.PrismParser.MulDivExprContext;
-import antlr.PrismParser.NotExprContext;
-import antlr.PrismParser.OrExprContext;
-import antlr.PrismParser.PowFunctionCallExpressionContext;
-import antlr.PrismParser.StringAtomExprContext;
-import antlr.PrismParser.UnaryMinusExprContext;
-import antlr.PrismParser.VariableAtomExprContext;
+import antlr.*;
+import antlr.PrismParser.*;
 
 public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 

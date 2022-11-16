@@ -1,11 +1,7 @@
 package prism;
 
-import antlr.PrismBaseVisitor;
-import antlr.PrismParser.ClassBodyDeclContext;
-import antlr.PrismParser.ClassDeclContext;
-import antlr.PrismParser.FunctionDeclContext;
-import antlr.PrismParser.FunctionParamDeclContext;
-import antlr.PrismParser.VariableDeclContext;
+import antlr.*;
+import antlr.PrismParser.*;
 
 public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
 	private StatementVisitor stmtVisitor = new StatementVisitor();
