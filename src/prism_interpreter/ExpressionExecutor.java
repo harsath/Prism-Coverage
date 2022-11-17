@@ -83,7 +83,11 @@ public class ExpressionExecutor {
 		} else if (expression instanceof PowFunctionCallExpression) {
 			return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers,
 					scopeIdentifiers);
-		} else {
+		} else if (expression instanceof PrintFunctionCallExpression) {
+        	return printExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+        }else if (expression instanceof PrintlnFunctionCallExpression) {
+        	return printlnExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+        }else {
 			throw new RuntimeException("Undefined Expression type");
 		}
 	}
@@ -307,7 +311,44 @@ public class ExpressionExecutor {
 			throw new Exception("Invalid relational expression");
 		}
 	}
-
+	
+	
+	private Expression printExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers, 
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		
+		PrintFunctionCallExpression expr_cast = (PrintFunctionCallExpression) expr;
+		Expression print = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+		
+		if (print instanceof VariableAtomExpression) { //VARIABLE
+			VariableAtomExpression expr_var_cast = (VariableAtomExpression) print;
+			String var_id = expr_var_cast.getId();
+			System.out.print(var_id);
+			return new StringAtomExpression(var_id);
+		} else {
+			System.out.print(print.toString());
+			return new StringAtomExpression(expr_cast.toString());
+		}
+	}
+	
+	
+	private Expression printlnExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers, 
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		
+		PrintlnFunctionCallExpression expr_cast = (PrintlnFunctionCallExpression) expr;
+		Expression print = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getExpr());
+		
+		if (print instanceof VariableAtomExpression) { //VARIABLE
+			VariableAtomExpression expr_var_cast = (VariableAtomExpression) print;
+			String var_id = expr_var_cast.getId();
+			System.out.println(var_id);
+			return new StringAtomExpression(var_id);
+		} else {
+			System.out.println(print.toString());
+			return new StringAtomExpression(expr_cast.toString());
+		}	
+	}
+	
+	
 	private Expression logicalExpressionTypeHandler(Expression expr, LogicalExpressionType type,
 			Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
 		Expression lhs, rhs;
