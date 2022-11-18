@@ -2,9 +2,20 @@ package prism;
 
 public class ReturnStatement implements Statement {
         private Expression expression;
+	private boolean executed = false;
 
         ReturnStatement() {
                 this.expression = null;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public Expression getExpression() {

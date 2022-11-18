@@ -5,9 +5,20 @@ import java.util.List;
 
 public class BlockStatement implements Statement {
         private List<Statement> statements;
+	private boolean executed = false;
 
         BlockStatement() {
                 this.statements = new ArrayList<>();
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public void addStatement(Statement statement) {

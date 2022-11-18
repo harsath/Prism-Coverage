@@ -3,10 +3,21 @@ package prism;
 public class ParameterDeclaration implements Declaration {
         private String id;
         private AtomType type;
+	private boolean executed = false;
 
         ParameterDeclaration(String id, AtomType type) {
                 this.id = id;
                 this.type = type;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public String getId() {

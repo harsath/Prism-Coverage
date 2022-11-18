@@ -4,12 +4,23 @@ public class MultiplicationDivisionExpression implements Expression {
 	private Expression left;
 	private Expression right;
 	private boolean multiplication;
+	private boolean executed = false;
 
 	public MultiplicationDivisionExpression(Expression left, Expression right, boolean multiplication) {
 		this.left = left;
 		this.right = right;
 		this.multiplication = multiplication;
 	}
+
+	@Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
+        }
 
 	public Expression getLeft() {
 		return left;

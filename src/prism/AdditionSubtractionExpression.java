@@ -4,11 +4,22 @@ public class AdditionSubtractionExpression implements Expression {
 	private Expression left;
 	private Expression right;
 	private boolean addition;
+	private boolean executed = false;
 
 	public AdditionSubtractionExpression(Expression left, Expression right, boolean addition) {
 		this.left = left;
 		this.right = right;
 		this.addition = addition;
+	}
+
+	@Override
+	public boolean getIsExecuted() {
+		return this.executed;
+	}
+
+	@Override
+	public void setIsExecuted(boolean value) {
+		this.executed = value;	
 	}
 
 	public Expression getLeft() {

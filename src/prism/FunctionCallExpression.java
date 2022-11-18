@@ -3,9 +3,20 @@ package prism;
 public class FunctionCallExpression implements Expression {
         private FunctionParamListExpression functionParam;
         private String functionName;
+	private boolean executed = false;
 
         FunctionCallExpression() {
                 this.functionParam = null;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public FunctionParamListExpression getFunctionParamList() {

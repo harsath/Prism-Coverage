@@ -3,11 +3,22 @@ package prism;
 public class GreaterthanEqExpression implements Expression {
 	private Expression left;
 	private Expression right;
+	private boolean executed = false;
 
 	public GreaterthanEqExpression(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
 	}
+
+	@Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
+        }
 
 	public Expression getLeft() {
 		return left;

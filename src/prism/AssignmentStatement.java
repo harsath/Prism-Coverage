@@ -3,10 +3,21 @@ package prism;
 public class AssignmentStatement implements Statement {
         private Expression lhs;
         private Expression rhs;
+	private boolean executed = false;
 
         AssignmentStatement(Expression lhs, Expression rhs) {
                 this.lhs = lhs;
                 this.rhs = rhs;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public Expression getLhs() {

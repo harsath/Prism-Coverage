@@ -3,10 +3,21 @@ package prism;
 public class WhileLoopStatement implements Statement {
        private Expression expressionBlock; 
        private BlockStatement statementBlock;
+       private boolean executed = false;
 
        public WhileLoopStatement(Expression expressionBlock, BlockStatement statementBlock) {
                 this.expressionBlock = expressionBlock;
                 this.statementBlock = statementBlock;
+       }
+
+       @Override
+       public void setIsExecuted(boolean value) {
+               this.executed = value;
+       }
+
+       @Override
+       public boolean getIsExecuted() {
+               return this.executed;
        }
 
         public Expression getExpressionBlock() {

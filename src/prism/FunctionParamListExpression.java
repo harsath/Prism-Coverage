@@ -5,9 +5,20 @@ import java.util.List;
 
 public class FunctionParamListExpression implements Expression {
         private List<Expression> paramList;
+	private boolean executed = false;
 
         FunctionParamListExpression() {
                 paramList = new ArrayList<>();
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public List<Expression> getParamList() {

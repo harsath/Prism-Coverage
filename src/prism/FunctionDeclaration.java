@@ -5,10 +5,21 @@ public class FunctionDeclaration implements Declaration {
 	ParameterListDeclaration functionParamDecl;
 	AtomType returnType;
 	BlockStatement functionBody;
+	private boolean executed = false;
 
 	public FunctionDeclaration() {
 		this.functionParamDecl = null;		
 	}
+
+	@Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
+        }
 
 	public ParameterListDeclaration getFunctionParamDecl() {
 		return this.functionParamDecl;

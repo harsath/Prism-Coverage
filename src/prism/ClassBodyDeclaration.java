@@ -3,10 +3,21 @@ package prism;
 public class ClassBodyDeclaration implements Declaration {
         private AttributeDeclaration attributes;
         private MethodDeclaration methods;
+	private boolean executed = false;
 
         ClassBodyDeclaration() {
                 this.attributes = new AttributeDeclaration();
                 this.methods = new MethodDeclaration();
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public void addAttribute(VariableDeclaration attribute) {

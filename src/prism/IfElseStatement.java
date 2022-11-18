@@ -4,9 +4,20 @@ public class IfElseStatement implements Statement {
         private Expression expr_condition;
         private Statement if_statement_block;
         private Statement else_statement_block;
+	private boolean executed = false;
 
         IfElseStatement() {
                 else_statement_block = null;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public Expression getExpr_condition() {
