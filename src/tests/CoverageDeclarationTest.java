@@ -36,7 +36,7 @@ public class CoverageDeclarationTest {
                 PrismProgram prism_program = (PrismProgram) prismVisitor.visit(AST);
 		PrismInterpreter prism_interpreter = new PrismInterpreter(prism_program.getProgram());
 		prism_interpreter.interpret();
-                PrismCodeCoverage prism_coverage = new PrismCodeCoverage(prism_program);
+                PrismCodeCoverage prism_coverage = new PrismCodeCoverage(prism_program, file_path);
                 return prism_coverage;
         }
 }
