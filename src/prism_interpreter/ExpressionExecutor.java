@@ -21,46 +21,33 @@ public class ExpressionExecutor {
 		if (expression instanceof FunctionCallExpression) {
 			return functionCallExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof UnaryMinusExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.UNARYMINUS, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.UNARYMINUS, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof NotExpression) {
-			return logicalExpressionTypeHandler(expression, LogicalExpressionType.NOT, globalIdentifiers,
-					scopeIdentifiers);
+			return logicalExpressionTypeHandler(expression, LogicalExpressionType.NOT, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof MultiplicationDivisionExpression) {
 			if (((MultiplicationDivisionExpression) expression).isMultiplication()) {
-				return relationalExpressionTypeHandler(expression, RelationalExpressionType.MULTIPLICATION,
-						globalIdentifiers, scopeIdentifiers);
+				return relationalExpressionTypeHandler(expression, RelationalExpressionType.MULTIPLICATION, globalIdentifiers, scopeIdentifiers);
 			}
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.DIVISION, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.DIVISION, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof AdditionSubtractionExpression) {
 			if (((AdditionSubtractionExpression) expression).isAddition()) {
-				return relationalExpressionTypeHandler(expression, RelationalExpressionType.ADDITION, globalIdentifiers,
-						scopeIdentifiers);
+				return relationalExpressionTypeHandler(expression, RelationalExpressionType.ADDITION, globalIdentifiers, scopeIdentifiers);
 			}
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.SUBTRACTION, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.SUBTRACTION, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof EqualityExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.EQUALITY, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.EQUALITY, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof OrExpression) {
-			return logicalExpressionTypeHandler(expression, LogicalExpressionType.OR, globalIdentifiers,
-					scopeIdentifiers);
+			return logicalExpressionTypeHandler(expression, LogicalExpressionType.OR, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof AndExpression) {
-			return logicalExpressionTypeHandler(expression, LogicalExpressionType.AND, globalIdentifiers,
-					scopeIdentifiers);
+			return logicalExpressionTypeHandler(expression, LogicalExpressionType.AND, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof GreaterthanExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHAN, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHAN, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof LessthanExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHAN, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHAN, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof GreaterthanEqExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHANEQ,
-					globalIdentifiers, scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.GREATERTHANEQ, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof LessthanEqExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHANEQ, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.LESSTHANEQ, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof VariableAtomExpression) {
 			VariableAtomExpression expr = (VariableAtomExpression) expression;
 			return lookupIdentifier(globalIdentifiers, scopeIdentifiers, expr.getId());
@@ -74,26 +61,21 @@ public class ExpressionExecutor {
 			BracketExprExpression expr = (BracketExprExpression) expression;
 			return executeExpression(globalIdentifiers, scopeIdentifiers, expr.getExpression());
 		} else if (expression instanceof MaxFunctionCallExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.MAX, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.MAX, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof MinFunctionCallExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.MIN, globalIdentifiers,
-					scopeIdentifiers);
-
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.MIN, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof PowFunctionCallExpression) {
-			return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers,
-					scopeIdentifiers);
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.POW, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof PrintFunctionCallExpression) {
-        	return printExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
-        }else if (expression instanceof PrintlnFunctionCallExpression) {
-        	return printlnExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
-        }else {
-			throw new RuntimeException("Undefined Expression type");
+	        	return printExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+	        }else if (expression instanceof PrintlnFunctionCallExpression) {
+	        	return printlnExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+	        }else {
+				throw new RuntimeException("Undefined Expression type");
 		}
 	}
 
-	private Expression lookupIdentifier(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers,
-			String id) throws Exception {
+	private Expression lookupIdentifier(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, String id) throws Exception {
 		// Local scope is given high presidence when looking up variables
 		if (scopeIdentifiers.containsKey(id)) {
 			AtomType atom_value = scopeIdentifiers.get(id);
@@ -141,13 +123,13 @@ public class ExpressionExecutor {
 		}
 	}
 
-	private Expression functionCallExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
-			Map<String, AtomType> scopeIdentifiers) throws Exception {
+	private Expression functionCallExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
 		// Initialize the call stack with parameter values
 		FunctionCallExpression fn_call_expr = (FunctionCallExpression) expr;
 		if (!functionDeclarationSymbolTable.containsKey(fn_call_expr.getFunctionName())) {
 			throw new RuntimeException("Call to undefined function");
 		}
+		functionDeclarationSymbolTable.get(fn_call_expr.getFunctionName()).setIsExecuted(true);
 		Map<String, AtomType> fn_call_scope_identifiers = new HashMap<>();
 		if (fn_call_expr.getFunctionParamList() != null) {
 			String function_name = fn_call_expr.getFunctionName();

@@ -29,27 +29,35 @@ public class StatementExecutor {
 				return returner;
 			}
 			if (statement instanceof VariableDeclarationStatement) {
+				statement.setIsExecuted(true);
 				variableDeclarationStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof AssignmentStatement) {
+				statement.setIsExecuted(true);
 				assignmentStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ReturnStatement) {
+				statement.setIsExecuted(true);
 				returnStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				break;
 			} else if (statement instanceof IfElseStatement) {
+				statement.setIsExecuted(true);
 				ifElseStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b) {
 					return returner;
 				}
 			} else if (statement instanceof BlockStatement) {
+				statement.setIsExecuted(true);
 				blockStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ExpressionStatement) {
+				statement.setIsExecuted(true);
 				expressionStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ForLoopStatement) {
+				statement.setIsExecuted(true);
 				forLoopStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b) {
 					return returner;
 				}
 			} else if (statement instanceof WhileLoopStatement) {
+				statement.setIsExecuted(true);
 				whileLoopStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b) {
 					return returner;
@@ -152,12 +160,14 @@ public class StatementExecutor {
                 BooleanType expr_condition_cast = (BooleanType) expr_condition;
                 if (expr_condition_cast.getValue()) {
                         BlockStatement block_stmt = (BlockStatement) if_else_stmt.getIf_statement_block();
+			block_stmt.setIsExecuted(true);
                         StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
                         Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers, scopeIdentifiers, block_stmt.getStatements());
                         returner.a = stmt_return.a;
                         returner.b = stmt_return.b;
                 } else if (if_else_stmt.getElse_statement_block() != null) {
                         BlockStatement block_stmt = (BlockStatement) if_else_stmt.getElse_statement_block();
+			block_stmt.setIsExecuted(true);
                         StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
                         Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers, scopeIdentifiers, block_stmt.getStatements());
                         returner.a = stmt_return.a;
@@ -169,20 +179,17 @@ public class StatementExecutor {
 
         private void blockStatementHandler(Statement statement, Map<String, AtomType> globalIdentifers, Map<String, AtomType> scopeIdentifiers) throws Exception {
                 BlockStatement block_stmt = (BlockStatement) statement;
-                block_stmt.setIsExecuted(true);
                 StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
                 stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers, block_stmt.getStatements());
         }
 
         private void expressionStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
                 ExpressionStatement expr_stmt = (ExpressionStatement) statement;
-                expr_stmt.setIsExecuted(true);
                 expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, expr_stmt.getExpression());
         }
 
         private void forLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
                 ForLoopStatement for_stmt = (ForLoopStatement) statement;
-                for_stmt.setIsExecuted(true);
                 VariableDeclarationStatement for_decl_stmt = for_stmt.getInitBlock();
                 Expression for_condition_expr = for_stmt.getConditionalBlock();
                 AssignmentStatement for_updation_stmt = for_stmt.getUpdationBlock();

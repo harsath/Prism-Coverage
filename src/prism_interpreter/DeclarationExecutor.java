@@ -19,7 +19,9 @@ public class DeclarationExecutor {
                 if (!functionDeclarationSymbolTable.containsKey("main")) {
                         throw new RuntimeException("Source file does not contain main() function");
                 }
-                List<Statement> main_stmt = functionDeclarationSymbolTable.get("main").getFunctionBody().getStatements();
+                FunctionDeclaration main_fn = functionDeclarationSymbolTable.get("main");
+                main_fn.setIsExecuted(true);
+                List<Statement> main_stmt = main_fn.getFunctionBody().getStatements();
                 Map<String, AtomType> scopeIdentifiers = new HashMap<>();
                 StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
                 Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers, main_stmt);
