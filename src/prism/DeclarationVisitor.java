@@ -7,31 +7,30 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
 	private StatementVisitor stmtVisitor = new StatementVisitor();
 	private ExpressionVisitor exprVisitor = new ExpressionVisitor();
 
+	private static AtomType strTypeToAtomType(String str) throws RuntimeException {
+		switch (str) {
+			case "INT":
+				return new IntegerType();
+			case "BOOL":
+				return new BooleanType();
+			case "STRING":
+				return new StringType();
+			case "VOID":
+				return new VoidType();
+			default:
+				throw new RuntimeException("Invalid type as function return type.");
+		}
+	}
 
-        private static AtomType strTypeToAtomType(String str) throws RuntimeException {
-          switch (str) {
-          case "INT":
-            return new IntegerType();
-          case "BOOL":
-            return new BooleanType();
-          case "STRING":
-            return new StringType();
-          case "VOID":
-            return new VoidType();
-          default:
-            throw new RuntimeException("Invalid type as function return type.");
-          }
-        }
-        @Override
-        public Declaration visitVariableDecl(VariableDeclContext ctx) {
-                String var_id = ctx.getChild(1).getText();
-                Expression expr = exprVisitor.visit(ctx.getChild(3));
-                VariableDeclaration var_decl_stmt = new VariableDeclaration(var_id, expr);
-                var_decl_stmt.setType(ctx.getChild(0).getChild(0).getText());
-                var_decl_stmt.setExpression((Expression) expr);
-                return var_decl_stmt;
-        }
-
+	@Override
+	public Declaration visitVariableDecl(VariableDeclContext ctx) {
+		String var_id = ctx.getChild(1).getText();
+		Expression expr = exprVisitor.visit(ctx.getChild(3));
+		VariableDeclaration var_decl_stmt = new VariableDeclaration(var_id, expr);
+		var_decl_stmt.setType(ctx.getChild(0).getChild(0).getText());
+		var_decl_stmt.setExpression((Expression) expr);
+		return var_decl_stmt;
+	}
 
 	@Override
 	public Declaration visitFunctionParamDecl(FunctionParamDeclContext ctx) {

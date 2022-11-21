@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BlockStatement implements Statement {
         private List<Statement> statements;
-	private boolean executed = false;
+        private boolean executed = false;
 
         BlockStatement() {
                 this.statements = new ArrayList<>();
@@ -36,12 +36,12 @@ public class BlockStatement implements Statement {
         @Override
         public String toString() {
                 String returner = new String();
-                //returner += "{ \n";
+                // returner += "{ \n";
                 for (Statement stmt : statements) {
-                		returner += "\t";
+                        returner += "\t";
                         returner += stmt.toString();
                 }
-                //returner += "} \n";
+                // returner += "} \n";
                 return returner;
         }
 }

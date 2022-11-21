@@ -3,7 +3,7 @@ package prism;
 public class AssignmentStatement implements Statement {
         private Expression lhs;
         private Expression rhs;
-	private boolean executed = false;
+        private boolean executed = false;
 
         AssignmentStatement(Expression lhs, Expression rhs) {
                 this.lhs = lhs;

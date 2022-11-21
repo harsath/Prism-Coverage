@@ -60,7 +60,7 @@ attributes_decl : variable_decl+
 methods_decl : function_decl+
              ;
 
-type : 'INT' | 'BOOL' | 'VOID' | 'STRING'
+type : 'INT' | 'BOOL' | 'VOID' | 'STRING' | ID
      ;
 
 param_list : param (',' param)*                         #FunctionParamDecl               

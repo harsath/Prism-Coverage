@@ -19,8 +19,10 @@ public class CoverageDeclarationTest {
         public void test_1() throws Exception {
                 String input_file = test_root + "test-1.prism";
                 PrismCodeCoverage prism_coverage = codeCoverage(input_file);
-                TestHelpers.assertTrue((prism_coverage.getTotalFunctionDeclarations() == 3) && (prism_coverage.getTotalCoveredFunctionDeclarations() == 2), 
-                                        "test_1, getTotalFunctionDeclarations() and getTotalCoveredFunctionDeclarations()");
+                TestHelpers.assertTrue(
+                                (prism_coverage.getTotalFunctionDeclarations() == 3)
+                                                && (prism_coverage.getTotalCoveredFunctionDeclarations() == 2),
+                                "test_1, getTotalFunctionDeclarations() and getTotalCoveredFunctionDeclarations()");
         }
 
         private PrismCodeCoverage codeCoverage(String file_path) throws Exception {
@@ -34,8 +36,8 @@ public class CoverageDeclarationTest {
 
                 PrismProgramVisitor prismVisitor = new PrismProgramVisitor();
                 PrismProgram prism_program = (PrismProgram) prismVisitor.visit(AST);
-		PrismInterpreter prism_interpreter = new PrismInterpreter(prism_program.getProgram());
-		prism_interpreter.interpret();
+                PrismInterpreter prism_interpreter = new PrismInterpreter(prism_program.getProgram());
+                prism_interpreter.interpret();
                 PrismCodeCoverage prism_coverage = new PrismCodeCoverage(prism_program);
                 return prism_coverage;
         }

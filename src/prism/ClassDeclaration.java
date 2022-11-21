@@ -3,7 +3,7 @@ package prism;
 public class ClassDeclaration implements Declaration {
         private String className;
         private ClassBodyDeclaration classBody;
-	private boolean executed = false;
+        private boolean executed = false;
 
         ClassDeclaration() {
 

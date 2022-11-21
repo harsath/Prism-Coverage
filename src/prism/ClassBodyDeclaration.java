@@ -3,7 +3,7 @@ package prism;
 public class ClassBodyDeclaration implements Declaration {
         private AttributeDeclaration attributes;
         private MethodDeclaration methods;
-	private boolean executed = false;
+        private boolean executed = false;
 
         ClassBodyDeclaration() {
                 this.attributes = new AttributeDeclaration();

@@ -19,29 +19,29 @@ public class AdditionSubtractionExpression implements Expression {
 
 	@Override
 	public void setIsExecuted(boolean value) {
-		this.executed = value;	
+		this.executed = value;
 	}
 
 	public Expression getLeft() {
 		return left;
 	}
-	
+
 	public Expression getRight() {
 		return right;
 	}
-	
+
 	public void setLeft(Expression left) {
 		this.left = left;
 	}
-	
+
 	public void setRight(Expression right) {
 		this.right = right;
 	}
-	
+
 	public boolean isAddition() {
 		return addition;
 	}
-	
+
 	public void setIsAddition(boolean addition) {
 		this.addition = addition;
 	}

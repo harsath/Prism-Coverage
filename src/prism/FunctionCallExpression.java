@@ -3,7 +3,7 @@ package prism;
 public class FunctionCallExpression implements Expression {
         private FunctionParamListExpression functionParam;
         private String functionName;
-	private boolean executed = false;
+        private boolean executed = false;
 
         FunctionCallExpression() {
                 this.functionParam = null;
@@ -39,7 +39,7 @@ public class FunctionCallExpression implements Expression {
         public String toString() {
                 String returner = new String();
                 returner += functionName + "(";
-                if (functionParam != null){
+                if (functionParam != null) {
                         returner += functionParam.toString();
                 }
                 returner += ")";

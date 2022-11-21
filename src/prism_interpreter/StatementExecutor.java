@@ -21,7 +21,8 @@ public class StatementExecutor {
 	// Execution functions returns a value, we return that as AtomType
 	// `AtomType` is actual value of `executeStatements()`, and `Boolean` says if we
 	// received `AtomType` as a result of a `RETURN` statement or not.
-	public Pair<AtomType, Boolean> executeStatements(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, List<Statement> statements) throws Exception {
+	public Pair<AtomType, Boolean> executeStatements(Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers, List<Statement> statements) throws Exception {
 		// First
 		Pair<AtomType, Boolean> returner = new Pair<AtomType, Boolean>(new VoidType(), false);
 		for (Statement statement : statements) {
@@ -29,29 +30,22 @@ public class StatementExecutor {
 				return returner;
 			}
 			if (statement instanceof VariableDeclarationStatement) {
-				statement.setIsExecuted(true);
 				variableDeclarationStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof AssignmentStatement) {
-				statement.setIsExecuted(true);
 				assignmentStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ReturnStatement) {
-				statement.setIsExecuted(true);
 				returnStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				break;
 			} else if (statement instanceof IfElseStatement) {
-				statement.setIsExecuted(true);
 				ifElseStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b) {
 					return returner;
 				}
 			} else if (statement instanceof BlockStatement) {
-				statement.setIsExecuted(true);
 				blockStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ExpressionStatement) {
-				statement.setIsExecuted(true);
 				expressionStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
 			} else if (statement instanceof ForLoopStatement) {
-				statement.setIsExecuted(true);
 				forLoopStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b) {
 					return returner;
@@ -92,8 +86,10 @@ public class StatementExecutor {
 		}
 	}
 
-	private void variableDeclarationStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
+	private void variableDeclarationStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
 		VariableDeclarationStatement var_decl_stmt = (VariableDeclarationStatement) statement;
+		var_decl_stmt.setIsExecuted(true);
 		if (globalIdentifiers.containsKey(var_decl_stmt.getId())
 				|| scopeIdentifiers.containsKey(var_decl_stmt.getId())) {
 			throw new RuntimeException("Variable already declared");
@@ -101,134 +97,168 @@ public class StatementExecutor {
 		Expression expr = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
 				var_decl_stmt.getExpression());
 		if (expr instanceof IntegerAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(), new IntegerType(((IntegerAtomExpression) expr).getValue()));
+			scopeIdentifiers.put(var_decl_stmt.getId(),
+					new IntegerType(((IntegerAtomExpression) expr).getValue()));
 		} else if (expr instanceof BooleanAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(), new BooleanType(((BooleanAtomExpression) expr).getValue()));
+			scopeIdentifiers.put(var_decl_stmt.getId(),
+					new BooleanType(((BooleanAtomExpression) expr).getValue()));
 		} else if (expr instanceof StringAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(), new StringType(((StringAtomExpression) expr).getValue()));
+			scopeIdentifiers.put(var_decl_stmt.getId(),
+					new StringType(((StringAtomExpression) expr).getValue()));
 		} else {
 			throw new RuntimeException("Unsupported type in variable declaration");
 		}
 	}
 
+	private void assignmentStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		AssignmentStatement assign_stmt = (AssignmentStatement) statement;
+		assign_stmt.setIsExecuted(true);
+		if (!(assign_stmt.getLhs() instanceof VariableAtomExpression)) {
+			throw new RuntimeException("LHS of an assignment statement must be a variable");
+		}
+		VariableAtomExpression lhs = (VariableAtomExpression) assign_stmt.getLhs();
+		Expression rhs = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
+				assign_stmt.getRhs());
+		if (rhs instanceof IntegerAtomExpression) {
+			setIdentifier(lhs.getId(), new IntegerType(((IntegerAtomExpression) rhs).getValue()),
+					globalIdentifiers, scopeIdentifiers);
+		} else if (rhs instanceof BooleanAtomExpression) {
+			setIdentifier(lhs.getId(), new BooleanType(((BooleanAtomExpression) rhs).getValue()),
+					globalIdentifiers, scopeIdentifiers);
+		} else if (rhs instanceof StringAtomExpression) {
+			setIdentifier(lhs.getId(), new StringType(((StringAtomExpression) rhs).getValue()),
+					globalIdentifiers, scopeIdentifiers);
+		} else {
+			throw new RuntimeException("Undefined type variable assignment");
+		}
+	}
 
-        private void assignmentStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
-                AssignmentStatement assign_stmt = (AssignmentStatement) statement;
-                assign_stmt.setIsExecuted(true);
-                if (!(assign_stmt.getLhs() instanceof VariableAtomExpression)) {
-                        throw new RuntimeException("LHS of an assignment statement must be a variable");
-                }
-                VariableAtomExpression lhs = (VariableAtomExpression) assign_stmt.getLhs();
-                Expression rhs = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, assign_stmt.getRhs());
-                if (rhs instanceof IntegerAtomExpression) {
-                        setIdentifier(lhs.getId(), new IntegerType(((IntegerAtomExpression) rhs).getValue()), globalIdentifiers, scopeIdentifiers);
-                } else if (rhs instanceof BooleanAtomExpression) {
-                        setIdentifier(lhs.getId(), new BooleanType(((BooleanAtomExpression) rhs).getValue()), globalIdentifiers, scopeIdentifiers);
-                } else if (rhs instanceof StringAtomExpression) {
-                        setIdentifier(lhs.getId(), new StringType(((StringAtomExpression) rhs).getValue()), globalIdentifiers, scopeIdentifiers);
-		}else {
-                        throw new RuntimeException("Undefined type variable assignment");
-                }
-        }
+	private void returnStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
+		ReturnStatement return_stmt = (ReturnStatement) statement;
+		return_stmt.setIsExecuted(true);
+		if (return_stmt.getExpression() == null) {
+			returner.a = new VoidType();
+			returner.b = true;
+			return;
+		}
+		Expression expression = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
+				return_stmt.getExpression());
+		returner.a = getAtomTypeFromExpression(expression);
+		returner.b = true;
+	}
 
-        private void returnStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
-                ReturnStatement return_stmt = (ReturnStatement) statement;
-                return_stmt.setIsExecuted(true);
-                if (return_stmt.getExpression() == null) {
-                        returner.a = new VoidType();
-                        returner.b = true;
-                        return;
-                }
-                Expression expression = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, return_stmt.getExpression());
-                returner.a = getAtomTypeFromExpression(expression);
-                returner.b = true;
-        }
-
-        private void ifElseStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
-                IfElseStatement if_else_stmt = (IfElseStatement) statement;
-                if_else_stmt.setIsExecuted(true);
-                Expression expr_condition = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, if_else_stmt.getExpr_condition());
-                if (!(expr_condition instanceof BooleanAtomExpression)) {
-                        throw new RuntimeException("Expression condition of If-Else statement should be a logical expression");
-                }
-                if (!(if_else_stmt.getIf_statement_block() instanceof BlockStatement)) {
-                        throw new RuntimeException("If statement must be enclosed within {}");
-                }
-                if ((if_else_stmt.getElse_statement_block() != null) && !(if_else_stmt.getElse_statement_block() instanceof BlockStatement)) {
-                        throw new RuntimeException("Else statement must be enclosed within {}");
-                }
-                BooleanType expr_condition_cast = (BooleanType) expr_condition;
-                if (expr_condition_cast.getValue()) {
-                        BlockStatement block_stmt = (BlockStatement) if_else_stmt.getIf_statement_block();
+	private void ifElseStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
+		IfElseStatement if_else_stmt = (IfElseStatement) statement;
+		if_else_stmt.setIsExecuted(true);
+		Expression expr_condition = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
+				if_else_stmt.getExpr_condition());
+		if (!(expr_condition instanceof BooleanAtomExpression)) {
+			throw new RuntimeException(
+					"Expression condition of If-Else statement should be a logical expression");
+		}
+		if (!(if_else_stmt.getIf_statement_block() instanceof BlockStatement)) {
+			throw new RuntimeException("If statement must be enclosed within {}");
+		}
+		if ((if_else_stmt.getElse_statement_block() != null)
+				&& !(if_else_stmt.getElse_statement_block() instanceof BlockStatement)) {
+			throw new RuntimeException("Else statement must be enclosed within {}");
+		}
+		BooleanType expr_condition_cast = (BooleanType) expr_condition;
+		if (expr_condition_cast.getValue()) {
+			BlockStatement block_stmt = (BlockStatement) if_else_stmt.getIf_statement_block();
 			block_stmt.setIsExecuted(true);
-                        StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
-                        Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers, scopeIdentifiers, block_stmt.getStatements());
-                        returner.a = stmt_return.a;
-                        returner.b = stmt_return.b;
-                } else if (if_else_stmt.getElse_statement_block() != null) {
-                        BlockStatement block_stmt = (BlockStatement) if_else_stmt.getElse_statement_block();
+			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+			Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers,
+					scopeIdentifiers, block_stmt.getStatements());
+			returner.a = stmt_return.a;
+			returner.b = stmt_return.b;
+		} else if (if_else_stmt.getElse_statement_block() != null) {
+			BlockStatement block_stmt = (BlockStatement) if_else_stmt.getElse_statement_block();
 			block_stmt.setIsExecuted(true);
-                        StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
-                        Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers, scopeIdentifiers, block_stmt.getStatements());
-                        returner.a = stmt_return.a;
-                        returner.b = stmt_return.b;
-                } else {
-                        return;
-                }
-        }
+			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+			Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers,
+					scopeIdentifiers, block_stmt.getStatements());
+			returner.a = stmt_return.a;
+			returner.b = stmt_return.b;
+		} else {
+			return;
+		}
+	}
 
-        private void blockStatementHandler(Statement statement, Map<String, AtomType> globalIdentifers, Map<String, AtomType> scopeIdentifiers) throws Exception {
-                BlockStatement block_stmt = (BlockStatement) statement;
-                StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
-                stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers, block_stmt.getStatements());
-        }
+	private void blockStatementHandler(Statement statement, Map<String, AtomType> globalIdentifers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		BlockStatement block_stmt = (BlockStatement) statement;
+		block_stmt.setIsExecuted(true);
+		StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+		stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers, block_stmt.getStatements());
+	}
 
-        private void expressionStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers) throws Exception {
-                ExpressionStatement expr_stmt = (ExpressionStatement) statement;
-                expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, expr_stmt.getExpression());
-        }
+	private void expressionStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		ExpressionStatement expr_stmt = (ExpressionStatement) statement;
+		expr_stmt.setIsExecuted(true);
+		expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, expr_stmt.getExpression());
+	}
 
-        private void forLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
-                ForLoopStatement for_stmt = (ForLoopStatement) statement;
-                VariableDeclarationStatement for_decl_stmt = for_stmt.getInitBlock();
-                Expression for_condition_expr = for_stmt.getConditionalBlock();
-                AssignmentStatement for_updation_stmt = for_stmt.getUpdationBlock();
-                List<Statement> for_block_stmt = for_stmt.getStatementBlock().getStatements();
+	private void forLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
+		ForLoopStatement for_stmt = (ForLoopStatement) statement;
+		VariableDeclarationStatement for_decl_stmt = for_stmt.getInitBlock();
+		Expression for_condition_expr = for_stmt.getConditionalBlock();
+		AssignmentStatement for_updation_stmt = for_stmt.getUpdationBlock();
+		List<Statement> for_block_stmt = for_stmt.getStatementBlock().getStatements();
 
 		variableDeclarationStatementHandler(for_decl_stmt, globalIdentifiers, scopeIdentifiers);
-		Expression for_condition_expr_exec = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, for_condition_expr);
+		Expression for_condition_expr_exec = expressionExecutor.executeExpression(globalIdentifiers,
+				scopeIdentifiers, for_condition_expr);
 		if (!(for_condition_expr_exec instanceof BooleanAtomExpression)) {
-			throw new RuntimeException("Updation block of FOR loop must be a logical expression or relational expression that returns a boolean");
+			throw new RuntimeException(
+					"Updation block of FOR loop must be a logical expression or relational expression that returns a boolean");
 		}
 		BooleanAtomExpression for_condition_expr_exec_cast = (BooleanAtomExpression) for_condition_expr_exec;
 		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
+		if (for_condition_expr_exec_cast.getValue()) {
+			for_stmt.getStatementBlock().setIsExecuted(true);
+		}
 		while (for_condition_expr_exec_cast.getValue()) {
-			Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers,
-					for_block_stmt);
+			Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers,
+					scopeIdentifiers, for_block_stmt);
 			if (ret.b) {
 				returner.a = ret.a;
 				returner.b = ret.b;
 				return;
 			}
 			assignmentStatementHandler(for_updation_stmt, globalIdentifiers, scopeIdentifiers);
-			for_condition_expr_exec_cast = (BooleanAtomExpression) expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, for_condition_expr);
+			for_condition_expr_exec_cast = (BooleanAtomExpression) expressionExecutor
+					.executeExpression(globalIdentifiers, scopeIdentifiers, for_condition_expr);
 		}
 	}
 
-        private void whileLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
-                WhileLoopStatement while_stmt = (WhileLoopStatement) statement;
-                while_stmt.setIsExecuted(true);
-                Expression while_expr = while_stmt.getExpressionBlock();
-                List<Statement> while_block_stmt = while_stmt.getStatementBlock().getStatements();
-                Expression while_condition_expr = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, while_expr);
+	private void whileLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean> returner) throws Exception {
+		WhileLoopStatement while_stmt = (WhileLoopStatement) statement;
+		while_stmt.setIsExecuted(true);
+		Expression while_expr = while_stmt.getExpressionBlock();
+		List<Statement> while_block_stmt = while_stmt.getStatementBlock().getStatements();
+		Expression while_condition_expr = expressionExecutor.executeExpression(globalIdentifiers,
+				scopeIdentifiers, while_expr);
 		if (!(while_condition_expr instanceof BooleanAtomExpression)) {
-			throw new RuntimeException("Condition block of WHILE loop must be a logical expression or relational expression that returns a boolean");
+			throw new RuntimeException(
+					"Condition block of WHILE loop must be a logical expression or relational expression that returns a boolean");
 		}
 		BooleanAtomExpression while_condition_expr_cast = (BooleanAtomExpression) while_condition_expr;
 		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
+		if (while_condition_expr_cast.getValue()) {
+			while_stmt.getStatementBlock().setIsExecuted(true);
+		}
 		while (while_condition_expr_cast.getValue()) {
-			Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers, while_block_stmt);
-			while_condition_expr_cast = (BooleanAtomExpression) expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, while_expr);
+			Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers,
+					scopeIdentifiers, while_block_stmt);
+			while_condition_expr_cast = (BooleanAtomExpression) expressionExecutor
+					.executeExpression(globalIdentifiers, scopeIdentifiers, while_expr);
 			if (ret.b) {
 				returner.a = ret.a;
 				returner.b = ret.b;

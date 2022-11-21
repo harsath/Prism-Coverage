@@ -75,7 +75,7 @@ public class InterpreterExprTest {
 					"test_pow failed. Return value: " + return_value_int.getValue());
 		}
 	}
-	
+
 	public void test_print() throws Exception {
 		String input_file = test_root + "test_print.prism";
 		AtomType return_value = interpretGetAtomType(input_file);
@@ -85,7 +85,7 @@ public class InterpreterExprTest {
 					"test_print failed. Return value: " + return_value_string);
 		}
 	}
-	
+
 	public void test_println() throws Exception {
 		String input_file = test_root + "test_println.prism";
 		AtomType return_value = interpretGetAtomType(input_file);

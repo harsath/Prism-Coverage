@@ -8,14 +8,14 @@ public class IntegerAtomExpression extends IntegerType implements Expression {
 	}
 
 	@Override
-        public void setIsExecuted(boolean value) {
-                this.executed = value;
-        }
+	public void setIsExecuted(boolean value) {
+		this.executed = value;
+	}
 
-        @Override
-        public boolean getIsExecuted() {
-                return this.executed;
-        }
+	@Override
+	public boolean getIsExecuted() {
+		return this.executed;
+	}
 
 	@Override
 	public String toString() {

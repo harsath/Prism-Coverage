@@ -8,18 +8,18 @@ public class FunctionDeclaration implements Declaration {
 	private boolean executed = false;
 
 	public FunctionDeclaration() {
-		this.functionParamDecl = null;		
+		this.functionParamDecl = null;
 	}
 
 	@Override
-        public void setIsExecuted(boolean value) {
-                this.executed = value;
-        }
+	public void setIsExecuted(boolean value) {
+		this.executed = value;
+	}
 
-        @Override
-        public boolean getIsExecuted() {
-                return this.executed;
-        }
+	@Override
+	public boolean getIsExecuted() {
+		return this.executed;
+	}
 
 	public ParameterListDeclaration getFunctionParamDecl() {
 		return this.functionParamDecl;
