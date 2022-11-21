@@ -71,4 +71,13 @@ public class FunctionDeclaration implements Declaration {
 		returner += "\n}";
 		return returner;
 	}
+	public String functionSignature() {
+		String returner = new String();
+		returner += "FUNCTION " + returnType.toString() + " " + functionName + " (";
+		if (functionParamDecl != null) {
+			returner += functionParamDecl.toString();
+		}
+		returner += ")";
+		return returner;
+	}
 }
