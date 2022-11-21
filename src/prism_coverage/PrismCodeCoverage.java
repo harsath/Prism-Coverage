@@ -233,7 +233,7 @@ public class PrismCodeCoverage {
 					
         
             String result = sb.toString();
-        	List<Declaration> decls = prism_program.getProgram();
+            List<Declaration> decls = prism_program.getProgram();
             for (Declaration decl : decls) {
             	if (decl.getIsExecuted()) {
             		if (decl instanceof FunctionDeclaration) {
