@@ -1,0 +1,22 @@
+FUNCTION INT power(INT valx, INT valy){
+	IF (valx < valy) {
+		RETURN 100;
+	}ELSE{
+		RETURN POW(valx,valy);
+	}
+}
+
+FUNCTION INT test_pow_if(INT val1, INT val2) {
+	IF (val1 == val2){
+		INT x = POW(val1, val2);
+		RETURN x;
+	} ELSE {
+		RETURN power(5,10);
+	}
+}
+
+
+FUNCTION INT main() {
+	INT result = test_pow_if(2, 2); //2 to the power of 2, 2^2
+	RETURN result;
+}

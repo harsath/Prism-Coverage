@@ -5,9 +5,20 @@ import java.util.List;
 
 public class MethodDeclaration implements Declaration {
        private List<FunctionDeclaration> methods;  
+       private boolean executed = false;
 
        MethodDeclaration() {
                 this.methods = new ArrayList<>();
+       }
+
+       @Override
+       public void setIsExecuted(boolean value) {
+               this.executed = value;
+       }
+
+       @Override
+       public boolean getIsExecuted() {
+               return this.executed;
        }
 
        public void addMethod(FunctionDeclaration method) {

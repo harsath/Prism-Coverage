@@ -1,0 +1,14 @@
+FUNCTION INT test_max_min(INT val1, INT val2) {
+	IF (val1 > val2) {
+       	INT x = MAX(val1 + 10, val2);
+       	RETURN x;
+    } ELSE {
+    	INT y = MIN(val1, val2);
+    	RETURN y;
+    }
+}
+
+FUNCTION INT main() {
+	INT result = test_max_min(5, 10);
+	RETURN result;
+}

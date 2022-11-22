@@ -1,5 +1,13 @@
 INT global_var1 = 100;
 
+FUNCTION INT un_covered_fn(INT val1, INT val2, BOOL val3) {
+       IF (val3) {
+             RETURN val2 + val1;
+       } ELSE {
+             RETURN val2 * 2 + val1 * 2;
+       }
+}
+
 FUNCTION INT add(INT val1, INT val2, BOOL val3) {
        IF (val3) {
              RETURN val1 + val2;

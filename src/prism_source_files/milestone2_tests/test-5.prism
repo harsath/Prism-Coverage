@@ -1,0 +1,39 @@
+FUNCTION INT while_loop(INT value1) {
+	INT returner = value1;
+	INT i = 1;
+	WHILE (i < 5) {
+		returner = returner * 3;
+		i = i + 1;
+	}
+	IF (returner > 80) {
+		WHILE(i < 10) {
+			returner = returner + 3;
+			i = i + 2;
+		} 
+		returner = returner + add(returner, false);
+		
+	}ELSE {
+		RETURN 100;
+	}
+	
+	
+	RETURN returner;
+}
+
+FUNCTION INT add (INT val1, BOOL val2) {
+	IF (val2){
+		RETURN val1;
+	}ELSE {
+		FOR (INT i = 1; i < 5; i = i + 1;) {
+			val1 = val1 + val1;
+		}
+		RETURN val1;
+	}
+}
+
+FUNCTION INT main() {
+	INT return_value = while_loop(1);
+
+	// expected: 81
+	RETURN return_value;
+}

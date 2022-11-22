@@ -5,12 +5,24 @@ public class ForLoopStatement implements Statement {
         private Expression conditionalBlock;
         private AssignmentStatement updationBlock;
         private BlockStatement statementBlock;
+        private boolean executed = false;
 
-        public ForLoopStatement(VariableDeclarationStatement initBlock, Expression conditionalBlock, AssignmentStatement updationBlock, BlockStatement statementBlock) {
+        public ForLoopStatement(VariableDeclarationStatement initBlock, Expression conditionalBlock,
+                        AssignmentStatement updationBlock, BlockStatement statementBlock) {
                 this.initBlock = initBlock;
                 this.conditionalBlock = conditionalBlock;
                 this.updationBlock = updationBlock;
                 this.statementBlock = statementBlock;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public BlockStatement getStatementBlock() {
@@ -53,11 +65,11 @@ public class ForLoopStatement implements Statement {
                 returner += init_block_str + " " + conditionalBlock.toString() + "; " + updationBlock.toString();
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
-                        returner += "\t\t";
+                        returner += "\t";
                         returner += stmt.toString();
                         returner += "\n";
                 }
-                returner += "\t}";
+                returner += "}";
                 return returner;
         }
 

@@ -3,10 +3,21 @@ package prism;
 public class AndExpression implements Expression {
 	private Expression left;
 	private Expression right;
+	private boolean executed = false;
 
 	public AndExpression(Expression left, Expression right) {
 		this.left = left;
 		this.right = right;
+	}
+
+	@Override
+	public boolean getIsExecuted() {
+		return this.executed;
+	}
+
+	@Override
+	public void setIsExecuted(boolean value) {
+		this.executed = value;
 	}
 
 	public Expression getLeft() {
