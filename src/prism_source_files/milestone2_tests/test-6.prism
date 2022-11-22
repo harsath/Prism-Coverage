@@ -1,0 +1,21 @@
+FUNCTION INT while_loop_if(INT value1) {
+	INT returner = value1;
+	INT i = 1;
+	IF ( value1 > 2 ) {
+		WHILE (i < 10) {
+			returner = returner + 3;
+			i = i + 2;
+		}
+		RETURN returner;
+	} ELSE {
+		RETURN value1;
+	}
+	
+}
+
+FUNCTION INT main() {
+	INT return_value = while_loop_if(1);
+
+	// expected: 81
+	RETURN return_value;
+}
