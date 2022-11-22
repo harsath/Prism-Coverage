@@ -27,6 +27,7 @@ public class PrismCodeCoverage {
                 populateTotalAndCoveredDeclarations();
                 populateSourceCodeTotalAndCovered();
                 // TODO: we need same for classes once we support operations over classes
+                writeHTMLOutput("src/app/output.html");
         }
 
         public Integer getTotalSourceCode() {
@@ -266,6 +267,7 @@ public class PrismCodeCoverage {
                 out.write(body);
                 out.close();
         }
+        
 
         public String statementsToString(BlockStatement statements) {
                 String returner = new String();
@@ -277,15 +279,16 @@ public class PrismCodeCoverage {
                                         if (if_cast.getIsExecuted()) {
                                                 returner += "<div class=\"covered\">";
                                                 returner += "<div class=\"tabbed\">IF (" + if_cast.getExpr_condition()
-                                                                + ") { </br>" + "</div>";
-
+                                                                + ") { </br>" ;
+                                                
                                                 returner += statementsToString(
                                                                 (BlockStatement) if_cast.getIf_statement_block());
                                                 returner += "</div>";
                                         } else {
                                                 returner += "<div class=\"not-covered\">";
-                                                returner += "<div class=\"tabbed\">" + statement.toString() + "</div>";
-                                                returner += "</div>";
+                                                
+                                                returner += "<div class=\"tabbed\">" + statementsToString((BlockStatement)if_cast.getElse_statement_block()).toString() + "</div>";
+                                                returner += "</div>" ;
                                         }
                                         returner += "<div class=\"covered\">";
                                         returner += "<div class=\"tabbed\">} </div>";
@@ -293,7 +296,7 @@ public class PrismCodeCoverage {
                                         if (if_cast.getElse_statement_block().getIsExecuted()) {
                                                 returner += "<div class=\"covered\">";
                                                 returner += "<div class=\"tabbed\">ELSE { </br>"
-                                                                + if_cast.getElse_statement_block() + "</br>}</br>"
+                                                                + statementsToString((BlockStatement)if_cast.getElse_statement_block()).toString() + "</br>}</br>"
                                                                 + "</div>";
                                                 returner += "</div>";
                                                 // returner +=
@@ -307,24 +310,43 @@ public class PrismCodeCoverage {
 
                                         }
 
-                                } else {
-
-                                        if (statement.getIsExecuted()) {
-                                                returner += "<div class=\"covered\">";
-                                                returner += "<div class=\"tabbed\">	" + statement.toString() + "</div>";
-                                                returner += "</div>";
-                                        } else {
-                                                returner += "<div class=\"not-covered\">";
-                                                returner += "<div class=\"tabbed\">	" + statement.toString()
-                                                                + "</br></div>";
-                                                returner += "</div>";
-                                        }
+                                } else if (statement instanceof ForLoopStatement) {
+                                	if ( ((ForLoopStatement)statement).getStatementBlock().getIsExecuted()) { // If it is executed
+                                		returner += statementToString(statement, true);
+                                	} else {
+                                		returner += statementToString(statement, false);
+                                	}
+                                } else if (statement instanceof WhileLoopStatement) {
+                                	if ( ((WhileLoopStatement)statement).getStatementBlock().getIsExecuted()) { // If it is executed
+                                		returner += statementToString(statement, true);
+                                	} else {
+                                		returner += statementToString(statement, false);
+                                	}
+                                }else {
+                                	returner += statementToString(statement, statement.getIsExecuted());
                                 }
                         }
                 }
                 return returner;
         }
 
+        
+        public String statementToString(Statement statement, Boolean covered) {
+        	String result = new String();
+        	if (covered) {
+                        result += "<div class=\"covered\">";
+                        result += "<div class=\"tabbed\">" + statement.toString() + "</div>";
+                        //result +=   statement.toString() ;
+                        result += "</div>";
+                } else {
+                	result += "<div class=\"not-covered\">";
+                	result += "<div class=\"tabbed\">" + statement.toString() + "</div>";
+                	result += "</div>";
+                }
+        	return result;
+        }
+        
+        
         public double calcCoveragePercentage(Integer covered, Integer total) {
                 return ((double) covered / (double) total) * 100;
         }

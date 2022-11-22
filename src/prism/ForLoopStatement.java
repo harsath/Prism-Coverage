@@ -65,11 +65,11 @@ public class ForLoopStatement implements Statement {
                 returner += init_block_str + " " + conditionalBlock.toString() + "; " + updationBlock.toString();
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
-                        returner += "\t\t";
+                        returner += "\t";
                         returner += stmt.toString();
                         returner += "\n";
                 }
-                returner += "\t}";
+                returner += "}";
                 return returner;
         }
 

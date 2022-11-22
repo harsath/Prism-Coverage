@@ -42,11 +42,11 @@ public class WhileLoopStatement implements Statement {
                 returner += expressionBlock.toString();
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
-                        returner += "\t\t";
+                        returner += "\t";
                         returner += stmt.toString();
                         returner += "\n";
                 }
-                returner += "\t}";
+                returner += "}";
                 return returner;
         }
 }
