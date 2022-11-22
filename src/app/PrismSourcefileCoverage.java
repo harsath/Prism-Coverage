@@ -29,9 +29,7 @@ public class PrismSourcefileCoverage {
 		PrismInterpreter prism_interpreter = new PrismInterpreter(prism_program.getProgram());
 		prism_interpreter.interpret();
                 PrismCodeCoverage prism_coverage = new PrismCodeCoverage(prism_program);
-                System.out.println("Total fns: " + prism_coverage.getTotalFunctionDeclarations());
-                System.out.println("Total covered fns: " + prism_coverage.getTotalCoveredFunctionDeclarations());
-                System.out.println("Total var decls: " + prism_coverage.getTotalGlobalVariableDeclarations());
-                System.out.println("Total covered var decls: " + prism_coverage.getTotalCoveredGlobalVariableDeclarations());
+                File test = new File(input_file);
+                prism_coverage.writeHTMLOutput("Coverage-"+test.getName() +".html");
         }
 }
