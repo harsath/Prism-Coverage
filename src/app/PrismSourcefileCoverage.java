@@ -33,5 +33,7 @@ public class PrismSourcefileCoverage {
                 System.out.println("Total covered fns: " + prism_coverage.getTotalCoveredFunctionDeclarations());
                 System.out.println("Total var decls: " + prism_coverage.getTotalGlobalVariableDeclarations());
                 System.out.println("Total covered var decls: " + prism_coverage.getTotalCoveredGlobalVariableDeclarations());
+                File test = new File(input_file);
+                prism_coverage.writeHTMLOutput("src/prism_source_files/milestone2_tests/Coverage-"+test.getName() +".html");
         }
 }
