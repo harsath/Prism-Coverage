@@ -27,7 +27,6 @@ public class PrismCodeCoverage {
                 populateTotalAndCoveredDeclarations();
                 populateSourceCodeTotalAndCovered();
                 // TODO: we need same for classes once we support operations over classes
-                writeHTMLOutput("src/app/output.html");
         }
 
         public Integer getTotalSourceCode() {
