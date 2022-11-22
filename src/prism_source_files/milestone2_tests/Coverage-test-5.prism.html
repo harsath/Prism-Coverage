@@ -1,0 +1,41 @@
+<html><head><style>
+                        .color-red {
+                                color: red;
+                        }
+                        .covered {
+                                background-color: #50DBB4;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+                        }
+                        .not-covered {
+                                background-color: #FF6263;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+                        }
+						   .tabbed {
+                                padding-left: 3em;
+							}
+	                        #main-body {
+                                width: 70%;
+                        }
+                </style><title>Code Coverage Result</title></head><body></body></html><div id="header-text">
+<p>Total Statements: <span class="color-red">3</span></p>
+<p>Total Statements Covered:<span class="color-red">3</span></p>
+<p>Total Statement Coverage<code></code>: <span class="color-red">100%</span></p>
+<p>Total Desicions : <span class="color-red">4</span></p>
+<p>Total Desicions Covered: <span class="color-red">2</span></p>
+<p>Total Desicion Coverage<code></code>: <span class="color-red">50%</span></p>
+ </div><p class="covered">FUNCTION INT while_loop (INT value1) { </p><div class="covered"><div class="tabbed">INT returner = value1;
+</div></div><div class="covered"><div class="tabbed">INT i = 1;
+</div></div><div class="covered"><div class="tabbed">WHILE (i <  5) {
+	returner = returner * 3;
+	i = i + 1;
+}</div></div><div class="covered"><div class="tabbed">IF (returner > 80) { </br><div class="covered"><div class="tabbed">WHILE (i <  10) {
+	returner = returner + 3;
+	i = i + 2;
+}</div></div><div class="covered"><div class="tabbed">returner = returner + add(returner, false);</div></div></div><div class="covered"><div class="tabbed">} </div></div><div class="not-covered"><div class="tabbed">ELSE { </br>	RETURN 100;</br>}</br></div></div><div class="covered"><div class="tabbed">RETURN returner;</div></div><div class="covered">} </div><p class="covered">FUNCTION INT add (INT val1, BOOL val2) { </p><div class="covered"><div class="tabbed">IF (val2) { </br><div class="not-covered"><div class="tabbed">RETURN val1;</div></div></div><div class="covered"><div class="tabbed">} </div></div><div class="covered"><div class="tabbed">ELSE { </br><div class="covered"><div class="tabbed">FOR (null i = 1; i <  5; i = i + 1;) {
+	val1 = val1 + val1;
+}</div></div><div class="covered"><div class="tabbed">RETURN val1;</div></div></br>}</br></div></div><div class="covered">} </div><p class="covered">FUNCTION INT main () { </p><div class="covered"><div class="tabbed">INT return_value = while_loop(1);
+</div></div><div class="covered"><div class="tabbed">RETURN return_value;</div></div><div class="covered">} </div>
