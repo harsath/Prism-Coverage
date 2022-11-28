@@ -192,7 +192,7 @@ public class PrismCodeCoverage {
 				+ "                                padding: 1px;\n"
 				+ "								   white-space:pre;\n}"
 				+ "			   .part-covered {\n"
-				+ "                                background-color: #F6FF00;\\n\"\n"
+				+ "                                background-color: #F6FF00;\n\n"
 				+ "				   margin-bottom: 0px;\n"
 				+ "				   padding: 1px;\n"
 				+ "                                                               white-space:pre;\n}"
@@ -216,28 +216,28 @@ public class PrismCodeCoverage {
 		sb.append("</html>");
 
 		String input_file_name = new String();
-		sb.append("<div id=\"header-text\">\n" + "<p>Total Statements: <span class=\"color-red\">"
+		sb.append("<div id='header-text'>\n" + "<p>Total Statements: <span class='color-red'>"
 				+ getTotalFunctionDeclarations() + "</span></p>\n"
-				+ "<p>Total Statements Covered:<span class=\"color-red\">"
+				+ "<p>Total Statements Covered:<span class='color-red'>"
 				+ getTotalCoveredFunctionDeclarations() + "</span></p>\n"
 				+ "<p>Total Statement Coverage<code>" + input_file_name
-				+ "</code>: <span class=\"color-red\">"
+				+ "</code>: <span class='color-red'>"
 				+ (int) calcCoveragePercentage(this.getTotalCoveredFunctionDeclarations(),
 						this.getTotalFunctionDeclarations())
 				+ "%</span></p>\n"
 
-				+ "<p>Total Desicions : <span class=\"color-red\">" + getTotalIfElse() + "</span></p>\n"
-				+ "<p>Total Desicions Covered: <span class=\"color-red\">" + getTotalCoveredIfElse()
+				+ "<p>Total Desicions : <span class='color-red'>" + getTotalIfElse() + "</span></p>\n"
+				+ "<p>Total Desicions Covered: <span class='color-red'>" + getTotalCoveredIfElse()
 				+ "</span></p>\n");
 		if (getTotalIfElse() > 0) {
 			sb.append("<p>Total Desicion Coverage<code>" + input_file_name
-					+ "</code>: <span class=\"color-red\">"
+					+ "</code>: <span class='color-red'>"
 					+ (int) calcCoveragePercentage(this.getTotalCoveredIfElse(),
 							this.getTotalIfElse())
 					+ "%</span></p>\n </div>");
 		} else {
 			sb.append("<p>Total Desicion Coverage<code>" + input_file_name
-					+ "</code>: <span class=\"color-red\"> 100%</span></p>\n </div>");
+					+ "</code>: <span class='color-red'> 100%</span></p>\n </div>");
 		}
 
 		String result = sb.toString();
@@ -248,12 +248,12 @@ public class PrismCodeCoverage {
 					FunctionDeclaration funcDecl = (FunctionDeclaration) decl;
 					String funcSignature = funcDecl.functionSignature();
 
-					result += "<p class=\"covered\">" + funcSignature + " { </p>";
+					result += "<p class='covered'>" + funcSignature + " { </p>";
 					result += statementsToString(funcDecl.getFunctionBody());
-					result += "<div class=\"covered\">} </div>";
+					result += "<div class='covered'>} </div>";
 				}
 			} else {
-				result += "<p class=\"not-covered\">" + decl.toString() + "</p>";
+				result += "<p class='not-covered'>" + decl.toString() + "</p>";
 			}
 		}
 		return result;
@@ -280,33 +280,33 @@ public class PrismCodeCoverage {
 					IfElseStatement if_cast = (IfElseStatement) statement;
 					if (if_cast.getIsExecuted()
 							&& !if_cast.getElse_statement_block().getIsExecuted()) {
-						returner += "<div class=\"covered\">";
-						returner += "<div class=\"tabbed\">IF (" + if_cast.getExpr_condition()
+						returner += "<div class='covered'>";
+						returner += "<div class='tabbed'>IF (" + if_cast.getExpr_condition()
 								+ ") { </br>";
 
 						returner += statementsToString(
 								(BlockStatement) if_cast.getIf_statement_block());
 						returner += "</div>";
 					} else if (if_cast.getIsExecuted()) {
-						returner += "<div class=\"part-covered\"><div class=\"tabbed\">IF ("
+						returner += "<div class='part-covered'><div class='tabbed'>IF ("
 								+ if_cast.getExpr_condition() + "){ </div></div>";
 
 						returner += statementsToString(
 								(BlockStatement) if_cast.getIf_statement_block());
 					} else {
-						returner += "<div class=\"not-covered\">";
-						returner += "<div class=\"tabbed\">"
+						returner += "<div class='not-covered'>";
+						returner += "<div class='tabbed'>"
 								+ statementsToString((BlockStatement) if_cast
 										.getElse_statement_block()).toString()
 								+ "</div>";
 						returner += "</div>";
 					}
-					returner += "<div class=\"covered\">";
-					returner += "<div class=\"tabbed\">} </div>";
+					returner += "<div class='covered'>";
+					returner += "<div class='tabbed'>} </div>";
 					returner += "</div>";
 					if (if_cast.getElse_statement_block().getIsExecuted()) {
-						returner += "<div class=\"covered\">";
-						returner += "<div class=\"tabbed\">ELSE { </br>"
+						returner += "<div class='covered'>";
+						returner += "<div class='tabbed'>ELSE { </br>"
 								+ statementsToString((BlockStatement) if_cast
 										.getElse_statement_block()).toString()
 								+ "</br>}</br>" + "</div>";
@@ -314,8 +314,8 @@ public class PrismCodeCoverage {
 						// returner +=
 						// statementsToString((BlockStatement)if_cast.getElse_statement_block());
 					} else {
-						returner += "<div class=\"not-covered\">";
-						returner += "<div class=\"tabbed\">ELSE { </br>"
+						returner += "<div class='not-covered'>";
+						returner += "<div class='tabbed'>ELSE { </br>"
 								+ if_cast.getElse_statement_block() + "</br>}</br>"
 								+ "</div>";
 						returner += "</div>";
@@ -351,13 +351,13 @@ public class PrismCodeCoverage {
 	public String statementToString(Statement statement, Boolean covered) {
 		String result = new String();
 		if (covered) {
-			result += "<div class=\"covered\">";
-			result += "<div class=\"tabbed\">" + statement.toString() + "</div>";
+			result += "<div class='covered'>";
+			result += "<div class='tabbed'>" + statement.toString() + "</div>";
 			// result += statement.toString() ;
 			result += "</div>";
 		} else {
-			result += "<div class=\"not-covered\">";
-			result += "<div class=\"tabbed\">" + statement.toString() + "</div>";
+			result += "<div class='not-covered'>";
+			result += "<div class='tabbed'>" + statement.toString() + "</div>";
 			result += "</div>";
 		}
 		return result;
