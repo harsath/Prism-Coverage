@@ -1,6 +1,8 @@
 package prism;
 
-public class BooleanType implements AtomType {
+import java.io.Serializable;
+
+public class BooleanType implements AtomType, Serializable {
 	private boolean value;
 	private boolean isInitialized;
 

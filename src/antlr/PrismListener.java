@@ -312,6 +312,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ObjectCreationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectCreationExpr(PrismParser.ObjectCreationExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectCreationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectCreationExpr(PrismParser.ObjectCreationExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code AndExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -323,6 +335,18 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAndExpr(PrismParser.AndExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectInvocationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectInvocationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BuiltinFunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -587,6 +611,30 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectCreationExpression}
+	 * labeled alternative in {@link PrismParser#object_creation_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectCreationExpression}
+	 * labeled alternative in {@link PrismParser#object_creation_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectInvocationExpression}
+	 * labeled alternative in {@link PrismParser#object_invocation_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectInvocationExpression(PrismParser.ObjectInvocationExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectInvocationExpression}
+	 * labeled alternative in {@link PrismParser#object_invocation_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectInvocationExpression(PrismParser.ObjectInvocationExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PrismParser#bool}.
 	 * @param ctx the parse tree

@@ -26,5 +26,7 @@ FUNCTION INT main() {
 	INT return_one = class_one.methodTwo();
 	INT return_two = class_one.methodOne(10);
 
-	RETURN return_two;
+	INT value_attr_one = class_one.attr_two;
+
+	RETURN class_one.attr_one;
 }

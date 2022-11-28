@@ -1,6 +1,8 @@
 package prism;
 
-public class IntegerType implements AtomType {
+import java.io.Serializable;
+
+public class IntegerType implements AtomType, Serializable {
 	private int value;
 	private boolean isInitialized;
 
