@@ -5,4 +5,6 @@ FUNCTION INT main()  {
 	PRINT(x);
 	BOOL y = false;
 	PRINT(y);
+
+	// expected: 9false60false
 }
