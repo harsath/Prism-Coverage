@@ -5,7 +5,7 @@ public class FunctionCallExpression implements Expression {
         private String functionName;
         private boolean executed = false;
 
-        FunctionCallExpression() {
+        public FunctionCallExpression() {
                 this.functionParam = null;
         }
 

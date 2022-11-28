@@ -6,6 +6,7 @@ import prism.*;
 
 public class StatementExecutor {
 	private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;
+	private Pair<Map<String, Map<String, FunctionDeclaration>>, Map<String, Map<String, AtomType>>> classSymbolTable;
 	private ExpressionExecutor expressionExecutor;
 
 	// Execution of functions with parameters. Parameters will be passed in as a
@@ -13,9 +14,12 @@ public class StatementExecutor {
 	// that is readily available for statement execution. Global variables are also
 	// passed passed this mannar
 	// since our grammar supports variable declaration in `Declaration` block.
-	public StatementExecutor(Map<String, FunctionDeclaration> functionDeclarationSymbolTable) {
+	public StatementExecutor(Map<String, FunctionDeclaration> functionDeclarationSymbolTable,
+			Pair<Map<String, Map<String, FunctionDeclaration>>, Map<String, Map<String, AtomType>>> classSymbolTable) {
 		this.functionDeclarationSymbolTable = functionDeclarationSymbolTable;
-		this.expressionExecutor = new ExpressionExecutor(this.functionDeclarationSymbolTable);
+		this.classSymbolTable = classSymbolTable;
+		this.expressionExecutor = new ExpressionExecutor(this.functionDeclarationSymbolTable,
+				this.classSymbolTable);
 	}
 
 	// Execution functions returns a value, we return that as AtomType
@@ -74,18 +78,6 @@ public class StatementExecutor {
 		}
 	}
 
-	public AtomType getAtomTypeFromExpression(Expression expression) throws Exception {
-		if (expression instanceof IntegerAtomExpression) {
-			return new IntegerType(((IntegerAtomExpression) expression).getValue());
-		} else if (expression instanceof BooleanAtomExpression) {
-			return new BooleanType(((BooleanAtomExpression) expression).getValue());
-		} else if (expression instanceof StringAtomExpression) {
-			return new StringType(((StringAtomExpression) expression).getValue());
-		} else {
-			throw new RuntimeException("Undefined type in get atom from expession");
-		}
-	}
-
 	private void variableDeclarationStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
 			Map<String, AtomType> scopeIdentifiers) throws Exception {
 		VariableDeclarationStatement var_decl_stmt = (VariableDeclarationStatement) statement;
@@ -96,18 +88,8 @@ public class StatementExecutor {
 		}
 		Expression expr = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
 				var_decl_stmt.getExpression());
-		if (expr instanceof IntegerAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(),
-					new IntegerType(((IntegerAtomExpression) expr).getValue()));
-		} else if (expr instanceof BooleanAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(),
-					new BooleanType(((BooleanAtomExpression) expr).getValue()));
-		} else if (expr instanceof StringAtomExpression) {
-			scopeIdentifiers.put(var_decl_stmt.getId(),
-					new StringType(((StringAtomExpression) expr).getValue()));
-		} else {
-			throw new RuntimeException("Unsupported type in variable declaration");
-		}
+		scopeIdentifiers.put(var_decl_stmt.getId(), ExecutorHelpers.getAtomTypeFromAtomExpression(expr,
+				"Invalid Expression type in variable declaration statement"));
 	}
 
 	private void assignmentStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
@@ -145,7 +127,8 @@ public class StatementExecutor {
 		}
 		Expression expression = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
 				return_stmt.getExpression());
-		returner.a = getAtomTypeFromExpression(expression);
+		returner.a = ExecutorHelpers.getAtomTypeFromAtomExpression(expression,
+				"Invalid expression type in return statement");
 		returner.b = true;
 	}
 
@@ -170,7 +153,8 @@ public class StatementExecutor {
 		if (expr_condition_cast.getValue()) {
 			BlockStatement block_stmt = (BlockStatement) if_else_stmt.getIf_statement_block();
 			block_stmt.setIsExecuted(true);
-			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable,
+					classSymbolTable);
 			Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers,
 					scopeIdentifiers, block_stmt.getStatements());
 			returner.a = stmt_return.a;
@@ -178,7 +162,8 @@ public class StatementExecutor {
 		} else if (if_else_stmt.getElse_statement_block() != null) {
 			BlockStatement block_stmt = (BlockStatement) if_else_stmt.getElse_statement_block();
 			block_stmt.setIsExecuted(true);
-			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+			StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable,
+					classSymbolTable);
 			Pair<AtomType, Boolean> stmt_return = stmt_exec.executeStatements(globalIdentifiers,
 					scopeIdentifiers, block_stmt.getStatements());
 			returner.a = stmt_return.a;
@@ -192,7 +177,7 @@ public class StatementExecutor {
 			Map<String, AtomType> scopeIdentifiers) throws Exception {
 		BlockStatement block_stmt = (BlockStatement) statement;
 		block_stmt.setIsExecuted(true);
-		StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable);
+		StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable, classSymbolTable);
 		stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers, block_stmt.getStatements());
 	}
 
@@ -219,7 +204,8 @@ public class StatementExecutor {
 					"Updation block of FOR loop must be a logical expression or relational expression that returns a boolean");
 		}
 		BooleanAtomExpression for_condition_expr_exec_cast = (BooleanAtomExpression) for_condition_expr_exec;
-		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
+		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable,
+				classSymbolTable);
 		if (for_condition_expr_exec_cast.getValue()) {
 			for_stmt.getStatementBlock().setIsExecuted(true);
 		}
@@ -250,7 +236,8 @@ public class StatementExecutor {
 					"Condition block of WHILE loop must be a logical expression or relational expression that returns a boolean");
 		}
 		BooleanAtomExpression while_condition_expr_cast = (BooleanAtomExpression) while_condition_expr;
-		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable);
+		StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable,
+				classSymbolTable);
 		if (while_condition_expr_cast.getValue()) {
 			while_stmt.getStatementBlock().setIsExecuted(true);
 		}

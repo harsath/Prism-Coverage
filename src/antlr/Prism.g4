@@ -15,6 +15,7 @@ ELSE        :       'ELSE';
 METHODS     :       'METHODS';
 ATTRIBUTES  :       'ATTRIBUTES';
 RETURN      :       'RETURN';
+NEW         :       'NEW';
 COMMENT     :       '//' ~[\r\n]* -> skip;
 WS          :       [ \t\n]+ -> skip;
 LCURLY      :       '{';
@@ -26,13 +27,14 @@ MUL         :       '*';
 DIV         :       '/';
 ADD         :       '+';
 SUB         :       '-';
-MAX			:		'MAX';
-MIN			:		'MIN';
-POW			: 		'POW';
-PRINT	    :       'PRINT';
+MAX		  :		'MAX';
+MIN		  :		'MIN';
+POW		  : 		'POW';
+PRINT	  :       'PRINT';
 PRINTLN     :		'PRINTLN';
-TEXT        :       [a-zA-Z0-9_]+;
-
+STRING      :       '"' ~["]* '"'
+            |       '\'' ~[']* '\''
+            ;
 			
 /* Parser elements */
 
@@ -113,19 +115,27 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | expr '<' expr               #LessthanExpr
      | expr '>=' expr              #GreaterthanEqExpr
      | expr '<=' expr              #LessthanEqExpr
+     | object_creation_expr        #ObjectCreationExpr
+     | object_invocation_expr      #ObjectInvocationExpr
      | bool                        #BoolAtomExpr
      | ID                          #VariableAtomExpr
      | INT                         #IntAtomExpr
+     | STRING                      #StringAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
-     | '"'TEXT'"'                  #StringAtomExpr
      ;
      
 builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression
 					  | MIN LPAREN expr ',' expr RPAREN #MinFunctionCallExpression
 					  | POW LPAREN expr ',' expr RPAREN #PowFunctionCallExpression
-					  | PRINT LPAREN expr RPAREN #PrintFunctionCallExpression
-					  | PRINTLN LPAREN expr RPAREN #PrintlnFunctionCallExpression
-				      ;
+					  | PRINT LPAREN expr RPAREN        #PrintFunctionCallExpression
+					  | PRINTLN LPAREN expr RPAREN      #PrintlnFunctionCallExpression
+				       ;
+
+object_creation_expr : NEW ID LPAREN expr_list? RPAREN              #ObjectCreationExpression
+                     ;
+
+object_invocation_expr : ID '.' ID (LPAREN expr_list? RPAREN)?      #ObjectInvocationExpression
+                       ;
 
 bool : 'true' | 'false'
      ;

@@ -190,12 +190,26 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ObjectCreationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectCreationExpr(PrismParser.ObjectCreationExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code AndExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAndExpr(PrismParser.AndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ObjectInvocationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BuiltinFunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -350,6 +364,20 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ObjectCreationExpression}
+	 * labeled alternative in {@link PrismParser#object_creation_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ObjectInvocationExpression}
+	 * labeled alternative in {@link PrismParser#object_invocation_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectInvocationExpression(PrismParser.ObjectInvocationExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PrismParser#bool}.
 	 * @param ctx the parse tree

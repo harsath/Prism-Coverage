@@ -1,6 +1,8 @@
 package prism;
 
-public class StringType implements AtomType {
+import java.io.Serializable;
+
+public class StringType implements AtomType, Serializable {
 	private String value;
 	private boolean initialized;
 

@@ -34,6 +34,44 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitObjectCreationExpr(ObjectCreationExprContext ctx) {
+		return visit(ctx.getChild(0));
+	}
+
+	@Override
+	public Expression visitObjectCreationExpression(ObjectCreationExpressionContext ctx) {
+		String id = ctx.getChild(1).getText();
+		Expression param_decl = visit(ctx.getChild(3));
+		ObjectRHSExpression object_decl = new ObjectRHSExpression();
+		object_decl.setParameterDeclaration((FunctionParamListExpression) param_decl);
+		object_decl.setId(id);
+		return object_decl;
+	}
+
+	@Override
+	public Expression visitObjectInvocationExpr(ObjectInvocationExprContext ctx) {
+		return visit(ctx.getChild(0));
+	}
+
+	@Override
+	public Expression visitObjectInvocationExpression(ObjectInvocationExpressionContext ctx) {
+		String id = ctx.getChild(0).getText();
+		String member_id = ctx.getChild(2).getText();
+		ObjectInvocationExpression object_invocation = new ObjectInvocationExpression();
+		object_invocation.setId(id);
+		object_invocation.setMember_Id(member_id);
+		object_invocation.setIs_method(false);
+		if (ctx.getChildCount() > 3) {
+			object_invocation.setIs_method(true);
+			if (ctx.getChildCount() == 6) {
+				Expression param_decl = visit(ctx.getChild(4));
+				object_invocation.setParam_decl((FunctionParamListExpression) param_decl);
+			}
+		}
+		return object_invocation;
+	}
+
+	@Override
 	public Expression visitUnaryMinusExpr(UnaryMinusExprContext ctx) {
 		Expression e = visit(ctx.getChild(1));
 		return new UnaryMinusExpression(e);
@@ -132,7 +170,7 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 
 	@Override
 	public Expression visitStringAtomExpr(StringAtomExprContext ctx) {
-		String value = ctx.getChild(1).getText();
+		String value = ctx.getChild(0).getText().substring(1, ctx.getChild(0).getText().length() - 1);
 		return new StringAtomExpression(value);
 	}
 
