@@ -26,5 +26,6 @@ FUNCTION INT main() {
 	INT return_one = class_one.methodTwo();
 	INT return_two = class_one.methodOne(10);
 
+	// expected: 199
 	RETURN return_two;
 }

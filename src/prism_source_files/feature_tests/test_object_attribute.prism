@@ -28,5 +28,6 @@ FUNCTION INT main() {
 
 	INT value_attr_one = class_one.attr_two;
 
+	// expected: 10
 	RETURN class_one.attr_one;
 }

@@ -5,5 +5,7 @@ FUNCTION INT test_max(INT val1, INT val2) {
 
 FUNCTION INT main() {
 	INT result = test_max(5, 10);
+
+	// expected: 15
 	RETURN result;
 }

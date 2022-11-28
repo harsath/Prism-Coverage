@@ -5,4 +5,6 @@ FUNCTION VOID main()  {
 	PRINTLN(x);
 	BOOL y = false;
 	PRINTLN(y);
+
+	// expected: 9\nfalse\n60\nfalse\n
 }
