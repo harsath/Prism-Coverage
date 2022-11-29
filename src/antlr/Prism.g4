@@ -16,6 +16,8 @@ METHODS     :       'METHODS';
 ATTRIBUTES  :       'ATTRIBUTES';
 RETURN      :       'RETURN';
 NEW         :       'NEW';
+CONTINUE    :       'CONTINUE';
+BREAK       :       'BREAK';
 COMMENT     :       '//' ~[\r\n]* -> skip;
 WS          :       [ \t\n]+ -> skip;
 LCURLY      :       '{';
@@ -81,8 +83,16 @@ stmt : stmt_block                                       #BlockStmt
      | IF LPAREN expr RPAREN stmt (ELSE stmt)?          #IfElseStmt
      | RETURN expr? SEMICOLON                           #ReturnStmt
      | variable_assignment                              #AssignmentStmt
+     | continue_stmt                                    #ContinueStmt
+     | break_stmt                                       #BreakStmt
      | expr SEMICOLON                                   #ExprStmt
      ;
+
+continue_stmt : CONTINUE SEMICOLON
+              ;
+
+break_stmt : BREAK SEMICOLON
+           ;
 
 variable_assignment : expr '=' expr SEMICOLON           #VariableAssignmentStmt
                     ;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INT global_var1 = 100;
 
 FUNCTION INT un_covered_fn(INT val1, INT val2, BOOL val3) {
@@ -21,4 +22,34 @@ FUNCTION INT main() {
 	INT result = add(5, 10, true);
 	result = add(5, 10, false);
 	RETURN result;
+=======
+FUNCTION INT test_continue_for(INT start_val) {
+	INT returner = 1;
+	FOR (INT i = 1; i <= 5; i = i + 1;) {
+		IF (i == 3) {
+			CONTINUE;
+		}
+		returner = returner + 1;
+	}
+	RETURN returner;
+}
+
+FUNCTION INT test_continue_while(INT start_val) {
+	INT returner = 1;
+	INT i = 1;
+	WHILE (i <= 5) {
+		IF (i == 3) {
+			CONTINUE;
+		}
+		returner = returner + 1;
+		i = i + 1;
+	}
+	RETURN returner;
+}
+
+FUNCTION INT main() {
+	INT return_one = test_continue_for();
+
+	RETURN return_one;
+>>>>>>> 9f9b0a8 (prism: #36 add support for BREAK and CONTINUE)
 }

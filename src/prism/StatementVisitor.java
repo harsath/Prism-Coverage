@@ -79,6 +79,16 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         }
 
         @Override
+        public Statement visitContinueStmt(ContinueStmtContext ctx) {
+                return new ContinueStatement();
+        }
+
+        @Override
+        public Statement visitBreakStmt(BreakStmtContext ctx) {
+                return new BreakStatement();
+        }
+
+        @Override
         public Statement visitAssignmentStmt(AssignmentStmtContext ctx) {
                 return visit(ctx.getChild(0));
         }
