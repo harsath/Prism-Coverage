@@ -165,7 +165,7 @@ public class ExpressionExecutor {
 					.getStatements();
 			StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
-			Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers,
+			Pair<AtomType, Boolean[]> ret = statementExecutor.executeStatements(globalIdentifiers,
 					fn_call_scope_identifiers, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Unsupported type in function call execution");
@@ -175,7 +175,7 @@ public class ExpressionExecutor {
 					.getStatements();
 			StatementExecutor statementExecutor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
-			Pair<AtomType, Boolean> ret = statementExecutor.executeStatements(globalIdentifiers,
+			Pair<AtomType, Boolean[]> ret = statementExecutor.executeStatements(globalIdentifiers,
 					fn_call_scope_identifiers, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Unsupported type in function call execution");
@@ -252,7 +252,7 @@ public class ExpressionExecutor {
 			List<Statement> block_stmt = method_decl.getFunctionBody().getStatements();
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
-			Pair<AtomType, Boolean> ret = statement_executor.executeStatements(globalIdentifiers,
+			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
 					attributes, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invalid return from statement executor of method call");
@@ -260,7 +260,7 @@ public class ExpressionExecutor {
 			List<Statement> block_stmt = method_decl.getFunctionBody().getStatements();
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
-			Pair<AtomType, Boolean> ret = statement_executor.executeStatements(globalIdentifiers,
+			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
 					attributes, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invaild return from statement executor of method call");

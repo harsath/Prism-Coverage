@@ -29,7 +29,7 @@ public class DeclarationExecutor {
                 Map<String, AtomType> scopeIdentifiers = new HashMap<>();
                 StatementExecutor stmt_executor = new StatementExecutor(functionDeclarationSymbolTable,
                                 classSymbolTable);
-                Pair<AtomType, Boolean> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers,
+                Pair<AtomType, Boolean[]> ret = stmt_executor.executeStatements(globalIdentifiers, scopeIdentifiers,
                                 main_stmt);
                 return ret.a;
         }
