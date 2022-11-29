@@ -15,6 +15,26 @@ public class InterpreterStatementTest {
 		this.test_root = test_root;
 	}
 
+	public void test_continue_stmt() throws Exception {
+		String input_file = test_root + "test_continue_stmt.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 10),
+					"test_continue_stmt failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
+	public void test_break_stmt() throws Exception {
+		String input_file = test_root + "test_break_stmt.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 5),
+					"test_break_stmt failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
 	public void test_for_loop_stmt() throws Exception {
 		String input_file = test_root + "test_for_loop_stmt.prism";
 		AtomType return_value = interpretGetAtomType(input_file);
