@@ -16,6 +16,16 @@ public class InterpreterExprTest {
 		this.test_root = test_root;
 	}
 
+	public void test_exit() throws Exception {
+		String input_file = test_root + "test_exit.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == -1),
+					"test_exit failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
 	public void test_object_method_call() throws Exception {
 		String input_file = test_root + "test_object_method_call.prism";
 		AtomType return_value = interpretGetAtomType(input_file);
