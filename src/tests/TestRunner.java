@@ -16,6 +16,7 @@ public class TestRunner {
 		interpreter_expr_test.test_println();
 		interpreter_expr_test.test_object_attribute();
 		interpreter_expr_test.test_object_method_call();
+		interpreter_expr_test.test_exit();
 
 		InterpreterStatementTest interpreter_stmt_test = new InterpreterStatementTest(feature_test_root);
 		interpreter_stmt_test.test_for_loop_stmt();
