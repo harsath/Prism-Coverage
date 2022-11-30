@@ -181,6 +181,12 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitExitFunctionCallExpression(ExitFunctionCallExpressionContext ctx) {
+		Expression expr = visit(ctx.getChild(2));
+		return new ExitFunctionCallExpression(expr);
+	}
+
+	@Override
 	public Expression visitMaxFunctionCallExpression(MaxFunctionCallExpressionContext ctx) {
 		Expression left = visit(ctx.getChild(2));
 		Expression right = visit(ctx.getChild(4));

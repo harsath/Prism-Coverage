@@ -391,6 +391,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExitFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ObjectCreationExpression}
 	 * labeled alternative in {@link PrismParser#object_creation_expr}.
 	 * @param ctx the parse tree

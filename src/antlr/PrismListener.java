@@ -656,6 +656,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExitFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExitFunctionCallExpression}
+	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ObjectCreationExpression}
 	 * labeled alternative in {@link PrismParser#object_creation_expr}.
 	 * @param ctx the parse tree

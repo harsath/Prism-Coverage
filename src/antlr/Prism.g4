@@ -34,6 +34,7 @@ MIN		  :		'MIN';
 POW		  : 		'POW';
 PRINT	  :       'PRINT';
 PRINTLN     :		'PRINTLN';
+EXIT        :       'EXIT';
 STRING      :       '"' ~["]* '"'
             |       '\'' ~[']* '\''
             ;
@@ -139,6 +140,7 @@ builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExp
 					  | POW LPAREN expr ',' expr RPAREN #PowFunctionCallExpression
 					  | PRINT LPAREN expr RPAREN        #PrintFunctionCallExpression
 					  | PRINTLN LPAREN expr RPAREN      #PrintlnFunctionCallExpression
+                           | EXIT LPAREN expr RPAREN         #ExitFunctionCallExpression
 				       ;
 
 object_creation_expr : NEW ID LPAREN expr_list? RPAREN              #ObjectCreationExpression

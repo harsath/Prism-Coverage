@@ -30,10 +30,11 @@ public class StatementExecutor {
 		// Boolean[0] = return
 		// Boolean[1] = break
 		// Boolean[2] = continue
+		// Boolean[3] = EXIT()
 		Pair<AtomType, Boolean[]> returner = new Pair<AtomType, Boolean[]>(new VoidType(),
-				new Boolean[] { false, false, false });
+				new Boolean[] { false, false, false, false });
 		for (Statement statement : statements) {
-			if (returner.b[0] || returner.b[1] || returner.b[2]) {
+			if (returner.b[0] || returner.b[1] || returner.b[2] || returner.b[3]) {
 				return returner;
 			}
 			if (statement instanceof VariableDeclarationStatement) {
@@ -49,7 +50,7 @@ public class StatementExecutor {
 					return returner;
 				}
 			} else if (statement instanceof BlockStatement) {
-				blockStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
+				blockStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 			} else if (statement instanceof ContinueStatement) {
 				continueStatementHandler(returner);
 				return returner;
@@ -57,7 +58,10 @@ public class StatementExecutor {
 				breakStatementHandler(returner);
 				return returner;
 			} else if (statement instanceof ExpressionStatement) {
-				expressionStatementHandler(statement, globalIdentifiers, scopeIdentifiers);
+				expressionStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
+				if (returner.b[3]) {
+					return returner;
+				}
 			} else if (statement instanceof ForLoopStatement) {
 				forLoopStatementHandler(statement, globalIdentifiers, scopeIdentifiers, returner);
 				if (returner.b[0]) {
@@ -131,22 +135,22 @@ public class StatementExecutor {
 		return_stmt.setIsExecuted(true);
 		if (return_stmt.getExpression() == null) {
 			returner.a = new VoidType();
-			returner.b = new Boolean[] { true, false, false };
+			returner.b = new Boolean[] { true, false, false, returner.b[3] };
 			return;
 		}
 		Expression expression = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
 				return_stmt.getExpression());
 		returner.a = ExecutorHelpers.getAtomTypeFromAtomExpression(expression,
 				"Invalid expression type in return statement");
-		returner.b = new Boolean[] { true, false, false };
+		returner.b = new Boolean[] { true, false, false, returner.b[3] };
 	}
 
 	public void breakStatementHandler(Pair<AtomType, Boolean[]> returner) {
-		returner.b = new Boolean[] { false, true, false };
+		returner.b = new Boolean[] { false, true, false, returner.b[3] };
 	}
 
 	public void continueStatementHandler(Pair<AtomType, Boolean[]> returner) {
-		returner.b = new Boolean[] { false, false, true };
+		returner.b = new Boolean[] { false, false, true, returner.b[3] };
 	}
 
 	private void ifElseStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
@@ -191,18 +195,27 @@ public class StatementExecutor {
 	}
 
 	private void blockStatementHandler(Statement statement, Map<String, AtomType> globalIdentifers,
-			Map<String, AtomType> scopeIdentifiers) throws Exception {
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean[]> returner) throws Exception {
 		BlockStatement block_stmt = (BlockStatement) statement;
 		block_stmt.setIsExecuted(true);
 		StatementExecutor stmt_exec = new StatementExecutor(functionDeclarationSymbolTable, classSymbolTable);
-		stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers, block_stmt.getStatements());
+		Pair<AtomType, Boolean[]> ret = stmt_exec.executeStatements(globalIdentifers, scopeIdentifiers,
+				block_stmt.getStatements());
+		returner.a = ret.a;
+		returner.b = ret.b;
 	}
 
 	private void expressionStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
-			Map<String, AtomType> scopeIdentifiers) throws Exception {
+			Map<String, AtomType> scopeIdentifiers, Pair<AtomType, Boolean[]> returner) throws Exception {
 		ExpressionStatement expr_stmt = (ExpressionStatement) statement;
 		expr_stmt.setIsExecuted(true);
-		expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, expr_stmt.getExpression());
+		Expression expr = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
+				expr_stmt.getExpression());
+		if (expr instanceof ExitFunctionCallExpression) {
+			ExitFunctionCallExpression expr_cast = (ExitFunctionCallExpression) expr;
+			returner.a = new IntegerType(expr_cast.getExitCode());
+			returner.b = new Boolean[] { false, false, false, true };
+		}
 	}
 
 	private void forLoopStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
@@ -229,9 +242,9 @@ public class StatementExecutor {
 		while (for_condition_expr_exec_cast.getValue()) {
 			Pair<AtomType, Boolean[]> ret = stmt_executor.executeStatements(globalIdentifiers,
 					scopeIdentifiers, for_block_stmt);
-			if (ret.b[1]) {
+			if (ret.b[1] || ret.b[3]) {
 				returner.a = ret.a;
-				returner.b = new Boolean[] { false, false, false };
+				returner.b = new Boolean[] { false, false, false, ret.b[3] };
 				return;
 			}
 			if (ret.b[0]) {
@@ -241,7 +254,7 @@ public class StatementExecutor {
 			}
 			if (ret.b[2]) {
 				returner.a = ret.a;
-				returner.b = new Boolean[] { false, false, false };
+				returner.b = new Boolean[] { false, false, false, ret.b[3] };
 			}
 			assignmentStatementHandler(for_updation_stmt, globalIdentifiers, scopeIdentifiers);
 			for_condition_expr_exec_cast = (BooleanAtomExpression) expressionExecutor
@@ -270,9 +283,9 @@ public class StatementExecutor {
 		while (while_condition_expr_cast.getValue()) {
 			Pair<AtomType, Boolean[]> ret = stmt_executor.executeStatements(globalIdentifiers,
 					scopeIdentifiers, while_block_stmt);
-			if (ret.b[1]) {
+			if (ret.b[1] || ret.b[3]) {
 				returner.a = ret.a;
-				returner.b = new Boolean[] { false, false, false };
+				returner.b = new Boolean[] { false, false, false, ret.b[3] };
 				return;
 			}
 			if (ret.b[0]) {
@@ -282,7 +295,7 @@ public class StatementExecutor {
 			}
 			if (ret.b[2]) {
 				returner.a = ret.a;
-				returner.b = new Boolean[] { false, false, false };
+				returner.b = new Boolean[] { false, false, false, ret.b[3] };
 			}
 			while_condition_expr_cast = (BooleanAtomExpression) expressionExecutor
 					.executeExpression(globalIdentifiers, scopeIdentifiers, while_expr);
