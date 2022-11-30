@@ -90,6 +90,8 @@ public class ExpressionExecutor {
 			return printExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof PrintlnFunctionCallExpression) {
 			return printlnExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof ExitFunctionCallExpression) {
+			return exitExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof ObjectRHSExpression) {
 			return objectRHSExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof ObjectInvocationExpression) {
@@ -167,6 +169,13 @@ public class ExpressionExecutor {
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statementExecutor.executeStatements(globalIdentifiers,
 					fn_call_scope_identifiers, block_stmt);
+			if (ret.b[3]) {
+				IntegerType exit_code = (IntegerType) ret.a;
+				ExitFunctionCallExpression returner_expr = new ExitFunctionCallExpression(
+						new IntegerAtomExpression(exit_code.getValue()));
+				returner_expr.setExitCode(exit_code.getValue());
+				return returner_expr;
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Unsupported type in function call execution");
 		} else {
@@ -177,6 +186,13 @@ public class ExpressionExecutor {
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statementExecutor.executeStatements(globalIdentifiers,
 					fn_call_scope_identifiers, block_stmt);
+			if (ret.b[3]) {
+				IntegerType exit_code = (IntegerType) ret.a;
+				ExitFunctionCallExpression returner_expr = new ExitFunctionCallExpression(
+						new IntegerAtomExpression(exit_code.getValue()));
+				returner_expr.setExitCode(exit_code.getValue());
+				return returner_expr;
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Unsupported type in function call execution");
 		}
@@ -430,6 +446,30 @@ public class ExpressionExecutor {
 			System.out.println(print.toString());
 			return new StringAtomExpression(expr_cast.toString());
 		}
+	}
+
+	private Expression exitExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		ExitFunctionCallExpression expr_cast = (ExitFunctionCallExpression) expr;
+		Expression exit_code = executeExpression(globalIdentifiers, scopeIdentifiers,
+				expr_cast.getExitCodeExpression());
+		if (exit_code instanceof VariableAtomExpression) {
+			VariableAtomExpression exit_code_cast = (VariableAtomExpression) exit_code;
+			Expression var_expr = lookupIdentifier(globalIdentifiers, scopeIdentifiers,
+					exit_code_cast.getId());
+			if (var_expr instanceof IntegerAtomExpression) {
+				IntegerAtomExpression var_expr_cast = (IntegerAtomExpression) var_expr;
+				expr_cast.setExitCode(var_expr_cast.getValue());
+			} else {
+				throw new RuntimeException("Exit code must be of type integer");
+			}
+		} else if (exit_code instanceof IntegerAtomExpression) {
+			IntegerAtomExpression exit_code_cast = (IntegerAtomExpression) exit_code;
+			expr_cast.setExitCode(exit_code_cast.getValue());
+		} else {
+			throw new RuntimeException("Exit code must be of type interger");
+		}
+		return expr_cast;
 	}
 
 	private Expression logicalExpressionTypeHandler(Expression expr, LogicalExpressionType type,

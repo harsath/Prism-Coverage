@@ -679,6 +679,18 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
