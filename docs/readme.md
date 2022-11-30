@@ -141,6 +141,7 @@ INT area = rectangle_class.getArea();
 
 ### Builtin functions
 Prism language supports these builtin functions:
+* `EXIT(<EXPRESSION>)` - exits a Prism program with `<EXPRESSION>` exit code.
 * `PRINT(<EXPRESSION>)` - prints `<EXPRESSION>` (such as a literal value or a variable) to standard out.
 * `PRINTLN(<EXPRESSION>)` - prints `<EXPRESSION>` into standard out with a new line character.
 * `MIN(<EXPRESSION ONE>, <EXPRESSION TWO>)` - returns the minimum of the two expressions passed in.
