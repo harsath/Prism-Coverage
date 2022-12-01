@@ -10,7 +10,7 @@ $ java -jar prism-interpreter.jar input-source-file.prism
 ```
 
 ### Syntax Overview
-A Prism source file must contain a `main()` method which marks the start of execution. For sample Prism programs, please look into `src/prism_source_files/robust_tests` directory.
+A Prism source file must contain a `main()` method which marks the start of execution. Everything in Prism is [pass-by-value](https://stackoverflow.com/a/430958/19475446). For sample Prism programs, please look into `src/prism_source_files/robust_tests` directory.
 #### Variable declaration and assignments
 Supported types: `INT`, `BOOL`, `STRING`, `VOID`, and CLASS types.
 Syntax is as follows:
