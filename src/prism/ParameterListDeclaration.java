@@ -4,9 +4,20 @@ import java.util.*;
 
 public class ParameterListDeclaration implements Declaration {
         private List<ParameterDeclaration> paramList;        
+	private boolean executed = false;
 
         ParameterListDeclaration() {
                 paramList = new ArrayList<>();
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public List<ParameterDeclaration> getParamList() {

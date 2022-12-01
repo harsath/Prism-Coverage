@@ -1,6 +1,8 @@
 package prism;
 
-public class VoidType implements AtomType {
+import java.io.Serializable;
+
+public class VoidType implements AtomType, Serializable {
 
         @Override
         public String toString() {

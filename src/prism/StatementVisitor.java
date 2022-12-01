@@ -24,6 +24,16 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         }
 
         @Override
+        public Statement visitWhileStmt(WhileStmtContext ctx) {
+                return visit(ctx.getChild(0));
+        }
+
+        @Override
+        public Statement visitForStmt(ForStmtContext ctx) {
+                return visit(ctx.getChild(0));
+        }
+
+        @Override
         public Statement visitBlockStmt(BlockStmtContext ctx) {
                 return visit(ctx.getChild(0));
         }
@@ -33,6 +43,7 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 String var_id = ctx.getChild(0).getChild(1).getText();
                 Expression expr = exprVisitor.visit(ctx.getChild(0).getChild(3));
                 VariableDeclarationStatement var_decl_stmt = new VariableDeclarationStatement(var_id, expr);
+                var_decl_stmt.setType(ctx.getChild(0).getChild(0).getText());
                 var_decl_stmt.setExpression((Expression) expr);
                 return var_decl_stmt;
         }
@@ -68,10 +79,18 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
         }
 
         @Override
+        public Statement visitContinueStmt(ContinueStmtContext ctx) {
+                return new ContinueStatement();
+        }
+
+        @Override
+        public Statement visitBreakStmt(BreakStmtContext ctx) {
+                return new BreakStatement();
+        }
+
+        @Override
         public Statement visitAssignmentStmt(AssignmentStmtContext ctx) {
-                Statement lhs_expr = exprVisitor.visit(ctx.getChild(0));
-                Statement rhs_expr = exprVisitor.visit(ctx.getChild(2));
-                return new AssignmentStatement((Expression) lhs_expr, (Expression) rhs_expr);
+                return visit(ctx.getChild(0));
         }
 
         @Override
@@ -79,4 +98,35 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 Statement expr = exprVisitor.visit(ctx.getChild(0));
                 return new ExpressionStatement((Expression) expr);
         }
+
+        @Override
+        public Statement visitWhileLoopStmt(WhileLoopStmtContext ctx) {
+                Expression conditional_block = exprVisitor.visit(ctx.getChild(2));
+                Statement block_stmt = visit(ctx.getChild(4));
+                return new WhileLoopStatement(conditional_block, (BlockStatement) block_stmt);
+        }
+
+        @Override
+        public Statement visitForLoopStmt(ForLoopStmtContext ctx) {
+                Declaration init_block_decl = visit(ctx.getChild(2));
+                Expression conditional_block_decl = exprVisitor.visit(ctx.getChild(3).getChild(0));
+                Statement updation_block_decl = visit(ctx.getChild(4));
+                Statement block_stmt_decl = visit(ctx.getChild(6));
+                return new ForLoopStatement((VariableDeclarationStatement) init_block_decl, conditional_block_decl, (AssignmentStatement) updation_block_decl, (BlockStatement) block_stmt_decl);
+        }
+
+        @Override
+        public Statement visitLoopInitBlockStmt(LoopInitBlockStmtContext ctx) {
+                Expression expr = exprVisitor.visit(ctx.getChild(3));
+                String id = ctx.getChild(1).getText();
+                return new VariableDeclarationStatement(id, expr);
+        }
+
+        @Override
+        public Statement visitVariableAssignmentStmt(VariableAssignmentStmtContext ctx) {
+                Statement lhs_expr = exprVisitor.visit(ctx.getChild(0));
+                Statement rhs_expr = exprVisitor.visit(ctx.getChild(2));
+                return new AssignmentStatement((Expression) lhs_expr, (Expression) rhs_expr);
+        }
+
 }

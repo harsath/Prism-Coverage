@@ -175,6 +175,30 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterWhileStmt(PrismParser.WhileStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileStmt(PrismParser.WhileStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForStmt(PrismParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStmt(PrismParser.ForStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableDeclStmt(PrismParser.VariableDeclStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -223,6 +247,30 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterContinueStmt(PrismParser.ContinueStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitContinueStmt(PrismParser.ContinueStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBreakStmt(PrismParser.BreakStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBreakStmt(PrismParser.BreakStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprStmt(PrismParser.ExprStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -235,6 +283,114 @@ public class PrismBaseListener implements PrismListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterContinue_stmt(PrismParser.Continue_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitContinue_stmt(PrismParser.Continue_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBreak_stmt(PrismParser.Break_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBreak_stmt(PrismParser.Break_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVariableAssignmentStmt(PrismParser.VariableAssignmentStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariableAssignmentStmt(PrismParser.VariableAssignmentStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhileLoopStmt(PrismParser.WhileLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhileLoopStmt(PrismParser.WhileLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForLoopStmt(PrismParser.ForLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForLoopStmt(PrismParser.ForLoopStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopInitBlockStmt(PrismParser.LoopInitBlockStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopInitBlockStmt(PrismParser.LoopInitBlockStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopConditionStmt(PrismParser.LoopConditionStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopConditionStmt(PrismParser.LoopConditionStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectCreationExpr(PrismParser.ObjectCreationExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectCreationExpr(PrismParser.ObjectCreationExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAndExpr(PrismParser.AndExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -242,6 +398,30 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAndExpr(PrismParser.AndExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBuiltinFunctionCallExpr(PrismParser.BuiltinFunctionCallExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -266,6 +446,18 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStringAtomExpr(PrismParser.StringAtomExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringAtomExpr(PrismParser.StringAtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -422,6 +614,102 @@ public class PrismBaseListener implements PrismListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMaxFunctionCallExpression(PrismParser.MaxFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMinFunctionCallExpression(PrismParser.MinFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPowFunctionCallExpression(PrismParser.PowFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrintFunctionCallExpression(PrismParser.PrintFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrintFunctionCallExpression(PrismParser.PrintFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrintlnFunctionCallExpression(PrismParser.PrintlnFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExitFunctionCallExpression(PrismParser.ExitFunctionCallExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectCreationExpression(PrismParser.ObjectCreationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectInvocationExpression(PrismParser.ObjectInvocationExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectInvocationExpression(PrismParser.ObjectInvocationExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,14 +1,14 @@
 FUNCTION INT boo(INT x, INT y, BOOL val) {
 	INT result = 5;
 	IF (val) {
-		result = x*y;
+		result = x * y;
 	} ELSE {
-			result = x/y;
+		result = x / y;
 	}
 	RETURN result;
 }
 
-FUNCTION INT test_boo(BOOL test) {
+FUNCTION INT test_boo() {
 	INT c = 2;
 	INT a = 8;
 	INT b = 20;
@@ -19,6 +19,6 @@ FUNCTION INT test_boo(BOOL test) {
 }
 
 FUNCTION INT main() {
-	INT a = test_boo(false);
+	INT a = test_boo();
 	RETURN a;
 }

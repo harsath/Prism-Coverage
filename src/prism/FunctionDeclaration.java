@@ -5,9 +5,20 @@ public class FunctionDeclaration implements Declaration {
 	ParameterListDeclaration functionParamDecl;
 	AtomType returnType;
 	BlockStatement functionBody;
+	private boolean executed = false;
 
 	public FunctionDeclaration() {
-		this.functionParamDecl = null;		
+		this.functionParamDecl = null;
+	}
+
+	@Override
+	public void setIsExecuted(boolean value) {
+		this.executed = value;
+	}
+
+	@Override
+	public boolean getIsExecuted() {
+		return this.executed;
 	}
 
 	public ParameterListDeclaration getFunctionParamDecl() {
@@ -58,6 +69,15 @@ public class FunctionDeclaration implements Declaration {
 			returner += functionBody.toString();
 		}
 		returner += "\n}";
+		return returner;
+	}
+	public String functionSignature() {
+		String returner = new String();
+		returner += "FUNCTION " + returnType.toString() + " " + functionName + " (";
+		if (functionParamDecl != null) {
+			returner += functionParamDecl.toString();
+		}
+		returner += ")";
 		return returner;
 	}
 }

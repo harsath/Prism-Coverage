@@ -1,0 +1,13 @@
+FUNCTION INT factorial(INT n) {
+	IF (n >= 1) {
+		RETURN n * factorial(n - 1);
+	} ELSE {
+		RETURN 1;
+	}
+}
+
+FUNCTION INT main() {
+	INT result = factorial(5);
+
+	RETURN result;
+}

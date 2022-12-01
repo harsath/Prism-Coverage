@@ -1,0 +1,16 @@
+FUNCTION INT while_loop(INT value1) {
+	INT returner = value1;
+	INT i = 0;
+	WHILE (i < 5) {
+		returner = returner * 2;	
+		i = i + 1;
+	}
+	RETURN returner;
+}
+
+FUNCTION INT main() {
+	INT result = while_loop(1);
+
+	// expected: 32
+	RETURN result;
+}

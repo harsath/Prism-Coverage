@@ -2,9 +2,20 @@ package prism;
 
 public class ReturnStatement implements Statement {
         private Expression expression;
+	private boolean executed = false;
 
         ReturnStatement() {
                 this.expression = null;
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public Expression getExpression() {
@@ -18,8 +29,8 @@ public class ReturnStatement implements Statement {
         @Override
         public String toString() {
                 if (expression != null) {
-                        return "RETURN " + expression.toString();
+                        return "RETURN " + expression.toString() + ";";
                 }
-                return "RETURN";
+                return "RETURN;";
         }
 }

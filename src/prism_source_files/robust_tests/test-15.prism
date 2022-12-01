@@ -1,0 +1,10 @@
+FUNCTION VOID void_with_params(INT val1, INT val2) {
+	val1 = val1 + 2;
+	val2 = val1 * val2;
+}
+
+FUNCTION INT main() {
+	void_with_params(10, 20);
+
+	RETURN 10;
+}

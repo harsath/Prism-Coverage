@@ -3,9 +3,20 @@ package prism;
 public class ClassDeclaration implements Declaration {
         private String className;
         private ClassBodyDeclaration classBody;
+        private boolean executed = false;
 
         ClassDeclaration() {
 
+        }
+
+        @Override
+        public void setIsExecuted(boolean value) {
+                this.executed = value;
+        }
+
+        @Override
+        public boolean getIsExecuted() {
+                return this.executed;
         }
 
         public void addAttribute(VariableDeclaration attribute) {

@@ -1,0 +1,33 @@
+CLASS classNameOne {
+        ATTRIBUTES
+                INT attr_one = 0;
+                BOOL attr_two = false;
+                INT attr_three = 99;
+        METHODS
+                FUNCTION INT methodOne(INT val1) {
+                        INT result = attr_one  * val1 + attr_three;
+                        RETURN result;
+                }
+                FUNCTION INT methodTwo() {
+                        attr_one = 10;
+                        IF (attr_two) {
+                                RETURN attr_three;
+                        } ELSE {
+                                RETURN 20;
+                        }
+                }
+}
+
+FUNCTION INT main() {
+	// Right now we do not support constructor so we currently don't process these arguments
+	// classNameOne class_one = NEW classNameOne(10, "hello world");	
+
+	classNameOne class_one = NEW classNameOne();	
+	INT return_one = class_one.methodTwo();
+	INT return_two = class_one.methodOne(10);
+
+	INT value_attr_one = class_one.attr_two;
+
+	// expected: 10
+	RETURN class_one.attr_one;
+}
