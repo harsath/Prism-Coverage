@@ -16,6 +16,16 @@ public class InterpreterExprTest {
 		this.test_root = test_root;
 	}
 
+	public void test_postfix_addition_subtraction() throws Exception {
+		String input_file = test_root + "test_postfix_addition_subtraction.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 12),
+					"test_postfix_addition_subtraction failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
 	public void test_exit() throws Exception {
 		String input_file = test_root + "test_exit.prism";
 		AtomType return_value = interpretGetAtomType(input_file);
