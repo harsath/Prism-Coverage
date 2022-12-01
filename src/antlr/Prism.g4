@@ -111,9 +111,12 @@ loop_condition_block : expr SEMICOLON                                #LoopCondit
                      ;
 
 loop_updation_block : variable_assignment                            #LoopUpdationStmt
+                    | expr SEMICOLON                                 #ExprUpdateStmt
                     ;
 
-expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
+expr : expr '++'                   #PostfixAdditionExpr
+     | expr '--'                   #PostfixSubtractionExpr
+     | ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
 	| builtin_function_call_expr  #BuiltinFunctionCallExpr
      | '-' expr                    #UnaryMinusExpr
      | '!' expr                    #NotExpr

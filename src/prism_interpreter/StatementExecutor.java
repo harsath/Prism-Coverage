@@ -1,6 +1,7 @@
 package prism_interpreter;
 
 import java.util.*;
+import java.util.concurrent.Executor;
 
 import prism.*;
 
@@ -115,18 +116,10 @@ public class StatementExecutor {
 		VariableAtomExpression lhs = (VariableAtomExpression) assign_stmt.getLhs();
 		Expression rhs = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
 				assign_stmt.getRhs());
-		if (rhs instanceof IntegerAtomExpression) {
-			setIdentifier(lhs.getId(), new IntegerType(((IntegerAtomExpression) rhs).getValue()),
-					globalIdentifiers, scopeIdentifiers);
-		} else if (rhs instanceof BooleanAtomExpression) {
-			setIdentifier(lhs.getId(), new BooleanType(((BooleanAtomExpression) rhs).getValue()),
-					globalIdentifiers, scopeIdentifiers);
-		} else if (rhs instanceof StringAtomExpression) {
-			setIdentifier(lhs.getId(), new StringType(((StringAtomExpression) rhs).getValue()),
-					globalIdentifiers, scopeIdentifiers);
-		} else {
-			throw new RuntimeException("Undefined type variable assignment");
-		}
+		setIdentifier(lhs.getId(),
+				ExecutorHelpers.getAtomTypeFromAtomExpression(rhs,
+						"Undefined type in variable assignment"),
+				globalIdentifiers, scopeIdentifiers);
 	}
 
 	private void returnStatementHandler(Statement statement, Map<String, AtomType> globalIdentifiers,
@@ -223,7 +216,13 @@ public class StatementExecutor {
 		ForLoopStatement for_stmt = (ForLoopStatement) statement;
 		VariableDeclarationStatement for_decl_stmt = for_stmt.getInitBlock();
 		Expression for_condition_expr = for_stmt.getConditionalBlock();
-		AssignmentStatement for_updation_stmt = for_stmt.getUpdationBlock();
+		Expression for_updation_expr = null;
+		AssignmentStatement for_updation_stmt = null;
+		if (for_stmt.getUpdationAssignmentBlock() == null) {
+			for_updation_expr = for_stmt.getUpdationExpressionBlock();
+		} else {
+			for_updation_stmt = for_stmt.getUpdationAssignmentBlock();
+		}
 		List<Statement> for_block_stmt = for_stmt.getStatementBlock().getStatements();
 
 		variableDeclarationStatementHandler(for_decl_stmt, globalIdentifiers, scopeIdentifiers);
@@ -256,7 +255,11 @@ public class StatementExecutor {
 				returner.a = ret.a;
 				returner.b = new Boolean[] { false, false, false, ret.b[3] };
 			}
-			assignmentStatementHandler(for_updation_stmt, globalIdentifiers, scopeIdentifiers);
+			if (for_updation_stmt != null) {
+				assignmentStatementHandler(for_updation_stmt, globalIdentifiers, scopeIdentifiers);
+			} else {
+				expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, for_updation_expr);
+			}
 			for_condition_expr_exec_cast = (BooleanAtomExpression) expressionExecutor
 					.executeExpression(globalIdentifiers, scopeIdentifiers, for_condition_expr);
 		}

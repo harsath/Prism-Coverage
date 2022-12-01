@@ -356,6 +356,18 @@ public interface PrismListener extends ParseTreeListener {
 	 */
 	void exitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprUpdateStmt}
+	 * labeled alternative in {@link PrismParser#loop_updation_block}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprUpdateStmt(PrismParser.ExprUpdateStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprUpdateStmt}
+	 * labeled alternative in {@link PrismParser#loop_updation_block}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprUpdateStmt(PrismParser.ExprUpdateStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ObjectCreationExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -583,6 +595,30 @@ public interface PrismListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddSubExpr(PrismParser.AddSubExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PostfixAdditionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPostfixAdditionExpr(PrismParser.PostfixAdditionExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PostfixAdditionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPostfixAdditionExpr(PrismParser.PostfixAdditionExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PostfixSubtractionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPostfixSubtractionExpr(PrismParser.PostfixSubtractionExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PostfixSubtractionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPostfixSubtractionExpr(PrismParser.PostfixSubtractionExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code UnaryMinusExpr}
 	 * labeled alternative in {@link PrismParser#expr}.

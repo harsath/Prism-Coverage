@@ -216,6 +216,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoopUpdationStmt(PrismParser.LoopUpdationStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprUpdateStmt}
+	 * labeled alternative in {@link PrismParser#loop_updation_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprUpdateStmt(PrismParser.ExprUpdateStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ObjectCreationExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -348,6 +355,20 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAddSubExpr(PrismParser.AddSubExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PostfixAdditionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPostfixAdditionExpr(PrismParser.PostfixAdditionExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PostfixSubtractionExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPostfixSubtractionExpr(PrismParser.PostfixSubtractionExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UnaryMinusExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
