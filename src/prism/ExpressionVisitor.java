@@ -181,6 +181,18 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitPostfixAdditionExpr(PostfixAdditionExprContext ctx) {
+		Expression e = visit(ctx.getChild(0));
+		return new PostfixAdditionExpression(e);
+	}
+
+	@Override
+	public Expression visitPostfixSubtractionExpr(PostfixSubtractionExprContext ctx) {
+		Expression e = visit(ctx.getChild(0));
+		return new PostfixSubtractionExpression(e);
+	}
+
+	@Override
 	public Expression visitExitFunctionCallExpression(ExitFunctionCallExpressionContext ctx) {
 		Expression expr = visit(ctx.getChild(2));
 		return new ExitFunctionCallExpression(expr);

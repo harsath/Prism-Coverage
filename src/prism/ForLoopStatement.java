@@ -3,15 +3,15 @@ package prism;
 public class ForLoopStatement implements Statement {
         private VariableDeclarationStatement initBlock;
         private Expression conditionalBlock;
-        private AssignmentStatement updationBlock;
+        private AssignmentStatement updationAssignmentBlock = null;
+        private Expression updationExpressionBlock = null;
         private BlockStatement statementBlock;
         private boolean executed = false;
 
         public ForLoopStatement(VariableDeclarationStatement initBlock, Expression conditionalBlock,
-                        AssignmentStatement updationBlock, BlockStatement statementBlock) {
+                        BlockStatement statementBlock) {
                 this.initBlock = initBlock;
                 this.conditionalBlock = conditionalBlock;
-                this.updationBlock = updationBlock;
                 this.statementBlock = statementBlock;
         }
 
@@ -49,12 +49,20 @@ public class ForLoopStatement implements Statement {
                 this.conditionalBlock = conditionalBlock;
         }
 
-        public AssignmentStatement getUpdationBlock() {
-                return this.updationBlock;
+        public AssignmentStatement getUpdationAssignmentBlock() {
+                return this.updationAssignmentBlock;
         }
 
-        public void setUpdationBlock(AssignmentStatement updationBlock) {
-                this.updationBlock = updationBlock;
+        public void setUpdationAssignmentBlock(AssignmentStatement updationAssignmentBlock) {
+                this.updationAssignmentBlock = updationAssignmentBlock;
+        }
+
+        public Expression getUpdationExpressionBlock() {
+                return this.updationExpressionBlock;
+        }
+
+        public void setUpdationExpressionBlock(Expression updationExpresionBlock) {
+                this.updationExpressionBlock = updationExpresionBlock;
         }
 
         @Override
@@ -62,7 +70,12 @@ public class ForLoopStatement implements Statement {
                 String returner = "FOR (";
                 String init_block_str = initBlock.toString();
                 init_block_str = init_block_str.substring(0, init_block_str.length() - 1);
-                returner += init_block_str + " " + conditionalBlock.toString() + "; " + updationBlock.toString();
+                returner += init_block_str + " " + conditionalBlock.toString() + "; ";
+                if (updationExpressionBlock != null) {
+                        returner += updationExpressionBlock.toString();
+                } else {
+                        returner += updationAssignmentBlock.toString();
+                }
                 returner += ") {\n";
                 for (Statement stmt : statementBlock.getStatements()) {
                         returner += "\t";

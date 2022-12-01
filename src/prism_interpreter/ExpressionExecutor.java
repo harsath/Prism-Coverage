@@ -96,6 +96,10 @@ public class ExpressionExecutor {
 			return objectRHSExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof ObjectInvocationExpression) {
 			return objectInvocationExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof PostfixAdditionExpression) {
+			return postfixExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof PostfixSubtractionExpression) {
+			return postfixExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else {
 			throw new RuntimeException("Undefined Expression type");
 		}
@@ -112,6 +116,17 @@ public class ExpressionExecutor {
 			AtomType atom_value = globalIdentifiers.get(id);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(atom_value,
 					"Undefined type on global variable reference");
+		} else {
+			throw new RuntimeException("Undefined variable");
+		}
+	}
+
+	private void setIdentifier(Map<String, AtomType> globalIdentifiers, Map<String, AtomType> scopeIdentifiers,
+			String id, AtomType value) throws Exception {
+		if (scopeIdentifiers.containsKey(id)) {
+			scopeIdentifiers.put(id, value);
+		} else if (globalIdentifiers.containsKey(id)) {
+			globalIdentifiers.put(id, value);
 		} else {
 			throw new RuntimeException("Undefined variable");
 		}
@@ -195,6 +210,34 @@ public class ExpressionExecutor {
 			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Unsupported type in function call execution");
+		}
+	}
+
+	private Expression postfixExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		if (expr instanceof PostfixAdditionExpression) {
+			PostfixAdditionExpression expr_cast = (PostfixAdditionExpression) expr;
+			VariableAtomExpression expr_var = (VariableAtomExpression) expr_cast.getExpr();
+			Expression expr_var_value = lookupIdentifier(globalIdentifiers, scopeIdentifiers,
+					expr_var.getId());
+			if (!(expr_var_value instanceof IntegerAtomExpression)) {
+				throw new RuntimeException("Postfix expression can only be applied to integers");
+			}
+			IntegerAtomExpression expr_var_value_cast = (IntegerAtomExpression) expr_var_value;
+			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(), new IntegerType(expr_var_value_cast.getValue() + 1));
+			expr_var_value_cast.setValue(expr_var_value_cast.getValue() + 1);
+			return expr;
+		} else {
+			PostfixSubtractionExpression expr_cast = (PostfixSubtractionExpression) expr;
+			VariableAtomExpression expr_var = (VariableAtomExpression) expr_cast.getExpr();
+			Expression expr_var_value = lookupIdentifier(globalIdentifiers, scopeIdentifiers,
+					expr_var.getId());
+			if (!(expr_var_value instanceof IntegerAtomExpression)) {
+				throw new RuntimeException("Postfix expression can only be applied to integers");
+			}
+			IntegerAtomExpression expr_var_value_cast = (IntegerAtomExpression) expr_var_value;
+			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(), new IntegerType(expr_var_value_cast.getValue() - 1));
+			return expr;
 		}
 	}
 
