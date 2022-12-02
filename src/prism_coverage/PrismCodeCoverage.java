@@ -18,6 +18,8 @@ public class PrismCodeCoverage {
 	private Integer total_covered_source_code = 0;
 	private Integer total_if_else = 0;
 	private Integer total_covered_if_else = 0;
+	private Integer total_statements = 0;
+	private Integer total_covered_statements = 0;
 
 	public PrismCodeCoverage(PrismProgram prism_program) throws IOException {
 		this.prism_program = prism_program;
@@ -66,53 +68,81 @@ public class PrismCodeCoverage {
 		return total_covered_if_else;
 	}
 
-	private Integer getTotalStatementsFromFunction(FunctionDeclaration fn_decl) {
-		return fn_decl.getFunctionBody().getStatements().size();
+	public Integer getTotalStatements() {
+		return total_statements;
 	}
-
-	private Integer getTotalCoveredStatementsFromFunction(FunctionDeclaration fn_decl) {
-		Integer returner = 0;
-		for (Statement stmt : fn_decl.getFunctionBody().getStatements()) {
+	public Integer getTotalCoveredStatements() {
+		return total_covered_statements;
+	}
+	
+	private void getTotalStatementsFromFunction(BlockStatement decl) {
+		for (Statement stmt : decl.getStatements()) {
 			if (stmt instanceof AssignmentStatement) {
-				if (stmt.getIsExecuted()) {
-					returner++;
-				}
+				total_statements++;
 			} else if (stmt instanceof IfElseStatement) {
-				IfElseStatement if_else_block = (IfElseStatement) stmt;
-				if (if_else_block.getIf_statement_block().getIsExecuted()) {
-					returner++;
-				} else {
-					if ((if_else_block.getElse_statement_block() != null)
-							&& (if_else_block.getElse_statement_block().getIsExecuted())) {
-						returner++;
-					}
+				total_statements++;
+				BlockStatement if_block = (BlockStatement) ((IfElseStatement)stmt).getIf_statement_block();
+				getTotalStatementsFromFunction(if_block);
+				BlockStatement else_block = (BlockStatement) ((IfElseStatement)stmt).getElse_statement_block();
+				
+				if (else_block != null) {
+					total_statements++;
+					getTotalStatementsFromFunction(else_block);
 				}
 			} else if (stmt instanceof ForLoopStatement) {
-				// A for-loop may or may nor execute. If the condition is false on the first
-				// iteration, the BlockStatement wouldn't
-				// get executed even once.
-				ForLoopStatement for_loop_stmt = (ForLoopStatement) stmt;
-				if (for_loop_stmt.getStatementBlock().getIsExecuted()) {
-					returner++;
-				}
+				total_statements++;
+				getTotalStatementsFromFunction(((ForLoopStatement)stmt).getStatementBlock());
 			} else if (stmt instanceof WhileLoopStatement) {
-				WhileLoopStatement while_loop_stmt = (WhileLoopStatement) stmt;
-				if (while_loop_stmt.getStatementBlock().getIsExecuted()) {
-					returner++;
-				}
-			} else if (stmt instanceof ReturnStatement) {
+				total_statements++; 
+				getTotalStatementsFromFunction(((WhileLoopStatement)stmt).getStatementBlock());
+			}else if (stmt instanceof ReturnStatement) {
 				// If a function returns before hitting this particular ReturnStatement, it will
 				// not be executed
-				if (stmt.getIsExecuted()) {
-					returner++;
-				}
+				total_statements++;
 			} else if (stmt instanceof VariableDeclarationStatement) {
-				if (stmt.getIsExecuted()) {
-					returner++;
-				}
+				total_statements++;
+			} else {
+				total_statements++;
 			}
 		}
-		return returner;
+	}
+
+	private  void getTotalCoveredStatementsFromFunction(BlockStatement decl) {
+		for (Statement stmt : decl.getStatements()) {
+			if (stmt instanceof IfElseStatement) {
+				BlockStatement if_block = (BlockStatement) ((IfElseStatement)stmt).getIf_statement_block();
+				if (if_block.getIsExecuted()) {
+					total_covered_statements++;
+					getTotalCoveredStatementsFromFunction(if_block);
+				}
+				
+				BlockStatement else_block = (BlockStatement) ((IfElseStatement)stmt).getElse_statement_block();
+				if (else_block != null) {
+					if (else_block.getIsExecuted()) {
+						total_covered_statements++;
+						getTotalCoveredStatementsFromFunction( else_block);
+					}
+					
+				}
+			} else if (stmt instanceof ForLoopStatement) {
+				
+				if (((ForLoopStatement) stmt).getInitBlock().getIsExecuted()){
+					total_covered_statements++;
+					getTotalCoveredStatementsFromFunction(((ForLoopStatement)stmt).getStatementBlock());
+				}
+				
+			} else if (stmt instanceof WhileLoopStatement) {
+				if (stmt.getIsExecuted()) {
+					total_covered_statements++;
+					getTotalCoveredStatementsFromFunction(((WhileLoopStatement)stmt).getStatementBlock());
+				}
+			} else {
+				if (stmt.getIsExecuted()) {
+					total_covered_statements++;
+				}
+			}
+				
+		}
 	}
 
 	private void populateTotalAndCoveredDeclarations() throws RuntimeException {
@@ -141,16 +171,20 @@ public class PrismCodeCoverage {
 		total_source_code += (total_class_decls + total_function_decls + total_global_variables);
 		total_covered_source_code += (total_covered_class_decls + total_covered_function_decls
 				+ total_covered_global_variables);
+
 	}
 
 	private void populateSourceCodeTotalAndCovered() throws RuntimeException {
 		List<Declaration> decls = prism_program.getProgram();
+		//System.out.println(decls.size());
 		for (Declaration decl : decls) {
 			if (decl instanceof FunctionDeclaration) {
-				total_source_code += getTotalStatementsFromFunction((FunctionDeclaration) decl);
+				total_statements++;
+				getTotalStatementsFromFunction(((FunctionDeclaration)decl).getFunctionBody());
+				//System.out.println(total_source_code);
 				if (decl.getIsExecuted()) {
-					total_covered_source_code += getTotalCoveredStatementsFromFunction(
-							(FunctionDeclaration) decl);
+					total_covered_statements++;
+					getTotalCoveredStatementsFromFunction(((FunctionDeclaration)decl).getFunctionBody());
 				}
 			}
 		}
@@ -217,15 +251,13 @@ public class PrismCodeCoverage {
 
 		String input_file_name = new String();
 		sb.append("<div id='header-text'>\n" + "<p>Total Statements: <span class='color-red'>"
-				+ getTotalFunctionDeclarations() + "</span></p>\n"
+				+ total_statements + "</span></p>\n"
 				+ "<p>Total Statements Covered:<span class='color-red'>"
-				+ getTotalCoveredFunctionDeclarations() + "</span></p>\n"
+				+ getTotalCoveredStatements() + "</span></p>\n"
 				+ "<p>Total Statement Coverage<code>" + input_file_name
 				+ "</code>: <span class='color-red'>"
-				+ (int) calcCoveragePercentage(this.getTotalCoveredFunctionDeclarations(),
-						this.getTotalFunctionDeclarations())
-				+ "%</span></p>\n"
-
+				+ (int) calcCoveragePercentage(getTotalCoveredStatements(),getTotalStatements()) + "%</span></p>\n"
+				
 				+ "<p>Total Desicions : <span class='color-red'>" + getTotalIfElse() + "</span></p>\n"
 				+ "<p>Total Desicions Covered: <span class='color-red'>" + getTotalCoveredIfElse()
 				+ "</span></p>\n");
