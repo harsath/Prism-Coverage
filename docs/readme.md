@@ -84,7 +84,7 @@ WHILE (<CONDITION>) {
 INT i = 1;
 WHILE (i > 10) {
 	PRINTLN(i);
-	i = i + 1;
+	i++;
 }
 ```
 The while block's `<BODY>` executes as long as the `<CONDITION>` results in `true`. Updations to conditional variables should be placed within the `<BODY>`.
@@ -96,11 +96,11 @@ FOR (<INITIALIZATION BLOCK>; <CONDITIONAL BLOCK>; <UPDATION BLOCK>;) {
 	<BODY>
 }
 
-FOR (INT i = 0; i < 10; i = i + 1;) {
+FOR (INT i = 0; i < 10; i++;) {
 	PRINTLN(i);
 }
 ```
-
+Prism supports postfix notations for addition and subtraction: `i--` or `i++` instead of `i = i - 1` and `i = i + 1`
 ### Class
 Prism language also supports classes, also called as user defined data types. The syntax is as follows:
 ```
