@@ -18,6 +18,11 @@ public class ExecutorHelpers {
                 } else if (atom_type instanceof ObjectType) {
                         ObjectType obj_type = (ObjectType) atom_type;
                         return new ObjectAtomExpression(obj_type.getClassName(), obj_type.getAttributes());
+                } else if (atom_type instanceof ArrayType) {
+                        ArrayType array_type = (ArrayType) atom_type;
+                        ArrayAtomExpression returner = new ArrayAtomExpression(array_type.getType());
+                        returner.setInternalArray(array_type.getInternalArray());
+                        return returner;
                 } else {
                         throw new RuntimeException(exception_str);
                 }
@@ -35,6 +40,11 @@ public class ExecutorHelpers {
                 } else if (atom_expr instanceof ObjectAtomExpression) {
                         ObjectAtomExpression obj_type = (ObjectAtomExpression) atom_expr;
                         return new ObjectType(obj_type.getClassName(), obj_type.getAttributes());
+                } else if (atom_expr instanceof ArrayAtomExpression) {
+                        ArrayAtomExpression array_type = (ArrayAtomExpression) atom_expr;
+                        ArrayType returner = new ArrayType(array_type.getType());
+                        returner.setInternalArray(array_type.getInternalArray());
+                        return returner;
                 } else {
                         throw new RuntimeException(exception_str);
                 }
