@@ -1,0 +1,46 @@
+FUNCTION INT main() {
+	INT[] int_array = NEW INT[];
+	IF (int_array.SIZE() != 0) {
+		PRINTLN("Array size is not 0");
+		EXIT(-1);
+	}
+
+	int_array.INSERT(10);
+	int_array.INSERT(20);
+	int_array.INSERT(30);
+	int_array.INSERT(40);
+	int_array.INSERT(50);
+
+	IF (int_array.SIZE() != 5) {
+		PRINTLN("Array size is not 5");
+		EXIT(-1);
+	}
+
+	IF (int_array.AT(2) != 30) {
+		PRINTLN("Element at index 2 is not 30");
+		EXIT(-1);
+	}
+
+	int_array.REMOVEAT(2);
+
+	IF (int_array.AT(2) != 40) {
+		PRINTLN("Element at index 2 is not 40 after removal");
+		EXIT(-1);
+	}
+
+	int_array.REMOVEAT(2);
+
+	IF (int_array.SIZE() != 3) {
+		PRINTLN("Array size is not 3 after removals");
+		EXIT(-1);
+	}
+
+	int_array.REMOVEALL();
+
+	IF (int_array.SIZE() != 0) {
+		PRINTLN("Array size is not 0 after REMOVEALL");
+		EXIT(-1);
+	}
+
+	RETURN 1;
+}
