@@ -30,6 +30,29 @@ Variable assignment syntax is as follows:
 a = a * 10;
 ```
 
+### Arrays
+Prism supports arrays, the syntax is as follows:
+```
+<TYPE>[] <VARIABLE NAME> = NEW <TYPE>[];
+
+INT[] array = NEW INT[];
+```
+Following operations are supported over an array:
+* `.SIZE()` - returns the size of the array.
+* `.INSERT(<VALUE>)` - inserts `<VALUE>` into the array.
+* `.AT(<INDEX>)` - returns the element at index `<INDEX>`. The type of `<INDEX>` must be an integer.
+* `.REMOVEAT(<INDEX>)` - removes the element at index `<INDEX>`.
+* `.REMOVEALL()` - removes every element of the array.
+
+```
+array.INSERT(10);
+array.INSERT(20);
+BOOL array_size = (array.SIZE() == 2);
+array.REMOVEAT(1);
+BOL array_at = (array.AT(0) == 10);
+array.REMOVEALL();
+```
+Arrays are passed-by-reference when passed to a function (any modification to array in function reflects in the original array).
 ### IF statements
 `IF` statement syntax is as follows:
 ```
