@@ -244,6 +244,48 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObjectInvocationExpr(PrismParser.ObjectInvocationExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code LessthanEqExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IntAtomExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LessthanExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessthanExpr(PrismParser.LessthanExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BracketExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBracketExpr(PrismParser.BracketExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NotExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpr(PrismParser.NotExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ArrayCreationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayCreationExpr(PrismParser.ArrayCreationExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BuiltinFunctionCallExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -257,13 +299,6 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariableAtomExpr(PrismParser.VariableAtomExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code LessthanEqExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLessthanEqExpr(PrismParser.LessthanEqExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code StringAtomExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -279,19 +314,19 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolAtomExpr(PrismParser.BoolAtomExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IntAtomExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntAtomExpr(PrismParser.IntAtomExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code GreaterthanExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGreaterthanExpr(PrismParser.GreaterthanExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ArrayOperationExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayOperationExpr(PrismParser.ArrayOperationExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code OrExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -314,6 +349,13 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMulDivExpr(PrismParser.MulDivExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code NotEqExpr}
+	 * labeled alternative in {@link PrismParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotEqExpr(PrismParser.NotEqExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code EqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
@@ -321,33 +363,12 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEqExpr(PrismParser.EqExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LessthanExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLessthanExpr(PrismParser.LessthanExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code GreaterthanEqExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGreaterthanEqExpr(PrismParser.GreaterthanEqExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BracketExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBracketExpr(PrismParser.BracketExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code NotExpr}
-	 * labeled alternative in {@link PrismParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotExpr(PrismParser.NotExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code AddSubExpr}
 	 * labeled alternative in {@link PrismParser#expr}.
@@ -376,6 +397,25 @@ public interface PrismVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryMinusExpr(PrismParser.UnaryMinusExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ArrayOperationExpression}
+	 * labeled alternative in {@link PrismParser#array_operation_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayOperationExpression(PrismParser.ArrayOperationExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#array_creation_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray_creation_expr(PrismParser.Array_creation_exprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PrismParser#array_operations}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray_operations(PrismParser.Array_operationsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MaxFunctionCallExpression}
 	 * labeled alternative in {@link PrismParser#builtin_function_call_expr}.
