@@ -71,31 +71,34 @@ public class PrismCodeCoverage {
 	public Integer getTotalStatements() {
 		return total_statements;
 	}
+
 	public Integer getTotalCoveredStatements() {
 		return total_covered_statements;
 	}
-	
+
 	private void getTotalStatementsFromFunction(BlockStatement decl) {
 		for (Statement stmt : decl.getStatements()) {
 			if (stmt instanceof AssignmentStatement) {
 				total_statements++;
 			} else if (stmt instanceof IfElseStatement) {
 				total_statements++;
-				BlockStatement if_block = (BlockStatement) ((IfElseStatement)stmt).getIf_statement_block();
+				BlockStatement if_block = (BlockStatement) ((IfElseStatement) stmt)
+						.getIf_statement_block();
 				getTotalStatementsFromFunction(if_block);
-				BlockStatement else_block = (BlockStatement) ((IfElseStatement)stmt).getElse_statement_block();
-				
+				BlockStatement else_block = (BlockStatement) ((IfElseStatement) stmt)
+						.getElse_statement_block();
+
 				if (else_block != null) {
 					total_statements++;
 					getTotalStatementsFromFunction(else_block);
 				}
 			} else if (stmt instanceof ForLoopStatement) {
 				total_statements++;
-				getTotalStatementsFromFunction(((ForLoopStatement)stmt).getStatementBlock());
+				getTotalStatementsFromFunction(((ForLoopStatement) stmt).getStatementBlock());
 			} else if (stmt instanceof WhileLoopStatement) {
-				total_statements++; 
-				getTotalStatementsFromFunction(((WhileLoopStatement)stmt).getStatementBlock());
-			}else if (stmt instanceof ReturnStatement) {
+				total_statements++;
+				getTotalStatementsFromFunction(((WhileLoopStatement) stmt).getStatementBlock());
+			} else if (stmt instanceof ReturnStatement) {
 				// If a function returns before hitting this particular ReturnStatement, it will
 				// not be executed
 				total_statements++;
@@ -107,41 +110,45 @@ public class PrismCodeCoverage {
 		}
 	}
 
-	private  void getTotalCoveredStatementsFromFunction(BlockStatement decl) {
+	private void getTotalCoveredStatementsFromFunction(BlockStatement decl) {
 		for (Statement stmt : decl.getStatements()) {
 			if (stmt instanceof IfElseStatement) {
-				BlockStatement if_block = (BlockStatement) ((IfElseStatement)stmt).getIf_statement_block();
+				BlockStatement if_block = (BlockStatement) ((IfElseStatement) stmt)
+						.getIf_statement_block();
 				if (if_block.getIsExecuted()) {
 					total_covered_statements++;
 					getTotalCoveredStatementsFromFunction(if_block);
 				}
-				
-				BlockStatement else_block = (BlockStatement) ((IfElseStatement)stmt).getElse_statement_block();
+
+				BlockStatement else_block = (BlockStatement) ((IfElseStatement) stmt)
+						.getElse_statement_block();
 				if (else_block != null) {
 					if (else_block.getIsExecuted()) {
 						total_covered_statements++;
-						getTotalCoveredStatementsFromFunction( else_block);
+						getTotalCoveredStatementsFromFunction(else_block);
 					}
-					
+
 				}
 			} else if (stmt instanceof ForLoopStatement) {
-				
-				if (((ForLoopStatement) stmt).getInitBlock().getIsExecuted()){
+
+				if (((ForLoopStatement) stmt).getInitBlock().getIsExecuted()) {
 					total_covered_statements++;
-					getTotalCoveredStatementsFromFunction(((ForLoopStatement)stmt).getStatementBlock());
+					getTotalCoveredStatementsFromFunction(
+							((ForLoopStatement) stmt).getStatementBlock());
 				}
-				
+
 			} else if (stmt instanceof WhileLoopStatement) {
 				if (stmt.getIsExecuted()) {
 					total_covered_statements++;
-					getTotalCoveredStatementsFromFunction(((WhileLoopStatement)stmt).getStatementBlock());
+					getTotalCoveredStatementsFromFunction(
+							((WhileLoopStatement) stmt).getStatementBlock());
 				}
 			} else {
 				if (stmt.getIsExecuted()) {
 					total_covered_statements++;
 				}
 			}
-				
+
 		}
 	}
 
@@ -176,15 +183,16 @@ public class PrismCodeCoverage {
 
 	private void populateSourceCodeTotalAndCovered() throws RuntimeException {
 		List<Declaration> decls = prism_program.getProgram();
-		//System.out.println(decls.size());
+		// System.out.println(decls.size());
 		for (Declaration decl : decls) {
 			if (decl instanceof FunctionDeclaration) {
 				total_statements++;
-				getTotalStatementsFromFunction(((FunctionDeclaration)decl).getFunctionBody());
-				//System.out.println(total_source_code);
+				getTotalStatementsFromFunction(((FunctionDeclaration) decl).getFunctionBody());
+				// System.out.println(total_source_code);
 				if (decl.getIsExecuted()) {
 					total_covered_statements++;
-					getTotalCoveredStatementsFromFunction(((FunctionDeclaration)decl).getFunctionBody());
+					getTotalCoveredStatementsFromFunction(
+							((FunctionDeclaration) decl).getFunctionBody());
 				}
 			}
 		}
@@ -209,21 +217,22 @@ public class PrismCodeCoverage {
 				if (if_cast.getElse_statement_block() != null) {
 					if (if_cast.getElse_statement_block().getIsExecuted()) {
 						total_covered_if_else++;
-						codeCoverageBlockCheck((BlockStatement) if_cast.getElse_statement_block());
-					}	
+						codeCoverageBlockCheck(
+								(BlockStatement) if_cast.getElse_statement_block());
+					}
 				}
-				
+
 			} else if (statement instanceof ForLoopStatement) {
 				ForLoopStatement for_cast = (ForLoopStatement) statement;
 				total_if_else++;
 				if (for_cast.getStatementBlock().getIsExecuted()) {
 					total_covered_if_else++;
 					codeCoverageBlockCheck((BlockStatement) for_cast.getStatementBlock());
-				}		
-			} else if(statement instanceof WhileLoopStatement) {
+				}
+			} else if (statement instanceof WhileLoopStatement) {
 				WhileLoopStatement while_cast = (WhileLoopStatement) statement;
 				total_if_else++;
-				if(while_cast.getIsExecuted()) {
+				if (while_cast.getIsExecuted()) {
 					total_covered_if_else++;
 					codeCoverageBlockCheck((BlockStatement) while_cast.getStatementBlock());
 				}
@@ -237,8 +246,8 @@ public class PrismCodeCoverage {
 		sb.append("<head>");
 		sb.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
 		sb.append("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>\n"
-			+ "  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>");
-		
+				+ "  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>");
+
 		sb.append("<style>\n" + "                        .color-red {\n"
 				+ "                                color: red;\n" + "                        }\n"
 				+ "                        .covered {\n"
@@ -270,22 +279,19 @@ public class PrismCodeCoverage {
 		sb.append("<ul class=\"nav nav-tabs\">\n"
 				+ "    <li class=\"active\"><a data-toggle=\"tab\" href=\"#statementCoverage\">Control-Flow Coverage</a></li>\n"
 				+ "    <li><a data-toggle=\"tab\" href=\"#desicionCoverage\">Data-Flow Coverage</a></li>\n"
-				+ "  </ul>"
-			+ "<div class=\"tab-content\">");
-		
+				+ "  </ul>" + "<div class=\"tab-content\">");
+
 		String input_file_name = new String();
 		sb.append("<div id=\"statementCoverage\" class=\"tab-pane fade in active\">");
 		sb.append("<div id='header-text'>\n" + "<p>Total Statements: <span class='color-red'>"
 				+ total_statements + "</span></p>\n"
-				+ "<p>Total Statements Covered:<span class='color-red'>"
-				+ getTotalCoveredStatements() + "</span></p>\n"
-				+ "<p>Total Statement Coverage<code>" + input_file_name
+				+ "<p>Total Statements Covered:<span class='color-red'>" + getTotalCoveredStatements()
+				+ "</span></p>\n" + "<p>Total Statement Coverage<code>" + input_file_name
 				+ "</code>: <span class='color-red'>"
-				+ (int) calcCoveragePercentage(getTotalCoveredStatements(),getTotalStatements()) + "%</span></p>\n"
-				+ "</span></p>\n");
+				+ (int) calcCoveragePercentage(getTotalCoveredStatements(), getTotalStatements())
+				+ "%</span></p>\n" + "</span></p>\n");
 		if (getTotalIfElse() > 0) {
-			sb.append("<p>Total Desicions: <span class='color-red'>"
-					+ getTotalIfElse() + "</span></p>\n"
+			sb.append("<p>Total Desicions: <span class='color-red'>" + getTotalIfElse() + "</span></p>\n"
 					+ "<p>Total Desicions Covered:<span class='color-red'>"
 					+ getTotalCoveredIfElse() + "</span></p>\n");
 			sb.append("<p>Total Desicion Coverage<code>" + input_file_name
@@ -298,7 +304,6 @@ public class PrismCodeCoverage {
 					+ "</code>: <span class='color-red'> 100%</span></p>\n </div>");
 		}
 
-		
 		List<Declaration> decls = prism_program.getProgram();
 		for (Declaration decl : decls) {
 			if (decl.getIsExecuted()) {
@@ -306,15 +311,15 @@ public class PrismCodeCoverage {
 					FunctionDeclaration funcDecl = (FunctionDeclaration) decl;
 					String funcSignature = funcDecl.functionSignature();
 
-					sb.append( "<p class='covered'>" + funcSignature + " { </p>");
-					sb.append( statementsToString(funcDecl.getFunctionBody()));
+					sb.append("<p class='covered'>" + funcSignature + " { </p>");
+					sb.append(statementsToString(funcDecl.getFunctionBody()));
 					sb.append("<div class='covered'>} </div>");
 				}
 			} else {
 				sb.append("<p class='not-covered'>" + decl.toString() + "</p>");
 			}
 		}
-		
+
 		sb.append("</div>");
 		sb.append("</div>");
 		sb.append("</div>");
@@ -421,9 +426,25 @@ public class PrismCodeCoverage {
 			// result += statement.toString() ;
 			result += "</div>";
 		} else {
-			result += "<div class='not-covered'>";
-			result += "<div class='tabbed'>" + statement.toString() + "</div>";
-			result += "</div>";
+			if (statement instanceof ForLoopStatement) {
+				ForLoopStatement for_stmt = (ForLoopStatement) statement;
+				result += "<div class='part-covered'><div class='tabbed'>FOR "
+						+ for_stmt.getBracketBlock() + " { </div></div>";
+
+				result += "<div class='not-covered'><div class='tabbed'>"
+						+ statementsToString(for_stmt.getStatementBlock()) + "}</div></div>";
+			} else if (statement instanceof WhileLoopStatement) {
+				WhileLoopStatement while_stmt = (WhileLoopStatement) statement;
+				result += "<div class='part-covered'><div class='tabbed'>WHILE "
+						+ while_stmt.getBracketBlock() + " { </div></div>";
+
+				result += "<div class='not-covered'><div class='tabbed'>"
+						+ statementsToString(while_stmt.getStatementBlock()) + "}</div></div>";
+			} else {
+				result += "<div class='not-covered'>";
+				result += "<div class='tabbed'>" + statement.toString() + "</div>";
+				result += "</div>";
+			}
 		}
 		return result;
 	}
