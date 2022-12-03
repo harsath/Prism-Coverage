@@ -206,18 +206,147 @@ public class PrismCodeCoverage {
 					}
 					codeCoverageBlockCheck((BlockStatement) if_cast.getIf_statement_block());
 				}
-				if (if_cast.getElse_statement_block().getIsExecuted()) {
+				if (if_cast.getElse_statement_block() != null) {
+					if (if_cast.getElse_statement_block().getIsExecuted()) {
+						total_covered_if_else++;
+						codeCoverageBlockCheck((BlockStatement) if_cast.getElse_statement_block());
+					}	
+				}
+				
+			} else if (statement instanceof ForLoopStatement) {
+				ForLoopStatement for_cast = (ForLoopStatement) statement;
+				total_if_else++;
+				if (for_cast.getStatementBlock().getIsExecuted()) {
 					total_covered_if_else++;
-					codeCoverageBlockCheck((BlockStatement) if_cast.getElse_statement_block());
+					codeCoverageBlockCheck((BlockStatement) for_cast.getStatementBlock());
+				}		
+			} else if(statement instanceof WhileLoopStatement) {
+				WhileLoopStatement while_cast = (WhileLoopStatement) statement;
+				total_if_else++;
+				if(while_cast.getIsExecuted()) {
+					total_covered_if_else++;
+					codeCoverageBlockCheck((BlockStatement) while_cast.getStatementBlock());
 				}
 			}
 		}
 	}
+	/**
+	public String desicionCoverageHTML() {
+		String result = "";
+		result += "<div id='header-text'>" + "<p>Total Desicions: <span class='color-red'>"
+		+ 		+ getTotalIfElse() + "</span></p>"
+		+ "<p>Total Desicions Covered:<span class='color-red'>"
+		+  getTotalCoveredIfElse() + "</span></p>";
+		if (getTotalIfElse() > 0) {
+			result +="<p>Total Desicion Coverage<code>"
+					+ "</code>: <span class='color-red'>"
+					+ (int) calcCoveragePercentage(this.getTotalCoveredIfElse(),
+							this.getTotalIfElse())
+					+ "%</span></p>\n </div>";
+		} else {
+			result +="<p>Total Desicion Coverage<code>"
+					+ "</code>: <span class='color-red'> 100% (No desicions in code)</span></p>\n </div>";
+		}
 
+		
+		
+		List<Declaration> decls = prism_program.getProgram();
+		for (Declaration decl : decls) {
+			if (decl instanceof FunctionDeclaration) {
+				FunctionDeclaration funcDecl = (FunctionDeclaration) decl;
+				String funcSignature = funcDecl.functionSignature();
+				result += "<p> " + funcSignature + " { </p>";
+				result += desicionsToString(funcDecl.getFunctionBody());
+				result +="} ";
+			}else {
+				result += decl.toString();
+			}
+		}
+		return result;
+		
+	}
+	
+	public String desicionsToString(BlockStatement decl){
+		String result = "";
+		for (Statement stmt : decl.getStatements()) {
+			if (stmt instanceof ForLoopStatement) {
+				ForLoopStatement for_cast = (ForLoopStatement) stmt;
+				if (for_cast.getConditionalBlock().getIsExecuted()) {
+					result += "<p class='covered'>" + for_cast.getConditionalBlock().toString() + "</p>";
+				}else {
+					result += "<p class='not-covered'>" + for_cast.getConditionalBlock().toString() + "</p>";
+				}
+				result += desicionsToString(for_cast.getStatementBlock());	
+			} else if (stmt instanceof WhileLoopStatement) {
+				WhileLoopStatement while_cast = (WhileLoopStatement) stmt;
+				if (while_cast.getExpressionBlock().getIsExecuted()) {
+					result += "<p class='covered'>" + while_cast.getExpressionBlock().toString() + "</p>";
+				}else {
+					result += "<p class='not-covered'>" + while_cast.getExpressionBlock().toString() + "</p>";
+				}
+				result += desicionsToString(while_cast.getStatementBlock());	
+			} else if (stmt instanceof IfElseStatement) {
+				IfElseStatement if_cast = (IfElseStatement) stmt;
+				if (if_cast.getIsExecuted() && if_cast.getElse_statement_block() != null && !if_cast.getElse_statement_block().getIsExecuted()) {
+					result += "<div class='tabbed'>";
+					result += "<div class='covered'>IF (" + if_cast.getExpr_condition()
+							+ ") { </div></br>";
+					result += desicionsToString(
+							(BlockStatement) if_cast.getIf_statement_block());
+					result += "</div>";
+				} else if (if_cast.getIsExecuted()) {
+					result += "<div class='tabbed'><div class='part-covered'>IF ("
+							+ if_cast.getExpr_condition() + "){ </div></div>";
+
+					result += desicionsToString(
+							(BlockStatement) if_cast.getIf_statement_block());
+				} else {
+					result += "<div class='tabbed'>";
+					result += "<div class='not-covered'>"
+							+ desicionsToString((BlockStatement) if_cast
+									.getElse_statement_block())
+							+ "</div>";
+					result += "</div>";
+				}
+				result += "<div class='covered'>";
+				result += "<div class='tabbed'>} </div>";
+				result += "</div>";
+				if (if_cast.getElse_statement_block() != null && if_cast.getElse_statement_block().getIsExecuted()) {
+					result += "<div class='covered'>";
+					result += "<div class='tabbed'>ELSE { </br>"
+							+ desicionsToString((BlockStatement) if_cast
+									.getElse_statement_block())
+							+ "</br>}</br>" + "</div>";
+					result += "</div>";
+					// returner +=
+					// statementsToString((BlockStatement)if_cast.getElse_statement_block());
+				} else {
+					result += "<div class='not-covered'>";
+					result += "<div class='tabbed'>ELSE { </br>"
+							+ if_cast.getElse_statement_block() + "</br>}</br>"
+							+ "</div>";
+					result += "</div>";
+
+				}
+				
+			} else {
+				result += "<p >" + stmt.toString()+"</p>";
+			}
+		}
+		
+		
+		return result;
+	}
+	
+	**/
 	public String generateHTML() throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>");
 		sb.append("<head>");
+		sb.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
+		sb.append("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>\n"
+			+ "  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>");
+		
 		sb.append("<style>\n" + "                        .color-red {\n"
 				+ "                                color: red;\n" + "                        }\n"
 				+ "                        .covered {\n"
@@ -246,10 +375,16 @@ public class PrismCodeCoverage {
 		sb.append("</title>");
 		sb.append("</head>");
 		sb.append("<body>");
-		sb.append("</body>");
-		sb.append("</html>");
-
+		sb.append("<ul class=\"nav nav-tabs\">\n"
+				+ "    <li class=\"active\"><a data-toggle=\"tab\" href=\"#statementCoverage\">Statement Coverage</a></li>\n"
+				+ "    <li><a data-toggle=\"tab\" href=\"#desicionCoverage\">Desicion Coverage</a></li>\n"
+				+ "    <li><a data-toggle=\"tab\" href=\"#menu2\">Menu 2</a></li>\n"
+				+ "    <li><a data-toggle=\"tab\" href=\"#menu3\">Menu 3</a></li>\n"
+				+ "  </ul>"
+			+ "<div class=\"tab-content\">");
+		
 		String input_file_name = new String();
+		sb.append("<div id=\"statementCoverage\" class=\"tab-pane fade in active\">");
 		sb.append("<div id='header-text'>\n" + "<p>Total Statements: <span class='color-red'>"
 				+ total_statements + "</span></p>\n"
 				+ "<p>Total Statements Covered:<span class='color-red'>"
@@ -257,11 +392,12 @@ public class PrismCodeCoverage {
 				+ "<p>Total Statement Coverage<code>" + input_file_name
 				+ "</code>: <span class='color-red'>"
 				+ (int) calcCoveragePercentage(getTotalCoveredStatements(),getTotalStatements()) + "%</span></p>\n"
-				
-				+ "<p>Total Desicions : <span class='color-red'>" + getTotalIfElse() + "</span></p>\n"
-				+ "<p>Total Desicions Covered: <span class='color-red'>" + getTotalCoveredIfElse()
 				+ "</span></p>\n");
 		if (getTotalIfElse() > 0) {
+			sb.append("<p>Total Desicions: <span class='color-red'>"
+					+ getTotalIfElse() + "</span></p>\n"
+					+ "<p>Total Desicions Covered:<span class='color-red'>"
+					+ getTotalCoveredIfElse() + "</span></p>\n");
 			sb.append("<p>Total Desicion Coverage<code>" + input_file_name
 					+ "</code>: <span class='color-red'>"
 					+ (int) calcCoveragePercentage(this.getTotalCoveredIfElse(),
@@ -272,7 +408,7 @@ public class PrismCodeCoverage {
 					+ "</code>: <span class='color-red'> 100%</span></p>\n </div>");
 		}
 
-		String result = sb.toString();
+		
 		List<Declaration> decls = prism_program.getProgram();
 		for (Declaration decl : decls) {
 			if (decl.getIsExecuted()) {
@@ -280,14 +416,21 @@ public class PrismCodeCoverage {
 					FunctionDeclaration funcDecl = (FunctionDeclaration) decl;
 					String funcSignature = funcDecl.functionSignature();
 
-					result += "<p class='covered'>" + funcSignature + " { </p>";
-					result += statementsToString(funcDecl.getFunctionBody());
-					result += "<div class='covered'>} </div>";
+					sb.append( "<p class='covered'>" + funcSignature + " { </p>");
+					sb.append( statementsToString(funcDecl.getFunctionBody()));
+					sb.append("<div class='covered'>} </div>");
 				}
 			} else {
-				result += "<p class='not-covered'>" + decl.toString() + "</p>";
+				sb.append("<p class='not-covered'>" + decl.toString() + "</p>");
 			}
 		}
+		
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</body>");
+		sb.append("</html>");
+		String result = sb.toString();
 		return result;
 	}
 

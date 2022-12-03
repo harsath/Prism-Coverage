@@ -33,14 +33,17 @@
     <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
   </ul><div class="tab-content"><div id="statementCoverage" class="tab-pane fade in active"><div id='header-text'>
 <p>Total Statements: <span class='color-red'>10</span></p>
-<p>Total Statements Covered:<span class='color-red'>8</span></p>
-<p>Total Statement Coverage<code></code>: <span class='color-red'>80%</span></p>
+<p>Total Statements Covered:<span class='color-red'>9</span></p>
+<p>Total Statement Coverage<code></code>: <span class='color-red'>90%</span></p>
 </span></p>
-<p>Total Desicion Coverage<code></code>: <span class='color-red'>0%</span></p>
- </div><p class='covered'>FUNCTION VOID exit_tester (INT value_one) { </p><div class='covered'><div class='tabbed'>INT returner = 0;
+<p>Total Desicions: <span class='color-red'>2</span></p>
+<p>Total Desicions Covered:<span class='color-red'>2</span></p>
+<p>Total Desicion Coverage<code></code>: <span class='color-red'>100%</span></p>
+ </div><p class='covered'>FUNCTION INT for_loop (INT value1) { </p><div class='covered'><div class='tabbed'>INT returner = value1;
 </div></div><div class='covered'><div class='tabbed'>FOR (null i = 0; i <  5; i = i + 1;) {
-	returner = returner + 1;
-	IF (i == 4) { 
-		prism.ExitFunctionCallExpression@6fd02e5
+	returner = returner * 2;
+	IF (i == 2) { 
+		RETURN returner;
 	}
-}</div></div><div class='not-covered'><div class='tabbed'>RETURN returner;</div></div><div class='covered'>} </div><p class='covered'>FUNCTION INT main () { </p><div class='covered'><div class='tabbed'>exit_tester(10)</div></div><div class='not-covered'><div class='tabbed'>RETURN 0;</div></div><div class='covered'>} </div></div></div></div></body></html>
+}</div></div><div class='not-covered'><div class='tabbed'>RETURN returner;</div></div><div class='covered'>} </div><p class='covered'>FUNCTION INT main () { </p><div class='covered'><div class='tabbed'>INT result = for_loop(1);
+</div></div><div class='covered'><div class='tabbed'>RETURN result;</div></div><div class='covered'>} </div></div></div></div></body></html>
