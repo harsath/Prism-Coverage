@@ -230,115 +230,7 @@ public class PrismCodeCoverage {
 			}
 		}
 	}
-	/**
-	public String desicionCoverageHTML() {
-		String result = "";
-		result += "<div id='header-text'>" + "<p>Total Desicions: <span class='color-red'>"
-		+ 		+ getTotalIfElse() + "</span></p>"
-		+ "<p>Total Desicions Covered:<span class='color-red'>"
-		+  getTotalCoveredIfElse() + "</span></p>";
-		if (getTotalIfElse() > 0) {
-			result +="<p>Total Desicion Coverage<code>"
-					+ "</code>: <span class='color-red'>"
-					+ (int) calcCoveragePercentage(this.getTotalCoveredIfElse(),
-							this.getTotalIfElse())
-					+ "%</span></p>\n </div>";
-		} else {
-			result +="<p>Total Desicion Coverage<code>"
-					+ "</code>: <span class='color-red'> 100% (No desicions in code)</span></p>\n </div>";
-		}
 
-		
-		
-		List<Declaration> decls = prism_program.getProgram();
-		for (Declaration decl : decls) {
-			if (decl instanceof FunctionDeclaration) {
-				FunctionDeclaration funcDecl = (FunctionDeclaration) decl;
-				String funcSignature = funcDecl.functionSignature();
-				result += "<p> " + funcSignature + " { </p>";
-				result += desicionsToString(funcDecl.getFunctionBody());
-				result +="} ";
-			}else {
-				result += decl.toString();
-			}
-		}
-		return result;
-		
-	}
-	
-	public String desicionsToString(BlockStatement decl){
-		String result = "";
-		for (Statement stmt : decl.getStatements()) {
-			if (stmt instanceof ForLoopStatement) {
-				ForLoopStatement for_cast = (ForLoopStatement) stmt;
-				if (for_cast.getConditionalBlock().getIsExecuted()) {
-					result += "<p class='covered'>" + for_cast.getConditionalBlock().toString() + "</p>";
-				}else {
-					result += "<p class='not-covered'>" + for_cast.getConditionalBlock().toString() + "</p>";
-				}
-				result += desicionsToString(for_cast.getStatementBlock());	
-			} else if (stmt instanceof WhileLoopStatement) {
-				WhileLoopStatement while_cast = (WhileLoopStatement) stmt;
-				if (while_cast.getExpressionBlock().getIsExecuted()) {
-					result += "<p class='covered'>" + while_cast.getExpressionBlock().toString() + "</p>";
-				}else {
-					result += "<p class='not-covered'>" + while_cast.getExpressionBlock().toString() + "</p>";
-				}
-				result += desicionsToString(while_cast.getStatementBlock());	
-			} else if (stmt instanceof IfElseStatement) {
-				IfElseStatement if_cast = (IfElseStatement) stmt;
-				if (if_cast.getIsExecuted() && if_cast.getElse_statement_block() != null && !if_cast.getElse_statement_block().getIsExecuted()) {
-					result += "<div class='tabbed'>";
-					result += "<div class='covered'>IF (" + if_cast.getExpr_condition()
-							+ ") { </div></br>";
-					result += desicionsToString(
-							(BlockStatement) if_cast.getIf_statement_block());
-					result += "</div>";
-				} else if (if_cast.getIsExecuted()) {
-					result += "<div class='tabbed'><div class='part-covered'>IF ("
-							+ if_cast.getExpr_condition() + "){ </div></div>";
-
-					result += desicionsToString(
-							(BlockStatement) if_cast.getIf_statement_block());
-				} else {
-					result += "<div class='tabbed'>";
-					result += "<div class='not-covered'>"
-							+ desicionsToString((BlockStatement) if_cast
-									.getElse_statement_block())
-							+ "</div>";
-					result += "</div>";
-				}
-				result += "<div class='covered'>";
-				result += "<div class='tabbed'>} </div>";
-				result += "</div>";
-				if (if_cast.getElse_statement_block() != null && if_cast.getElse_statement_block().getIsExecuted()) {
-					result += "<div class='covered'>";
-					result += "<div class='tabbed'>ELSE { </br>"
-							+ desicionsToString((BlockStatement) if_cast
-									.getElse_statement_block())
-							+ "</br>}</br>" + "</div>";
-					result += "</div>";
-					// returner +=
-					// statementsToString((BlockStatement)if_cast.getElse_statement_block());
-				} else {
-					result += "<div class='not-covered'>";
-					result += "<div class='tabbed'>ELSE { </br>"
-							+ if_cast.getElse_statement_block() + "</br>}</br>"
-							+ "</div>";
-					result += "</div>";
-
-				}
-				
-			} else {
-				result += "<p >" + stmt.toString()+"</p>";
-			}
-		}
-		
-		
-		return result;
-	}
-	
-	**/
 	public String generateHTML() throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>");
@@ -376,10 +268,8 @@ public class PrismCodeCoverage {
 		sb.append("</head>");
 		sb.append("<body>");
 		sb.append("<ul class=\"nav nav-tabs\">\n"
-				+ "    <li class=\"active\"><a data-toggle=\"tab\" href=\"#statementCoverage\">Statement Coverage</a></li>\n"
-				+ "    <li><a data-toggle=\"tab\" href=\"#desicionCoverage\">Desicion Coverage</a></li>\n"
-				+ "    <li><a data-toggle=\"tab\" href=\"#menu2\">Menu 2</a></li>\n"
-				+ "    <li><a data-toggle=\"tab\" href=\"#menu3\">Menu 3</a></li>\n"
+				+ "    <li class=\"active\"><a data-toggle=\"tab\" href=\"#statementCoverage\">Control-Flow Coverage</a></li>\n"
+				+ "    <li><a data-toggle=\"tab\" href=\"#desicionCoverage\">Data-Flow Coverage</a></li>\n"
 				+ "  </ul>"
 			+ "<div class=\"tab-content\">");
 		
