@@ -1,0 +1,19 @@
+FUNCTION INT main() {
+	INT[] var_array = NEW INT[];
+	var_array.INSERT(10);
+	var_array.INSERT(20);
+	var_array.INSERT(30);
+	var_array.INSERT(40);
+	var_array.INSERT(50);
+
+	PRINT("SIZE : ");
+	PRINTLN(var_array.SIZE());
+
+	var_array.REMOVEAT(2);
+	var_array.REMOVEAT(2);
+
+	PRINT("SIZE : ");
+	PRINTLN(var_array.SIZE());
+
+	RETURN var_array.AT(2);
+}

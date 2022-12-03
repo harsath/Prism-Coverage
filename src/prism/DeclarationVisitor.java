@@ -17,6 +17,18 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
 				return new StringType();
 			case "VOID":
 				return new VoidType();
+			case "INT[]": {
+				ArrayType returner = new ArrayType("INT[]");
+				return returner;
+			}
+			case "BOOL[]": {
+				ArrayType returner = new ArrayType("BOOL[]");
+				return returner;
+			}
+			case "STRING[]": {
+				ArrayType returner = new ArrayType("STRING[]");
+				return returner;
+			}
 			default:
 				throw new RuntimeException("Invalid type as function return type.");
 		}

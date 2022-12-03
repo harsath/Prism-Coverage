@@ -14,9 +14,6 @@ public class StatementVisitor extends PrismBaseVisitor<Statement> {
                         return block_stmt;
                 }
                 // We don't want to visit '{' and '}'
-                // System.out.println("METHOD : " + ctx.getParent().getChild(2).getText());
-                // System.out.println("NUM CHILD OF 1st CHILD : " +
-                // ctx.getChild(0).getChildCount());
                 for (int i = 1; i < ctx.getChildCount() - 1; i++) {
                         Statement stmt = visit(ctx.getChild(i));
                         block_stmt.addStatement(stmt);

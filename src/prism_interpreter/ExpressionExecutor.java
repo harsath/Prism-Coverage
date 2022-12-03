@@ -47,6 +47,9 @@ public class ExpressionExecutor {
 		} else if (expression instanceof EqualityExpression) {
 			return relationalExpressionTypeHandler(expression, RelationalExpressionType.EQUALITY,
 					globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof NotEqualExpression) {
+			return relationalExpressionTypeHandler(expression, RelationalExpressionType.NOTEQUAL,
+					globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof OrExpression) {
 			return logicalExpressionTypeHandler(expression, LogicalExpressionType.OR, globalIdentifiers,
 					scopeIdentifiers);
@@ -100,6 +103,10 @@ public class ExpressionExecutor {
 			return postfixExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else if (expression instanceof PostfixSubtractionExpression) {
 			return postfixExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof ArrayCreationExpression) {
+			return arrayCreationExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
+		} else if (expression instanceof ArrayOperationExpression) {
+			return arrayOperationExpressionHandler(expression, globalIdentifiers, scopeIdentifiers);
 		} else {
 			throw new RuntimeException("Undefined Expression type");
 		}
@@ -213,6 +220,74 @@ public class ExpressionExecutor {
 		}
 	}
 
+	private Expression arrayCreationExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) {
+		ArrayCreationExpression arr_creation_expr = (ArrayCreationExpression) expr;
+		return new ArrayAtomExpression(arr_creation_expr.getType());
+	}
+
+	private Expression arrayOperationExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
+			Map<String, AtomType> scopeIdentifiers) throws Exception {
+		ArrayOperationExpression array_operation = (ArrayOperationExpression) expr;
+		array_operation.setIsExecuted(true);
+		Expression array_expr = lookupIdentifier(globalIdentifiers, scopeIdentifiers, array_operation.getId());
+		if (!(array_expr instanceof ArrayAtomExpression)) {
+			throw new RuntimeException("Variable is not of type array");
+		}
+		ArrayAtomExpression array_expr_cast = (ArrayAtomExpression) array_expr;
+		array_expr_cast.setIsExecuted(true);
+		switch (array_operation.getArrayOperation()) {
+			case "INSERT": {
+				if (array_operation.getExpression() == null) {
+					throw new RuntimeException("INSERT operation must pass in a value");
+				}
+				Expression insert_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
+						array_operation.getExpression());
+				array_expr_cast.putItem(ExecutorHelpers.getAtomTypeFromAtomExpression(insert_expr,
+						"Invalid type passed in array INSERT"));
+				return array_expr_cast;
+			}
+			case "AT": {
+				if (array_operation.getExpression() == null) {
+					throw new RuntimeException("AT operation must pass in a value");
+				}
+				Expression at_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
+						array_operation.getExpression());
+				if (!(at_expr instanceof IntegerAtomExpression)) {
+					throw new RuntimeException("Array index must be an integer");
+				}
+				return ExecutorHelpers.getAtomExpressionFromAtomType(
+						array_expr_cast.getItemAtIndex(
+								((IntegerAtomExpression) at_expr).getValue()),
+						"Invalid type in array AT");
+			}
+			case "SIZE": {
+				return new IntegerAtomExpression(array_expr_cast.getArraySize());
+			}
+			case "REMOVEAT": {
+				if (array_operation.getExpression() == null) {
+					throw new RuntimeException("REMOVEAT operation must pass in a value");
+				}
+				Expression removeat_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
+						array_operation.getExpression());
+				if (!(removeat_expr instanceof IntegerAtomExpression)) {
+					throw new RuntimeException("Array index must be an integer");
+				}
+				return ExecutorHelpers.getAtomExpressionFromAtomType(
+						array_expr_cast.removeAt(
+								((IntegerAtomExpression) removeat_expr).getValue()),
+						"Invalid type in array REMOVEAT");
+			}
+			case "REMOVEALL": {
+				array_expr_cast.removeAll();
+				return array_expr;
+			}
+			default: {
+				throw new RuntimeException("Invalid operation on array");
+			}
+		}
+	}
+
 	private Expression postfixExpressionHandler(Expression expr, Map<String, AtomType> globalIdentifiers,
 			Map<String, AtomType> scopeIdentifiers) throws Exception {
 		if (expr instanceof PostfixAdditionExpression) {
@@ -224,7 +299,8 @@ public class ExpressionExecutor {
 				throw new RuntimeException("Postfix expression can only be applied to integers");
 			}
 			IntegerAtomExpression expr_var_value_cast = (IntegerAtomExpression) expr_var_value;
-			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(), new IntegerType(expr_var_value_cast.getValue() + 1));
+			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(),
+					new IntegerType(expr_var_value_cast.getValue() + 1));
 			expr_var_value_cast.setValue(expr_var_value_cast.getValue() + 1);
 			return expr;
 		} else {
@@ -236,7 +312,8 @@ public class ExpressionExecutor {
 				throw new RuntimeException("Postfix expression can only be applied to integers");
 			}
 			IntegerAtomExpression expr_var_value_cast = (IntegerAtomExpression) expr_var_value;
-			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(), new IntegerType(expr_var_value_cast.getValue() - 1));
+			setIdentifier(globalIdentifiers, scopeIdentifiers, expr_var.getId(),
+					new IntegerType(expr_var_value_cast.getValue() - 1));
 			return expr;
 		}
 	}
@@ -376,6 +453,15 @@ public class ExpressionExecutor {
 				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
 				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
 				return new BooleanAtomExpression((lhs_cast.getValue() == rhs_cast.getValue()));
+			}
+			case NOTEQUAL: {
+				NotEqualExpression expr_cast = (NotEqualExpression) expr;
+				lhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getLeft());
+				rhs = executeExpression(globalIdentifiers, scopeIdentifiers, expr_cast.getRight());
+				typeCheckRelationalExpression(lhs, rhs);
+				IntegerAtomExpression lhs_cast = (IntegerAtomExpression) lhs;
+				IntegerAtomExpression rhs_cast = (IntegerAtomExpression) rhs;
+				return new BooleanAtomExpression((lhs_cast.getValue() != rhs_cast.getValue()));
 			}
 			case GREATERTHAN: {
 				GreaterthanExpression expr_cast = (GreaterthanExpression) expr;
@@ -555,8 +641,8 @@ public class ExpressionExecutor {
 	}
 
 	private enum RelationalExpressionType {
-		MULTIPLICATION, DIVISION, ADDITION, SUBTRACTION, EQUALITY, GREATERTHAN, LESSTHAN, GREATERTHANEQ,
-		LESSTHANEQ, UNARYMINUS, MAX, MIN, POW
+		MULTIPLICATION, DIVISION, ADDITION, SUBTRACTION, EQUALITY, NOTEQUAL, GREATERTHAN, LESSTHAN,
+		GREATERTHANEQ, LESSTHANEQ, UNARYMINUS, MAX, MIN, POW
 	};
 
 	private enum LogicalExpressionType {
