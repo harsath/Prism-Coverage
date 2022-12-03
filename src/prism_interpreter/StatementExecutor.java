@@ -1,7 +1,6 @@
 package prism_interpreter;
 
 import java.util.*;
-import java.util.concurrent.Executor;
 
 import prism.*;
 
