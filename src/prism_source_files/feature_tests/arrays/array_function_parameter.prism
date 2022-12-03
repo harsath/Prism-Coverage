@@ -30,5 +30,6 @@ FUNCTION INT main() {
 	// NOTE: Array here is pass-by-value (any modification to array by the function reflects in `array_one`)
 	INT function_return = fn_one(array_one);
 
+	// expected: 10
 	RETURN function_return;
 }
