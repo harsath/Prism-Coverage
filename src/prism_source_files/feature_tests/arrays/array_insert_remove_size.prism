@@ -42,5 +42,6 @@ FUNCTION INT main() {
 		EXIT(-1);
 	}
 
+	// expected: 1
 	RETURN 1;
 }
