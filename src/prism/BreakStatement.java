@@ -16,4 +16,9 @@ public class BreakStatement implements Statement {
         public boolean getIsExecuted() {
                 return this.executed;
         }
+
+        @Override
+        public String toString() {
+                return "BREAK;";
+        }
 }
