@@ -8,7 +8,7 @@ public class ObjectInvocationExpression implements Expression {
         String member_id;
 
         public ObjectInvocationExpression() {
-
+                this.param_decl = null;
         }
 
         public void setId(String id) {
@@ -51,5 +51,20 @@ public class ObjectInvocationExpression implements Expression {
         @Override
         public void setIsExecuted(boolean value) {
                 this.executed = value;
+        }
+
+        @Override
+        public String toString() {
+                String returner = "";
+                returner += this.id + "." + this.member_id;
+                if (this.is_method) {
+                        returner += "(";
+                        if (this.param_decl != null) {
+                                returner += this.param_decl.toString();
+                        }
+                        returner += ")";
+                }
+                returner += ";";
+                return returner;
         }
 }

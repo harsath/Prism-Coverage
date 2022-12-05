@@ -62,4 +62,9 @@ public class ArrayType implements AtomType, Serializable {
                 return returner;
         }
 
+        @Override
+        public String toString() {
+                return this.type;
+        }
+
 }
