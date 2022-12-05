@@ -3,7 +3,7 @@ package prism;
 import java.io.Serializable;
 
 public class IntegerType implements AtomType, Serializable {
-	private int value;
+	private Integer value;
 	private boolean isInitialized;
 
 	public IntegerType(int value) {
