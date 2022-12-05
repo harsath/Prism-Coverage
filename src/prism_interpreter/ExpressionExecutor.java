@@ -363,6 +363,7 @@ public class ExpressionExecutor {
 		}
 		FunctionDeclaration method_decl = classSymbolTable.a.get(obj_identifier_cast.getClassName())
 				.get(obj_expr.getMember_Id());
+		method_decl.setIsExecuted(true);
 		Map<String, AtomType> attributes = obj_identifier_cast.getAttributes();
 		Map<String, AtomType> attribute_stack = new HashMap<>(attributes);
 		if (method_decl.getFunctionParamDecl() != null) {
