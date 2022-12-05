@@ -61,5 +61,10 @@ public class ArrayType implements AtomType, Serializable {
                 internal_array.remove(internal_array.size() - 1);
                 return returner;
         }
-
+        
+        @Override
+        public String toString() {
+                return this.type;
+        }
+        
 }

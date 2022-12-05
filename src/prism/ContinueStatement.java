@@ -16,4 +16,9 @@ public class ContinueStatement implements Statement {
         public boolean getIsExecuted() {
                 return this.executed;
         }
+
+        @Override
+        public String toString() {
+                return "CONTINUE;";
+        }
 }

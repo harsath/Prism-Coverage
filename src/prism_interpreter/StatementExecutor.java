@@ -257,7 +257,8 @@ public class StatementExecutor {
 			if (for_updation_stmt != null) {
 				assignmentStatementHandler(for_updation_stmt, globalIdentifiers, scopeIdentifiers);
 			} else {
-				expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers, for_updation_expr);
+				expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
+						for_updation_expr);
 			}
 			for_condition_expr_exec_cast = (BooleanAtomExpression) expressionExecutor
 					.executeExpression(globalIdentifiers, scopeIdentifiers, for_condition_expr);

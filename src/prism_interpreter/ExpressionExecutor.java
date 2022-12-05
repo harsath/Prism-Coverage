@@ -1,6 +1,7 @@
 package prism_interpreter;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import prism.*;
 
@@ -362,7 +363,9 @@ public class ExpressionExecutor {
 		}
 		FunctionDeclaration method_decl = classSymbolTable.a.get(obj_identifier_cast.getClassName())
 				.get(obj_expr.getMember_Id());
+		method_decl.setIsExecuted(true);
 		Map<String, AtomType> attributes = obj_identifier_cast.getAttributes();
+		Map<String, AtomType> attribute_stack = new HashMap<>(attributes);
 		if (method_decl.getFunctionParamDecl() != null) {
 			List<ParameterDeclaration> method_decl_params = method_decl.getFunctionParamDecl()
 					.getParamList();
@@ -382,14 +385,20 @@ public class ExpressionExecutor {
 					throw new RuntimeException(
 							"Parameter name of a method cannot be same as that of an attribute.");
 				}
-				attributes.put(param_name_in_method_decl, ExecutorHelpers.getAtomTypeFromAtomExpression(
-						expr_in_method_call, "Invalid type in method parameter list"));
+				attribute_stack.put(param_name_in_method_decl,
+						ExecutorHelpers.getAtomTypeFromAtomExpression(expr_in_method_call,
+								"Invalid type in method parameter list"));
 			}
 			List<Statement> block_stmt = method_decl.getFunctionBody().getStatements();
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
-					attributes, block_stmt);
+					attribute_stack, block_stmt);
+			for (Entry<String, AtomType> stack_variable : attribute_stack.entrySet()) {
+				if (attributes.containsKey(stack_variable.getKey())) {
+					attributes.put(stack_variable.getKey(), stack_variable.getValue());
+				}
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invalid return from statement executor of method call");
 		} else {
@@ -397,7 +406,12 @@ public class ExpressionExecutor {
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
-					attributes, block_stmt);
+					attribute_stack, block_stmt);
+			for (Entry<String, AtomType> stack_variable : attribute_stack.entrySet()) {
+				if (attributes.containsKey(stack_variable.getKey())) {
+					attributes.put(stack_variable.getKey(), stack_variable.getValue());
+				}
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invaild return from statement executor of method call");
 		}

@@ -34,7 +34,7 @@ public class StringType implements AtomType, Serializable {
 	@Override
 	public String toString() {
 		if (initialized) {
-			return value;
+			return "\""+ value + "\"";
 		} else {
 			return "STRING";
 		}

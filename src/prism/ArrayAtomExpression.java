@@ -16,4 +16,9 @@ public class ArrayAtomExpression extends ArrayType implements Expression {
         public void setIsExecuted(boolean value) {
                 this.execute = value;
         }
+        
+        @Override
+        public String toString() {
+                return super.toString();
+        }
 }
