@@ -3,9 +3,11 @@ CLASS classNameOne {
                 INT attr_one = 0;
                 BOOL attr_two = false;
                 INT attr_three = 99;
+		STRING attr_four = "";
         METHODS
                 FUNCTION INT methodOne(INT val1) {
                         INT result = attr_one  * val1 + attr_three;
+			attr_four = "hello";
                         RETURN result;
                 }
                 FUNCTION INT methodTwo() {
