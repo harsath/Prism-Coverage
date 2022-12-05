@@ -455,9 +455,9 @@ public class PrismCodeCoverage {
 			sb.append("<p>Total Desicion Coverage<code>" + input_file_name
 					+ "</code>: <span class='color-red'> 100%</span></p>\n </div>");
 		}
+
  
- 
-		List<Declaration> decls = prism_program.getProgram();
+    List<Declaration> decls = prism_program.getProgram();
 		for (Declaration decl : decls) {
 			if (decl.getIsExecuted()) {
 				if (decl instanceof FunctionDeclaration) {
@@ -541,7 +541,7 @@ public class PrismCodeCoverage {
 							returner += "</div>";
 						}
 						
-					} else {
+					} else { 
 						if ( if_cast.getElse_statement_block() != null && ((BlockStatement)if_cast.getElse_statement_block()).getStatements().size() >0 ) {
 							returner += "<div class='not-covered'>";
 							returner += "<div class='tabbed'>ELSE { </br>"
@@ -587,9 +587,25 @@ public class PrismCodeCoverage {
 			// result += statement.toString() ;
 			result += "</div>";
 		} else {
-			result += "<div class='not-covered'>";
-			result += "<div class='tabbed'>" + statement.toString() + "</div>";
-			result += "</div>";
+			if (statement instanceof ForLoopStatement) {
+				ForLoopStatement for_stmt = (ForLoopStatement) statement;
+				result += "<div class='part-covered'><div class='tabbed'>FOR "
+						+ for_stmt.getBracketBlock() + " { </div></div>";
+
+				result += "<div class='not-covered'><div class='tabbed'>"
+						+ statementsToString(for_stmt.getStatementBlock()) + "}</div></div>";
+			} else if (statement instanceof WhileLoopStatement) {
+				WhileLoopStatement while_stmt = (WhileLoopStatement) statement;
+				result += "<div class='part-covered'><div class='tabbed'>WHILE "
+						+ while_stmt.getBracketBlock() + " { </div></div>";
+
+				result += "<div class='not-covered'><div class='tabbed'>"
+						+ statementsToString(while_stmt.getStatementBlock()) + "}</div></div>";
+			} else {
+				result += "<div class='not-covered'>";
+				result += "<div class='tabbed'>" + statement.toString() + "</div>";
+				result += "</div>";
+			}
 		}
 		return result;
 	}
