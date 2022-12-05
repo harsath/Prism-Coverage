@@ -30,7 +30,8 @@ public class DeclarationVisitor extends PrismBaseVisitor<Declaration> {
 				return returner;
 			}
 			default:
-				throw new RuntimeException("Invalid type as function return type.");
+				ObjectType returner = new ObjectType(str, null);
+				return returner;
 		}
 	}
 

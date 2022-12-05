@@ -1,6 +1,7 @@
 package prism_interpreter;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import prism.*;
 
@@ -362,7 +363,11 @@ public class ExpressionExecutor {
 		}
 		FunctionDeclaration method_decl = classSymbolTable.a.get(obj_identifier_cast.getClassName())
 				.get(obj_expr.getMember_Id());
+		Map<String, AtomType> attribute_stack = new HashMap<>();
 		Map<String, AtomType> attributes = obj_identifier_cast.getAttributes();
+		for (Entry<String, AtomType> attribute : attributes.entrySet()) {
+			attribute_stack.put(attribute.getKey(), attribute.getValue());
+		}
 		if (method_decl.getFunctionParamDecl() != null) {
 			List<ParameterDeclaration> method_decl_params = method_decl.getFunctionParamDecl()
 					.getParamList();
@@ -382,14 +387,15 @@ public class ExpressionExecutor {
 					throw new RuntimeException(
 							"Parameter name of a method cannot be same as that of an attribute.");
 				}
-				attributes.put(param_name_in_method_decl, ExecutorHelpers.getAtomTypeFromAtomExpression(
-						expr_in_method_call, "Invalid type in method parameter list"));
+				attribute_stack.put(param_name_in_method_decl,
+						ExecutorHelpers.getAtomTypeFromAtomExpression(expr_in_method_call,
+								"Invalid type in method parameter list"));
 			}
 			List<Statement> block_stmt = method_decl.getFunctionBody().getStatements();
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
-					attributes, block_stmt);
+					attribute_stack, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invalid return from statement executor of method call");
 		} else {
@@ -397,7 +403,7 @@ public class ExpressionExecutor {
 			StatementExecutor statement_executor = new StatementExecutor(functionDeclarationSymbolTable,
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
-					attributes, block_stmt);
+					attribute_stack, block_stmt);
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invaild return from statement executor of method call");
 		}

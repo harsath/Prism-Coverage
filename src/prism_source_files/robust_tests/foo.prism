@@ -1,0 +1,60 @@
+CLASS patient {
+    ATTRIBUTES
+    STRING name = "";
+    INT ssn = 0;
+
+    METHODS
+    FUNCTION VOID setName (STRING input_name) {
+        name = input_name;
+    }
+    
+    FUNCTION VOID setSsn (INT input_ssn) {
+        ssn = input_ssn;
+    }
+}
+
+CLASS physician {
+    ATTRIBUTES
+    STRING name = "";
+    patient[] patients = NEW patient[];
+
+    METHODS
+    FUNCTION VOID setName (STRING input_name){
+        name = input_name;
+    }
+
+    FUNCTION VOID addPatient (patient p_) {
+        patients.INSERT(p_);
+    }
+
+    FUNCTION VOID removePatient (patient p) {
+        FOR (INT i = 0; i < patients.SIZE(); i++;) {
+	    patient xx = patients.AT(i);
+            IF (xx.ssn == p.ssn) {
+                patients.REMOVEAT(i);
+                BREAK;
+            }
+        }
+    }
+}
+
+FUNCTION INT main () {
+    // test classes
+    patient p1 = NEW patient();
+    p1.setSsn(1);
+    patient p2 = NEW patient();
+    p2.setName("Harsath");
+    p2.setSsn(2);
+    physician phys = NEW physician();
+    phys.setName("Robbie");    
+    phys.addPatient(p1);
+    phys.addPatient(p2);
+    
+    patient[] phy_member = phys.patients;
+    PRINTLN(phy_member.SIZE());
+    phys.removePatient(p1);
+    PRINTLN(phy_member.SIZE());
+
+    RETURN 0;
+}
+
