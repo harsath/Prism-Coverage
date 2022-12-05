@@ -363,11 +363,8 @@ public class ExpressionExecutor {
 		}
 		FunctionDeclaration method_decl = classSymbolTable.a.get(obj_identifier_cast.getClassName())
 				.get(obj_expr.getMember_Id());
-		Map<String, AtomType> attribute_stack = new HashMap<>();
 		Map<String, AtomType> attributes = obj_identifier_cast.getAttributes();
-		for (Entry<String, AtomType> attribute : attributes.entrySet()) {
-			attribute_stack.put(attribute.getKey(), attribute.getValue());
-		}
+		Map<String, AtomType> attribute_stack = new HashMap<>(attributes);
 		if (method_decl.getFunctionParamDecl() != null) {
 			List<ParameterDeclaration> method_decl_params = method_decl.getFunctionParamDecl()
 					.getParamList();
@@ -396,6 +393,11 @@ public class ExpressionExecutor {
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
 					attribute_stack, block_stmt);
+			for (Entry<String, AtomType> stack_variable : attribute_stack.entrySet()) {
+				if (attributes.containsKey(stack_variable.getKey())) {
+					attributes.put(stack_variable.getKey(), stack_variable.getValue());
+				}
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invalid return from statement executor of method call");
 		} else {
@@ -404,6 +406,11 @@ public class ExpressionExecutor {
 					classSymbolTable);
 			Pair<AtomType, Boolean[]> ret = statement_executor.executeStatements(globalIdentifiers,
 					attribute_stack, block_stmt);
+			for (Entry<String, AtomType> stack_variable : attribute_stack.entrySet()) {
+				if (attributes.containsKey(stack_variable.getKey())) {
+					attributes.put(stack_variable.getKey(), stack_variable.getValue());
+				}
+			}
 			return ExecutorHelpers.getAtomExpressionFromAtomType(ret.a,
 					"Invaild return from statement executor of method call");
 		}
