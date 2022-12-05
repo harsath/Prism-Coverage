@@ -1,7 +1,7 @@
 package prism;
 
 public class ObjectRHSExpression implements Expression {
-        private boolean executed; 
+        private boolean executed;
         private String id;
         private FunctionParamListExpression param_decl;
 
@@ -32,5 +32,10 @@ public class ObjectRHSExpression implements Expression {
         @Override
         public void setIsExecuted(boolean value) {
                 this.executed = value;
+        }
+
+        @Override
+        public String toString() {
+                return "NEW " + this.id + "();";
         }
 }

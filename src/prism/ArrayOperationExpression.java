@@ -37,4 +37,15 @@ public class ArrayOperationExpression implements Expression {
         public boolean getIsExecuted() {
                 return this.execute;
         }
+
+        @Override
+        public String toString() {
+                String returner = "";
+                returner += this.id + "." + this.array_operation;
+                if (this.expr != null) {
+                        returner += "( " + this.expr.toString() + ")";
+                }
+                returner += ";";
+                return returner;
+        }
 }
