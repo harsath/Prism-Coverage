@@ -1,0 +1,10 @@
+FUNCTION INT main()  {
+	PRINT(5 + 4);
+	PRINT(true && false);
+	INT x = 60;
+	PRINT(x);
+	BOOL y = false;
+	PRINT(y);
+
+	// expected: 9false60false
+}

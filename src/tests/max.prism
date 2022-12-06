@@ -1,0 +1,11 @@
+FUNCTION INT test_max(INT val1, INT val2) {
+       INT x = MAX(val1 + 10, val2);
+       RETURN x;
+}
+
+FUNCTION INT main() {
+	INT result = test_max(5, 10);
+
+	// expected: 15
+	RETURN result;
+}
