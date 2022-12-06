@@ -1,4 +1,4 @@
-package tests;
+package test_runner;
 
 import java.io.*;
 

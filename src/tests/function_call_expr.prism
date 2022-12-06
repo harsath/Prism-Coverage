@@ -1,0 +1,22 @@
+FUNCTION INT param_function() {
+	RETURN 30;
+}
+
+FUNCTION INT test_add(INT param_1, INT param_2, BOOL param_3) {
+	IF (param_3) {
+		RETURN param_1 + param_2;
+	} ELSE {
+		RETURN param_2 - param_1;
+	}
+}
+
+FUNCTION INT main() {
+	INT value_1 = 10;
+	INT value_2 = 20;
+
+	INT result_1 = test_add(value_1, value_2, true);
+	INT result_2 = test_add(param_function(), 40, false);
+
+	// expected: 40
+	RETURN (result_1 + result_2);
+}

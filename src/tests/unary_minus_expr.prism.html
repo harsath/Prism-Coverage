@@ -1,0 +1,41 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><style>
+                        .color-red {
+                                color: red;
+                        }
+                        .covered {
+                                background-color: #50DBB4;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+}			   .part-covered {
+                                background-color: #F6FF00;
+
+				   margin-bottom: 0px;
+				   padding: 1px;
+                                                               white-space:pre;
+}			   .not-covered {
+                                background-color: #FF6263;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+                        }
+						   .tabbed {
+                                padding-left: 3em;
+				   white-space:pre;
+ 							}
+	                        #main-body {
+                                width: 70%;
+                        }
+                </style><title>Code Coverage Result</title></head><body><ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#statementCoverage">Control-Flow Coverage</a></li>
+    <li><a data-toggle="tab" href="#dataCoverage">Data-Flow Coverage</a></li>
+  </ul><div class="tab-content"><div id="statementCoverage" class="tab-pane fade in active"><div id='header-text'>
+<p>Total Statements: <span class='color-red'>7</span></p>
+<p>Total Statements Covered:<span class='color-red'>7</span></p>
+<p>Total Statement Coverage<code></code>: <span class='color-red'>100%</span></p>
+</span></p>
+<p>Total Desicion Coverage<code></code>: <span class='color-red'> 100%</span></p>
+ </div><p class='covered'>FUNCTION INT ret_fn () { </p><div class='covered'><div class='tabbed'>RETURN 20;</div></div><div class='covered'>} </div><p class='covered'>FUNCTION INT ret_fn_2 () { </p><div class='covered'><div class='tabbed'>RETURN -10;</div></div><div class='covered'>} </div><p class='covered'>FUNCTION INT main () { </p><div class='covered'><div class='tabbed'>INT value_1 = -(ret_fn() + ret_fn_2());
+</div></div><div class='covered'><div class='tabbed'>RETURN value_1;</div></div><div class='covered'>} </div></div><div id="dataCoverage" class="tab-pane fade"><p >0 FUNCTION INT ret_fn () { </p><div ><div class='tabbed'>1 RETURN 20;</div></div><div >} </div><p >2 FUNCTION INT ret_fn_2 () { </p><div ><div class='tabbed'>3 RETURN -10;</div></div><div >} </div><p >4 FUNCTION INT main () { </p><div ><div class='tabbed'>5 INT value_1 = -(ret_fn() + ret_fn_2());
+</div></div><div ><div class='tabbed'>6 RETURN value_1;</div></div><div >} </div></br>value_1(5, 5)</div></div></div></body></html>

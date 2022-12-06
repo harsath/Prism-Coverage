@@ -660,81 +660,83 @@ public class PrismCodeCoverage {
  
 	public String datasToString(BlockStatement statements) {
 		String returner = new String();
- 
-		if (statements.getStatements().size() > 0) { // If there are statements in function block
-			for (Statement statement : statements.getStatements()) {
-				if (statement instanceof IfElseStatement) {
-					IfElseStatement if_cast = (IfElseStatement) statement;
-					if (if_cast.getIsExecuted() && if_cast.getElse_statement_block() != null && !if_cast.getElse_statement_block().getIsExecuted()) {
-							returner += "<div >";
-							returner += "<div class='tabbed'>" + this.counter +" IF (" + if_cast.getExpr_condition()
-									+ ") { </br>";
+		if (statements != null) {
+			if (statements.getStatements().size() > 0) { // If there are statements in function block
+				for (Statement statement : statements.getStatements()) {
+					if (statement instanceof IfElseStatement) {
+						IfElseStatement if_cast = (IfElseStatement) statement;
+						if (if_cast.getIsExecuted() && if_cast.getElse_statement_block() != null && !if_cast.getElse_statement_block().getIsExecuted()) {
+								returner += "<div >";
+								returner += "<div class='tabbed'>" + this.counter +" IF (" + if_cast.getExpr_condition()
+										+ ") { </br>";
+								this.lines.put( counter,"IF (" + if_cast.getExpr_condition()); this.counter++;
+	 
+								returner += datasToString(
+										(BlockStatement) if_cast.getIf_statement_block());
+								returner += "</div>";
+						} else if (if_cast.getIsExecuted()) {
+							returner += "<div ><div class='tabbed'>" +this.counter+" IF ("
+									+ if_cast.getExpr_condition() + "){ </div></div>";
 							this.lines.put( counter,"IF (" + if_cast.getExpr_condition()); this.counter++;
- 
 							returner += datasToString(
 									(BlockStatement) if_cast.getIf_statement_block());
-							returner += "</div>";
-					} else if (if_cast.getIsExecuted()) {
-						returner += "<div ><div class='tabbed'>" +this.counter+" IF ("
-								+ if_cast.getExpr_condition() + "){ </div></div>";
-						this.lines.put( counter,"IF (" + if_cast.getExpr_condition()); this.counter++;
-						returner += datasToString(
-								(BlockStatement) if_cast.getIf_statement_block());
-					} else {
-						returner += "<div >";
-						returner += "<div class='tabbed'>"
-								+ datasToString((BlockStatement) if_cast
-										.getElse_statement_block()).toString()
-								+ "</div>";
-						returner += "</div>";
-					}
-					returner += "<div >";
-					returner += "<div class='tabbed'>} </div>";
-					returner += "</div>";
-					if (if_cast.getElse_statement_block() != null && if_cast.getElse_statement_block().getIsExecuted()) {
-						
-							if (((BlockStatement)if_cast.getElse_statement_block()).getStatements().size() >0 ) {
-								returner += "<div>";
-								returner += "<div class='tabbed'>"+ this.counter+"ELSE { </br>";
-								this.lines.put( counter,"ELSE"); this.counter++;
-								returner += datasToString((BlockStatement) if_cast
-												.getElse_statement_block()).toString()
-										+ "</br>}</br>" + "</div>";
-								returner += "</div>";
-							}
-							
-						
-					} else {
-						if ( if_cast.getElse_statement_block() != null && ((BlockStatement)if_cast.getElse_statement_block()).getStatements().size() >0 ) {
-							returner += "<div>";
-							returner += "<div class='tabbed'>"+ this.counter+ " ELSE { </br>"
-									+ if_cast.getElse_statement_block() + "</br>}</br>"
+						} else {
+							returner += "<div >";
+							returner += "<div class='tabbed'>"
+									+ datasToString((BlockStatement) if_cast
+											.getElse_statement_block()).toString()
 									+ "</div>";
-							this.lines.put( this.counter, "ELSE"); this.counter++;
 							returner += "</div>";
 						}
-					
+						returner += "<div >";
+						returner += "<div class='tabbed'>} </div>";
+						returner += "</div>";
+						if (if_cast.getElse_statement_block() != null && if_cast.getElse_statement_block().getIsExecuted()) {
+							
+								if (((BlockStatement)if_cast.getElse_statement_block()).getStatements().size() >0 ) {
+									returner += "<div>";
+									returner += "<div class='tabbed'>"+ this.counter+"ELSE { </br>";
+									this.lines.put( counter,"ELSE"); this.counter++;
+									returner += datasToString((BlockStatement) if_cast
+													.getElse_statement_block()).toString()
+											+ "</br>}</br>" + "</div>";
+									returner += "</div>";
+								}
+								
+							
+						} else {
+							if ( if_cast.getElse_statement_block() != null && ((BlockStatement)if_cast.getElse_statement_block()).getStatements().size() >0 ) {
+								returner += "<div>";
+								returner += "<div class='tabbed'>"+ this.counter+ " ELSE { </br>"
+										+ if_cast.getElse_statement_block() + "</br>}</br>"
+										+ "</div>";
+								this.lines.put( this.counter, "ELSE"); this.counter++;
+								returner += "</div>";
+							}
+						
+						}
+	 
+					} else if (statement instanceof ForLoopStatement) {
+						ForLoopStatement stmt_cast = (ForLoopStatement) statement;
+						String for_sig = "FOR (" + stmt_cast.getInitBlock().toString() + ";" + stmt_cast.getConditionalBlock().toString() + ";" +stmt_cast.getUpdationAssignmentBlock()  +")";
+	 
+						returner += "<div class='tabbed'>" +this.counter.toString() + " "+ for_sig;
+						this.lines.put( this.counter,for_sig);this.counter++;
+	 
+						returner += "<div class='tabbed'>" +datasToString(stmt_cast.getStatementBlock()) + "</div>";
+					} else if (statement instanceof WhileLoopStatement) {
+	 
+						WhileLoopStatement stmt_cast = (WhileLoopStatement) statement;
+						returner += "<div class='tabbed'>" +this.counter.toString() + " WHILE (" + stmt_cast.getExpressionBlock() +")";
+						this.lines.put( this.counter,"WHILE (" + stmt_cast.getExpressionBlock() +")");this.counter++;
+						returner += "<div class='tabbed'>" +datasToString(stmt_cast.getStatementBlock())+ "</div>";
+					} else {
+						returner += dataToString(statement);
 					}
- 
-				} else if (statement instanceof ForLoopStatement) {
-					ForLoopStatement stmt_cast = (ForLoopStatement) statement;
-					String for_sig = "FOR (" + stmt_cast.getInitBlock().toString() + ";" + stmt_cast.getConditionalBlock().toString() + ";" +stmt_cast.getUpdationAssignmentBlock().toString()  +")";
- 
-					returner += "<div class='tabbed'>" +this.counter.toString() + " "+ for_sig;
-					this.lines.put( this.counter,for_sig);this.counter++;
- 
-					returner += "<div class='tabbed'>" +datasToString(stmt_cast.getStatementBlock()) + "</div>";
-				} else if (statement instanceof WhileLoopStatement) {
- 
-					WhileLoopStatement stmt_cast = (WhileLoopStatement) statement;
-					returner += "<div class='tabbed'>" +this.counter.toString() + " WHILE (" + stmt_cast.getExpressionBlock() +")";
-					this.lines.put( this.counter,"WHILE (" + stmt_cast.getExpressionBlock() +")");this.counter++;
-					returner += "<div class='tabbed'>" +datasToString(stmt_cast.getStatementBlock())+ "</div>";
-				} else {
-					returner += dataToString(statement);
 				}
 			}
 		}
+		
 		return returner;
 	}
  
