@@ -25,4 +25,10 @@ public class PostfixAdditionExpression implements Expression {
         public void setIsExecuted(boolean value) {
                 this.execute = value;
         }
+
+        @Override
+        public String toString() {
+                VariableAtomExpression expr_cast = (VariableAtomExpression) this.expr;
+                return expr_cast.getId() + "++;";
+        }
 }
