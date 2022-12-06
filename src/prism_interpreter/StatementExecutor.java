@@ -97,6 +97,8 @@ public class StatementExecutor {
 		var_decl_stmt.setIsExecuted(true);
 		if (globalIdentifiers.containsKey(var_decl_stmt.getId())
 				|| scopeIdentifiers.containsKey(var_decl_stmt.getId())) {
+			System.out.println(var_decl_stmt.getId());
+			System.out.println(var_decl_stmt);
 			throw new RuntimeException("Variable already declared");
 		}
 		Expression expr = expressionExecutor.executeExpression(globalIdentifiers, scopeIdentifiers,
@@ -224,6 +226,7 @@ public class StatementExecutor {
 		}
 		List<Statement> for_block_stmt = for_stmt.getStatementBlock().getStatements();
 
+		scopeIdentifiers.remove(for_decl_stmt.getId());
 		variableDeclarationStatementHandler(for_decl_stmt, globalIdentifiers, scopeIdentifiers);
 		Expression for_condition_expr_exec = expressionExecutor.executeExpression(globalIdentifiers,
 				scopeIdentifiers, for_condition_expr);
