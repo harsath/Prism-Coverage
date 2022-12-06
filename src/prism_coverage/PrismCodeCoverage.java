@@ -160,6 +160,11 @@ public class PrismCodeCoverage {
 				if (decl.getIsExecuted()) {
 					total_covered_class_decls++;
 				}
+				ClassDeclaration classDecl = (ClassDeclaration) decl;
+				
+				for (FunctionDeclaration func : classDecl.getClassBody().getMethods().getMethods()) {
+					codeCoverageBlockCheck(func.getFunctionBody());
+				}
 			} else if (decl instanceof FunctionDeclaration) {
 				total_function_decls++;
 				codeCoverageBlockCheck(((FunctionDeclaration) decl).getFunctionBody());
@@ -171,7 +176,7 @@ public class PrismCodeCoverage {
 				if (decl.getIsExecuted()) {
 					total_covered_global_variables++;
 				}
-			} else {
+			}else {
 				throw new RuntimeException("Unrecognized declaration");
 			}
 		}
@@ -192,6 +197,18 @@ public class PrismCodeCoverage {
 				if (decl.getIsExecuted()) {
 					total_covered_statements++;
 					getTotalCoveredStatementsFromFunction(((FunctionDeclaration)decl).getFunctionBody());
+				}
+			}else if (decl instanceof ClassDeclaration) {
+				ClassDeclaration classDecl = (ClassDeclaration) decl;
+				
+				for (FunctionDeclaration func : classDecl.getClassBody().getMethods().getMethods()) {
+					total_statements++;
+					getTotalStatementsFromFunction(func.getFunctionBody());
+					
+					if (func.getIsExecuted()) {
+						total_covered_statements++;
+						getTotalCoveredStatementsFromFunction(func.getFunctionBody());
+					}
 				}
 			}
 		}
@@ -468,8 +485,32 @@ public class PrismCodeCoverage {
 					sb.append( statementsToString(funcDecl.getFunctionBody()));
 					sb.append("<div class='covered'>} </div>");
 				}
+				
 			} else {
-				sb.append("<p class='not-covered'>" + decl.toString() + "</p>");
+				if( decl instanceof ClassDeclaration) {
+					ClassDeclaration classDecl = (ClassDeclaration) decl;
+					String classSignature = classDecl.getClassName();
+
+						sb.append("<p class='covered'>CLASS " + classSignature + " {</p>");
+						sb.append("<p class='covered'>ATTRIBUTES</p>");
+						for (VariableDeclaration var : classDecl.getClassBody().getAttributes().getAttributes()) {
+							sb.append("<div class='covered'><div class='tabbed'>"+ var.toString()+"</div></div>");
+						}
+						
+						sb.append("<p class='covered'>METHODS</p>");
+						for (FunctionDeclaration func : classDecl.getClassBody().getMethods().getMethods()) {
+							FunctionDeclaration funcDecl = (FunctionDeclaration) func;
+							String funcSignature = funcDecl.functionSignature();
+		 
+							sb.append( "<p class='covered'>" + funcSignature + " { </p>");
+							sb.append( statementsToString(funcDecl.getFunctionBody()));
+							sb.append("<div class='covered'>} </div>");
+						}
+						
+				}else {
+					sb.append("<p class='not-covered'>" + decl.toString() + "</p>");
+				}
+				
 			}
 		}
 		sb.append("</div>");
