@@ -1,0 +1,10 @@
+FUNCTION INT main() {
+	INT value_one = 10;
+	INT value_two = 20;
+
+	IF (value_one != value_two) {
+		RETURN 10;
+	} ELSE {
+		RETURN 20;
+	}
+}

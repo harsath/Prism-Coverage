@@ -1,0 +1,35 @@
+FUNCTION INT fn_one(INT[] array_param) {
+	IF (array_param.SIZE() != 5) {
+		PRINTLN("Param array size is not 5");
+		EXIT(-1);
+	}
+
+	IF (array_param.AT(3) != 40) {
+		PRINTLN("Value at index 3 of param array is not 40");
+		EXIT(-1);
+	}
+
+	array_param.REMOVEAT(3);
+
+	IF (array_param.AT(3) != 50) {
+		PRINTLN("Value at index 3 of param array is not 50 after removal");
+		EXIT(-1);
+	}
+
+	RETURN 10;
+}
+
+FUNCTION INT main() {
+	INT[] array_one = NEW INT[];
+	array_one.INSERT(10);
+	array_one.INSERT(20);
+	array_one.INSERT(30);
+	array_one.INSERT(40);
+	array_one.INSERT(50);
+	
+	// NOTE: Array here is pass-by-reference (any modification to array by the function reflects in `array_one`)
+	INT function_return = fn_one(array_one);
+
+	// expected: 10
+	RETURN function_return;
+}

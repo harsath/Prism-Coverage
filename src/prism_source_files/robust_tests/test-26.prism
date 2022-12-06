@@ -1,0 +1,21 @@
+FUNCTION INT for_loop() {
+	INT returner = 1;
+	FOR (INT i = 0; i < 5; i++;) {
+		PRINTLN(i);
+		returner = 1 + returner;
+	}
+	RETURN returner;
+}
+
+
+FUNCTION INT main() {
+	INT i = 1;
+	i++;
+	INT j = 20;
+	j--;
+	j--;
+	INT for_loop_return = for_loop();
+	PRINTLN("HERE");
+
+	RETURN for_loop_return;
+}
