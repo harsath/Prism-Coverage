@@ -1,0 +1,22 @@
+FUNCTION INT main() {
+	INT[][]	matrix = NEW INT[][];
+	INT[] row = NEW INT[];
+	FOR (INT i = 0; i < 5; i++;) {
+		row = NEW INT[];
+		FOR (INT j = 0; j < 5; j++;) {
+			row.INSERT((i * j) + 1);
+		}
+		matrix.INSERT(row);
+	}
+
+	FOR (INT i = 0; i < 5; i++;) {
+		row = matrix.AT(i);
+		FOR (INT j = 0; j < 5; j++;) {
+			PRINT(row.AT(j));
+			PRINT(" ");
+		}
+		PRINTLN("");
+	}
+
+	RETURN 0;
+}

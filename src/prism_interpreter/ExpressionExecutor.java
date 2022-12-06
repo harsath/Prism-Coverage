@@ -3,8 +3,6 @@ package prism_interpreter;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.management.RuntimeErrorException;
-
 import prism.*;
 
 public class ExpressionExecutor {
@@ -592,7 +590,7 @@ public class ExpressionExecutor {
 			System.out.print(expr_print_cast.getValue());
 			return new StringAtomExpression(expr_cast.toString());
 		} else if (print instanceof BooleanAtomExpression) {
-			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;	
+			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;
 			System.out.print(expr_print_cast.getValue());
 			return new StringAtomExpression(expr_cast.toString());
 		} else if (print instanceof StringAtomExpression) {
@@ -621,7 +619,7 @@ public class ExpressionExecutor {
 			System.out.println(expr_print_cast.getValue());
 			return new StringAtomExpression(expr_cast.toString());
 		} else if (print instanceof BooleanAtomExpression) {
-			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;	
+			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;
 			System.out.println(expr_print_cast.getValue());
 			return new StringAtomExpression(expr_cast.toString());
 		} else if (print instanceof StringAtomExpression) {
