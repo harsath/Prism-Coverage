@@ -1,0 +1,165 @@
+CLASS patient {
+    ATTRIBUTES
+    STRING name = "";
+    INT ssn = 0;
+
+    METHODS
+    FUNCTION VOID setName (STRING input_name) {
+        name = input_name;
+    }
+    
+    FUNCTION VOID setSsn (INT input_ssn) {
+        ssn = input_ssn;
+    }
+}
+
+CLASS physician {
+    ATTRIBUTES
+    STRING name = "";
+    patient[] patients = NEW patient[];
+
+    METHODS
+    FUNCTION VOID setName (STRING input_name){
+        name = input_name;
+    }
+
+    FUNCTION VOID addPatient (patient p_) {
+        patients.INSERT(p_);
+    }
+
+    FUNCTION VOID removePatient (patient p) {
+        FOR (INT i = 0; i < patients.SIZE(); i++;) {
+	    patient xx = patients.AT(i);
+            IF (xx.ssn == p.ssn) {
+                patients.REMOVEAT(i);
+                BREAK;
+            }
+        }
+    }
+}
+
+FUNCTION INT findMax(INT[] arr) {
+	INT max = -1;
+	FOR (INT i = 0; i < arr.SIZE(); i++;){
+		max = MAX(max, arr.AT(i));
+	}
+	
+	IF (max == -1) {
+		EXIT(-1);
+	}
+	RETURN max;
+}
+
+FUNCTION INT test_pow (INT a, INT b) {
+	RETURN POW(a, b);
+}
+
+FUNCTION INT fib(INT n) {
+	IF (n <= 1){
+		RETURN n;
+	}
+	RETURN fib(n - 1) + fib(n - 2);
+}
+
+FUNCTION INT fibDP (INT n) {
+	IF(n <= 1){
+		RETURN n;
+	}
+	INT first = 0;
+	INT second = 1;
+	INT temp = 0;
+	
+	FOR (INT i = 2; i < n + 1; i++;) {
+		temp = first;
+		first = second;
+		second = temp + second;
+	}
+	RETURN second;
+}
+
+FUNCTION VOID swap (INT[] arr, INT i, INT j) {
+    INT temp = arr.AT(i);
+	INT temp2 = arr.AT(j);
+    arr.INSERTAT(i, temp2);
+	arr.REMOVEAT(i + 1);
+    arr.INSERTAT(j, temp);
+	arr.REMOVEAT(j + 1);
+}
+
+FUNCTION INT partition(INT[] arr, INT low, INT high) {
+    INT pivot = arr.AT(high);
+    INT i = low - 1;
+  
+    FOR (INT j = low; j <= high - 1; j++;) {
+        IF (arr.AT(j) < pivot) {
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    swap(arr, i + 1, high);
+    RETURN i + 1;
+}
+
+FUNCTION VOID quickSort(INT[] arr, INT low, INT high) {
+    IF (low < high) {
+        INT pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+  
+FUNCTION VOID printArray(INT[] arr, INT size) {
+	PRINT("[");
+    FOR (INT i = 0; i < size; i++;){
+		IF (i == (size - 1)){
+			PRINT(arr.AT(i));
+		}
+		ELSE{
+			PRINT(arr.AT(i));
+			PRINT(", ");
+		}
+	}
+	PRINTLN("]");
+}
+
+FUNCTION INT main () {
+    // test classes
+    patient p1 = NEW patient();
+    p1.setSsn(1);
+    patient p2 = NEW patient();
+    p2.setName("Harsath");
+    p2.setSsn(2);
+    physician phys = NEW physician();
+    phys.setName("Robbie");    
+    phys.addPatient(p1);
+    phys.addPatient(p2);
+    
+    patient[] phy_member = phys.patients;
+    PRINTLN(phy_member.SIZE()); // 2
+    phys.removePatient(p1);
+    PRINTLN(phy_member.SIZE()); // 1
+
+    INT[] arr = NEW INT[];
+    arr.INSERT(5);
+    arr.INSERT(1);
+    arr.INSERT(6);
+    arr.INSERT(2);
+    arr.INSERT(3);
+    arr.INSERT(4);
+    
+    printArray(arr, arr.SIZE()); // [5, 1, 6, 2, 3, 
+    
+    PRINTLN(findMax(arr)); // 6
+    PRINTLN(test_pow(2, 3)); // 8
+    
+    quickSort(arr, 0, arr.SIZE() - 1);
+    printArray(arr, arr.SIZE()); // [1, 2, 3, 4, 5, 6]
+    
+    arr.REMOVEALL();
+    PRINTLN(arr.SIZE()); // 0
+    
+    PRINTLN(fib(10)); // 55
+    PRINTLN(fibDP(10)); // 55
+    
+    RETURN 0;
+}
