@@ -4,20 +4,20 @@ public class ArrayOperationExpression implements Expression {
         private boolean execute = false;
         private String id;
         private String array_operation;
-        private Expression expr;
+        private FunctionParamListExpression expr_list;
 
         public ArrayOperationExpression(String id, String array_operation) {
                 this.id = id;
                 this.array_operation = array_operation;
-                this.expr = null;
+                this.expr_list = null;
         }
 
-        public void setExpression(Expression expr) {
-                this.expr = expr;
+        public void setParamListExpression(FunctionParamListExpression expr_list) {
+                this.expr_list = expr_list;
         }
 
-        public Expression getExpression() {
-                return this.expr;
+        public FunctionParamListExpression getParamListExpression() {
+                return this.expr_list;
         }
 
         public String getId() {
@@ -42,8 +42,8 @@ public class ArrayOperationExpression implements Expression {
         public String toString() {
                 String returner = "";
                 returner += this.id + "." + this.array_operation;
-                if (this.expr != null) {
-                        returner += "( " + this.expr.toString() + ")";
+                if (this.expr_list != null) {
+                        returner += "( " + this.expr_list.toString() + ")";
                 }
                 returner += ";";
                 return returner;

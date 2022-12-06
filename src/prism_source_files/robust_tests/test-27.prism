@@ -14,6 +14,7 @@ FUNCTION INT main() {
 
 	PRINT("SIZE : ");
 	PRINTLN(var_array.SIZE());
+	var_array.INSERTAT(1, 60);
 
-	RETURN var_array.AT(2);
+	RETURN var_array.AT(1);
 }

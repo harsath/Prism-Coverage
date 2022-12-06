@@ -3,6 +3,8 @@ package prism_interpreter;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.management.RuntimeErrorException;
+
 import prism.*;
 
 public class ExpressionExecutor {
@@ -239,21 +241,37 @@ public class ExpressionExecutor {
 		array_expr_cast.setIsExecuted(true);
 		switch (array_operation.getArrayOperation()) {
 			case "INSERT": {
-				if (array_operation.getExpression() == null) {
+				if (array_operation.getParamListExpression() == null) {
 					throw new RuntimeException("INSERT operation must pass in a value");
 				}
 				Expression insert_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
-						array_operation.getExpression());
+						array_operation.getParamListExpression().getParamList().get(0));
 				array_expr_cast.putItem(ExecutorHelpers.getAtomTypeFromAtomExpression(insert_expr,
 						"Invalid type passed in array INSERT"));
 				return array_expr_cast;
 			}
+			case "INSERTAT": {
+				if (array_operation.getParamListExpression() == null) {
+					throw new RuntimeException("INSERT operation must pass in index and a value");
+				}
+				Expression insert_index = executeExpression(globalIdentifiers, scopeIdentifiers,
+						array_operation.getParamListExpression().getParamList().get(0));
+				Expression insert_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
+						array_operation.getParamListExpression().getParamList().get(1));
+				if (!(insert_index instanceof IntegerAtomExpression)) {
+					throw new RuntimeException("INSERTAT's index should be an integer");
+				}
+				array_expr_cast.putItemAt(((IntegerAtomExpression) insert_index).getValue(),
+						ExecutorHelpers.getAtomTypeFromAtomExpression(insert_expr,
+								"Invalid type passed in array INSERT"));
+				return array_expr_cast;
+			}
 			case "AT": {
-				if (array_operation.getExpression() == null) {
+				if (array_operation.getParamListExpression() == null) {
 					throw new RuntimeException("AT operation must pass in a value");
 				}
 				Expression at_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
-						array_operation.getExpression());
+						array_operation.getParamListExpression().getParamList().get(0));
 				if (!(at_expr instanceof IntegerAtomExpression)) {
 					throw new RuntimeException("Array index must be an integer");
 				}
@@ -266,11 +284,11 @@ public class ExpressionExecutor {
 				return new IntegerAtomExpression(array_expr_cast.getArraySize());
 			}
 			case "REMOVEAT": {
-				if (array_operation.getExpression() == null) {
+				if (array_operation.getParamListExpression() == null) {
 					throw new RuntimeException("REMOVEAT operation must pass in a value");
 				}
 				Expression removeat_expr = executeExpression(globalIdentifiers, scopeIdentifiers,
-						array_operation.getExpression());
+						array_operation.getParamListExpression().getParamList().get(0));
 				if (!(removeat_expr instanceof IntegerAtomExpression)) {
 					throw new RuntimeException("Array index must be an integer");
 				}
@@ -568,6 +586,18 @@ public class ExpressionExecutor {
 			String var_id = expr_var_cast.getId();
 			System.out.print(var_id);
 			return new StringAtomExpression(var_id);
+		} else if (print instanceof IntegerAtomExpression) {
+			IntegerAtomExpression expr_print_cast = (IntegerAtomExpression) print;
+			System.out.print(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
+		} else if (print instanceof BooleanAtomExpression) {
+			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;	
+			System.out.print(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
+		} else if (print instanceof StringAtomExpression) {
+			StringAtomExpression expr_print_cast = (StringAtomExpression) print;
+			System.out.print(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
 		} else {
 			System.out.print(print.toString());
 			return new StringAtomExpression(expr_cast.toString());
@@ -585,6 +615,18 @@ public class ExpressionExecutor {
 			String var_id = expr_var_cast.getId();
 			System.out.println(var_id);
 			return new StringAtomExpression(var_id);
+		} else if (print instanceof IntegerAtomExpression) {
+			IntegerAtomExpression expr_print_cast = (IntegerAtomExpression) print;
+			System.out.println(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
+		} else if (print instanceof BooleanAtomExpression) {
+			BooleanAtomExpression expr_print_cast = (BooleanAtomExpression) print;	
+			System.out.println(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
+		} else if (print instanceof StringAtomExpression) {
+			StringAtomExpression expr_print_cast = (StringAtomExpression) print;
+			System.out.println(expr_print_cast.getValue());
+			return new StringAtomExpression(expr_cast.toString());
 		} else {
 			System.out.println(print.toString());
 			return new StringAtomExpression(expr_cast.toString());
