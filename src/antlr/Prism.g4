@@ -18,6 +18,11 @@ RETURN      :       'RETURN';
 NEW         :       'NEW';
 CONTINUE    :       'CONTINUE';
 BREAK       :       'BREAK';
+INSERT      :       'INSERT';
+AT          :       'AT';
+SIZE        :       'SIZE';
+REMOVEAT    :       'REMOVEAT';
+REMOVEALL   :       'REMOVEALL';
 COMMENT     :       '//' ~[\r\n]* -> skip;
 WS          :       [ \t\n]+ -> skip;
 LCURLY      :       '{';
@@ -65,7 +70,7 @@ attributes_decl : variable_decl+
 methods_decl : function_decl+
              ;
 
-type : 'INT' | 'BOOL' | 'VOID' | 'STRING' | ID
+type : 'INT' | 'BOOL' | 'VOID' | 'STRING' | ID | type '[]'
      ;
 
 param_list : param (',' param)*                         #FunctionParamDecl               
@@ -111,21 +116,27 @@ loop_condition_block : expr SEMICOLON                                #LoopCondit
                      ;
 
 loop_updation_block : variable_assignment                            #LoopUpdationStmt
+                    | expr SEMICOLON                                 #ExprUpdateStmt
                     ;
 
-expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
+expr : expr '++'                   #PostfixAdditionExpr
+     | expr '--'                   #PostfixSubtractionExpr
+     | ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(3, 2), fn(), fn(var1)
 	| builtin_function_call_expr  #BuiltinFunctionCallExpr
      | '-' expr                    #UnaryMinusExpr
      | '!' expr                    #NotExpr
      | expr op=('*' | '/') expr    #MulDivExpr
      | expr op=('+' | '-') expr    #AddSubExpr
      | expr '==' expr              #EqExpr
+     | expr '!=' expr              #NotEqExpr
      | expr '||' expr              #OrExpr
      | expr '&&' expr              #AndExpr
      | expr '>' expr               #GreaterthanExpr
      | expr '<' expr               #LessthanExpr
      | expr '>=' expr              #GreaterthanEqExpr
      | expr '<=' expr              #LessthanEqExpr
+     | array_operation_expr        #ArrayOperationExpr
+     | array_creation_expr         #ArrayCreationExpr
      | object_creation_expr        #ObjectCreationExpr
      | object_invocation_expr      #ObjectInvocationExpr
      | bool                        #BoolAtomExpr
@@ -134,6 +145,15 @@ expr : ID LPAREN expr_list? RPAREN #FunctionCallExpr // function invocation, fn(
      | STRING                      #StringAtomExpr
      | LPAREN expr RPAREN          #BracketExpr
      ;
+     
+array_operation_expr : ID '.' array_operations LPAREN expr? RPAREN #ArrayOperationExpression
+                     ;
+
+array_creation_expr : NEW type
+                    ;
+     
+array_operations : INSERT | AT | SIZE | REMOVEAT | REMOVEALL
+                 ;
      
 builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression
 					  | MIN LPAREN expr ',' expr RPAREN #MinFunctionCallExpression
@@ -151,7 +171,6 @@ object_invocation_expr : ID '.' ID (LPAREN expr_list? RPAREN)?      #ObjectInvoc
 
 bool : 'true' | 'false'
      ;
-
 
 expr_list : expr (',' expr)*       #FunctionParamExpr // function argument list
           ;

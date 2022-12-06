@@ -16,6 +16,36 @@ public class InterpreterExprTest {
 		this.test_root = test_root;
 	}
 
+	public void test_array_function_parameter() throws Exception {
+		String input_file = test_root + "arrays/array_function_parameter.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 10),
+					"test_array_function_parameter failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
+	public void test_array_insert_remove_size() throws Exception {
+		String input_file = test_root + "arrays/array_insert_remove_size.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 1),
+					"test_array_insert_remove_size failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
+	public void test_postfix_addition_subtraction() throws Exception {
+		String input_file = test_root + "test_postfix_addition_subtraction.prism";
+		AtomType return_value = interpretGetAtomType(input_file);
+		if (return_value instanceof IntegerType) {
+			IntegerType return_value_int = (IntegerType) return_value;
+			TestHelpers.assertTrue((return_value_int.getValue() == 12),
+					"test_postfix_addition_subtraction failed. Return value: " + return_value_int.getValue());
+		}
+	}
+
 	public void test_exit() throws Exception {
 		String input_file = test_root + "test_exit.prism";
 		AtomType return_value = interpretGetAtomType(input_file);

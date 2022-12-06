@@ -10,7 +10,7 @@ $ java -jar prism-interpreter.jar input-source-file.prism
 ```
 
 ### Syntax Overview
-A Prism source file must contain a `main()` method which marks the start of execution. For sample Prism programs, please look into `src/prism_source_files/robust_tests` directory.
+A Prism source file must contain a `main()` method which marks the start of execution. Everything in Prism is [pass-by-value](https://stackoverflow.com/a/430958/19475446). For sample Prism programs, please look into `src/prism_source_files/robust_tests` directory.
 #### Variable declaration and assignments
 Supported types: `INT`, `BOOL`, `STRING`, `VOID`, and CLASS types.
 Syntax is as follows:
@@ -30,6 +30,29 @@ Variable assignment syntax is as follows:
 a = a * 10;
 ```
 
+### Arrays
+Prism supports arrays, the syntax is as follows:
+```
+<TYPE>[] <VARIABLE NAME> = NEW <TYPE>[];
+
+INT[] array = NEW INT[];
+```
+Following operations are supported over an array:
+* `.SIZE()` - returns the size of the array.
+* `.INSERT(<VALUE>)` - inserts `<VALUE>` into the array.
+* `.AT(<INDEX>)` - returns the element at index `<INDEX>`. The type of `<INDEX>` must be an integer.
+* `.REMOVEAT(<INDEX>)` - removes the element at index `<INDEX>`.
+* `.REMOVEALL()` - removes every element of the array.
+
+```
+array.INSERT(10);
+array.INSERT(20);
+BOOL array_size = (array.SIZE() == 2);
+array.REMOVEAT(1);
+BOL array_at = (array.AT(0) == 10);
+array.REMOVEALL();
+```
+Arrays are passed-by-reference when passed to a function (any modification to array in function reflects in the original array).
 ### IF statements
 `IF` statement syntax is as follows:
 ```
@@ -84,7 +107,7 @@ WHILE (<CONDITION>) {
 INT i = 1;
 WHILE (i > 10) {
 	PRINTLN(i);
-	i = i + 1;
+	i++;
 }
 ```
 The while block's `<BODY>` executes as long as the `<CONDITION>` results in `true`. Updations to conditional variables should be placed within the `<BODY>`.
@@ -96,11 +119,11 @@ FOR (<INITIALIZATION BLOCK>; <CONDITIONAL BLOCK>; <UPDATION BLOCK>;) {
 	<BODY>
 }
 
-FOR (INT i = 0; i < 10; i = i + 1;) {
+FOR (INT i = 0; i < 10; i++;) {
 	PRINTLN(i);
 }
 ```
-
+Prism supports postfix notations for addition and subtraction: `i--` or `i++` instead of `i = i - 1` and `i = i + 1`
 ### Class
 Prism language also supports classes, also called as user defined data types. The syntax is as follows:
 ```

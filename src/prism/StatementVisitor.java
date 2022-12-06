@@ -3,7 +3,7 @@ package prism;
 import antlr.*;
 import antlr.PrismParser.*;
 
-public class StatementVisitor extends PrismBaseVisitor<Statement>  {
+public class StatementVisitor extends PrismBaseVisitor<Statement> {
         private ExpressionVisitor exprVisitor = new ExpressionVisitor();
 
         @Override
@@ -14,8 +14,6 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                         return block_stmt;
                 }
                 // We don't want to visit '{' and '}'
-                //System.out.println("METHOD : " + ctx.getParent().getChild(2).getText());
-                // System.out.println("NUM CHILD OF 1st CHILD : " + ctx.getChild(0).getChildCount());
                 for (int i = 1; i < ctx.getChildCount() - 1; i++) {
                         Statement stmt = visit(ctx.getChild(i));
                         block_stmt.addStatement(stmt);
@@ -112,7 +110,19 @@ public class StatementVisitor extends PrismBaseVisitor<Statement>  {
                 Expression conditional_block_decl = exprVisitor.visit(ctx.getChild(3).getChild(0));
                 Statement updation_block_decl = visit(ctx.getChild(4));
                 Statement block_stmt_decl = visit(ctx.getChild(6));
-                return new ForLoopStatement((VariableDeclarationStatement) init_block_decl, conditional_block_decl, (AssignmentStatement) updation_block_decl, (BlockStatement) block_stmt_decl);
+                ForLoopStatement for_stmt = new ForLoopStatement((VariableDeclarationStatement) init_block_decl,
+                                conditional_block_decl, (BlockStatement) block_stmt_decl);
+                if (updation_block_decl instanceof AssignmentStatement) {
+                        for_stmt.setUpdationAssignmentBlock((AssignmentStatement) updation_block_decl);       
+                } else {
+                        for_stmt.setUpdationExpressionBlock((Expression) updation_block_decl);       
+                }
+                return for_stmt;
+        }
+
+        @Override
+        public Statement visitExprUpdateStmt(ExprUpdateStmtContext ctx) {
+                return exprVisitor.visit(ctx.getChild(0));
         }
 
         @Override

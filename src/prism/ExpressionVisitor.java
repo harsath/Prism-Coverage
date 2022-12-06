@@ -107,6 +107,13 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitNotEqExpr(NotEqExprContext ctx) {
+		Expression left = visit(ctx.getChild(0));
+		Expression right = visit(ctx.getChild(2));
+		return new NotEqualExpression(left, right);
+	}
+
+	@Override
 	public Expression visitOrExpr(OrExprContext ctx) {
 		Expression left = visit(ctx.getChild(0));
 		Expression right = visit(ctx.getChild(2));
@@ -181,6 +188,18 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitPostfixAdditionExpr(PostfixAdditionExprContext ctx) {
+		Expression e = visit(ctx.getChild(0));
+		return new PostfixAdditionExpression(e);
+	}
+
+	@Override
+	public Expression visitPostfixSubtractionExpr(PostfixSubtractionExprContext ctx) {
+		Expression e = visit(ctx.getChild(0));
+		return new PostfixSubtractionExpression(e);
+	}
+
+	@Override
 	public Expression visitExitFunctionCallExpression(ExitFunctionCallExpressionContext ctx) {
 		Expression expr = visit(ctx.getChild(2));
 		return new ExitFunctionCallExpression(expr);
@@ -212,6 +231,27 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 	public Expression visitPrintFunctionCallExpression(PrintFunctionCallExpressionContext ctx) {
 		Expression expr = visit(ctx.getChild(2));
 		return new PrintFunctionCallExpression(expr);
+	}
+
+	@Override
+	public Expression visitArrayCreationExpr(ArrayCreationExprContext ctx) {
+		return new ArrayCreationExpression(ctx.getChild(0).getChild(1).getText());
+	}
+
+	@Override
+	public Expression visitArrayOperationExpr(ArrayOperationExprContext ctx) {
+		return visit(ctx.getChild(0));
+	}
+
+	@Override
+	public Expression visitArrayOperationExpression(ArrayOperationExpressionContext ctx) {
+		String id = ctx.getChild(0).getText();
+		String array_operation = ctx.getChild(2).getChild(0).getText();
+		ArrayOperationExpression returner = new ArrayOperationExpression(id, array_operation);
+		if (ctx.getChildCount() > 5) {
+			returner.setExpression(visit(ctx.getChild(4)));
+		}
+		return returner;
 	}
 
 	@Override

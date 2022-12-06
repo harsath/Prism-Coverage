@@ -31,4 +31,9 @@ public class ObjectType implements AtomType, Serializable {
         public AtomType getAttribute(String id) {
                 return this.attributes.get(id);
         }
+
+        @Override
+        public String toString() {
+                return this.className;
+        }
 }

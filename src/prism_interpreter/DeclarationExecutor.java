@@ -6,7 +6,7 @@ import prism.*;
 
 public class DeclarationExecutor {
         private List<Declaration> declarations;
-        private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;
+	private Map<String, FunctionDeclaration> functionDeclarationSymbolTable;
         // Class and class's method declaration (a) class and class's attributes
         // declaration (b)
         private Pair<Map<String, Map<String, FunctionDeclaration>>, Map<String, Map<String, AtomType>>> classSymbolTable;
