@@ -1,4 +1,4 @@
-FUNCTION INT test_continue_for(INT start_val) {
+FUNCTION INT test_break_for(INT start_val) {
 	INT returner = 1;
 	FOR (INT i = 1; i <= 5; i = i + 1;) {
 		IF (i == 3) {
@@ -9,7 +9,7 @@ FUNCTION INT test_continue_for(INT start_val) {
 	RETURN returner;
 }
 
-FUNCTION INT test_continue_while(INT start_val) {
+FUNCTION INT test_break_while(INT start_val) {
 	INT returner = 1;
 	INT i = 1;
 	WHILE (i <= 5) {
@@ -23,8 +23,8 @@ FUNCTION INT test_continue_while(INT start_val) {
 }
 
 FUNCTION INT main() {
-	INT return_one = test_continue_for();
-	INT return_two = test_continue_while();
+	INT return_one = test_break_for();
+	INT return_two = test_break_while();
 
 	// expected: 5
 	RETURN (return_one + return_two);
