@@ -178,6 +178,7 @@ public class ExpressionExecutor {
 					.getFunctionParamDecl().getParamList();
 			List<Expression> params = fn_call_expr.getFunctionParamList().getParamList();
 			if (params.size() != fn_decl_params.size()) {
+				System.out.println(fn_call_expr);
 				throw new RuntimeException("Invalid number of parameters on function call");
 			}
 			for (int i = 0; i < params.size(); i++) {
