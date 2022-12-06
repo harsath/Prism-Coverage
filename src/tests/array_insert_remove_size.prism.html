@@ -1,0 +1,43 @@
+<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script><style>
+                        .color-red {
+                                color: red;
+                        }
+                        .covered {
+                                background-color: #50DBB4;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+}			   .part-covered {
+                                background-color: #F6FF00;
+
+				   margin-bottom: 0px;
+				   padding: 1px;
+                                                               white-space:pre;
+}			   .not-covered {
+                                background-color: #FF6263;
+                                margin-bottom: 0px;
+                                padding: 1px;
+								   white-space:pre;
+                        }
+						   .tabbed {
+                                padding-left: 3em;
+				   white-space:pre;
+ 							}
+	                        #main-body {
+                                width: 70%;
+                        }
+                </style><title>Code Coverage Result</title></head><body><ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#statementCoverage">Control-Flow Coverage</a></li>
+    <li><a data-toggle="tab" href="#dataCoverage">Data-Flow Coverage</a></li>
+  </ul><div class="tab-content"><div id="statementCoverage" class="tab-pane fade in active"><div id='header-text'>
+<p>Total Statements: <span class='color-red'>29</span></p>
+<p>Total Statements Covered:<span class='color-red'>11</span></p>
+<p>Total Statement Coverage<code></code>: <span class='color-red'>37%</span></p>
+</span></p>
+<p>Total Desicions: <span class='color-red'>6</span></p>
+<p>Total Desicions Covered:<span class='color-red'>0</span></p>
+<p>Total Desicion Coverage<code></code>: <span class='color-red'>0%</span></p>
+ </div><p class='covered'>FUNCTION INT main () { </p><div class='covered'><div class='tabbed'>INT[] int_array = NEW INT[];
+</div></div><div class='part-covered'><div class='tabbed'>IF (int_array.SIZE; != 0){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Array size is not 0");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@6e06451e</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='covered'><div class='tabbed'>int_array.INSERT( 10);</div></div><div class='covered'><div class='tabbed'>int_array.INSERT( 20);</div></div><div class='covered'><div class='tabbed'>int_array.INSERT( 30);</div></div><div class='covered'><div class='tabbed'>int_array.INSERT( 40);</div></div><div class='covered'><div class='tabbed'>int_array.INSERT( 50);</div></div><div class='part-covered'><div class='tabbed'>IF (int_array.SIZE; != 5){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Array size is not 5");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@59494225</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='part-covered'><div class='tabbed'>IF (int_array.AT( 2); != 30){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Element at index 2 is not 30");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@6e1567f1</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='covered'><div class='tabbed'>int_array.REMOVEAT( 2);</div></div><div class='part-covered'><div class='tabbed'>IF (int_array.AT( 2); != 40){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Element at index 2 is not 40 after removal");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@5cb9f472</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='covered'><div class='tabbed'>int_array.REMOVEAT( 2);</div></div><div class='part-covered'><div class='tabbed'>IF (int_array.SIZE; != 3){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Array size is not 3 after removals");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@cb644e</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='covered'><div class='tabbed'>int_array.REMOVEALL;</div></div><div class='part-covered'><div class='tabbed'>IF (int_array.SIZE; != 0){ </div></div><div class='not-covered'><div class='tabbed'>PRINTLN("Array size is not 0 after REMOVEALL");</div></div><div class='not-covered'><div class='tabbed'>prism.ExitFunctionCallExpression@13805618</div></div><div class='covered'><div class='tabbed'>} </div></div><div class='covered'><div class='tabbed'>RETURN 1;</div></div><div class='covered'>} </div></div><div id="dataCoverage" class="tab-pane fade"><p >0 FUNCTION INT main () { </p><div ><div class='tabbed'>1 INT[] int_array = NEW INT[];
+</div></div><div ><div class='tabbed'>2 IF (int_array.SIZE; != 0){ </div></div><div ><div class='tabbed'>3 PRINTLN("Array size is not 0");</div></div><div ><div class='tabbed'>4 prism.ExitFunctionCallExpression@6e06451e</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>5 int_array.INSERT( 10);</div></div><div ><div class='tabbed'>6 int_array.INSERT( 20);</div></div><div ><div class='tabbed'>7 int_array.INSERT( 30);</div></div><div ><div class='tabbed'>8 int_array.INSERT( 40);</div></div><div ><div class='tabbed'>9 int_array.INSERT( 50);</div></div><div ><div class='tabbed'>10 IF (int_array.SIZE; != 5){ </div></div><div ><div class='tabbed'>11 PRINTLN("Array size is not 5");</div></div><div ><div class='tabbed'>12 prism.ExitFunctionCallExpression@59494225</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>13 IF (int_array.AT( 2); != 30){ </div></div><div ><div class='tabbed'>14 PRINTLN("Element at index 2 is not 30");</div></div><div ><div class='tabbed'>15 prism.ExitFunctionCallExpression@6e1567f1</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>16 int_array.REMOVEAT( 2);</div></div><div ><div class='tabbed'>17 IF (int_array.AT( 2); != 40){ </div></div><div ><div class='tabbed'>18 PRINTLN("Element at index 2 is not 40 after removal");</div></div><div ><div class='tabbed'>19 prism.ExitFunctionCallExpression@5cb9f472</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>20 int_array.REMOVEAT( 2);</div></div><div ><div class='tabbed'>21 IF (int_array.SIZE; != 3){ </div></div><div ><div class='tabbed'>22 PRINTLN("Array size is not 3 after removals");</div></div><div ><div class='tabbed'>23 prism.ExitFunctionCallExpression@cb644e</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>24 int_array.REMOVEALL;</div></div><div ><div class='tabbed'>25 IF (int_array.SIZE; != 0){ </div></div><div ><div class='tabbed'>26 PRINTLN("Array size is not 0 after REMOVEALL");</div></div><div ><div class='tabbed'>27 prism.ExitFunctionCallExpression@13805618</div></div><div ><div class='tabbed'>} </div></div><div ><div class='tabbed'>28 RETURN 1;</div></div><div >} </div></br>int_array(1, 1)</div></div></div></body></html>

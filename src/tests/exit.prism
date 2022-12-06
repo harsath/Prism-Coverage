@@ -1,0 +1,17 @@
+FUNCTION VOID exit_tester(INT value_one) {
+	INT returner = 0;
+	FOR (INT i = 0; i < 5; i = i + 1;) {
+		returner = returner + 1;
+		IF (i == 4) {
+			EXIT(-1);
+		}
+	}
+	RETURN returner;
+}
+
+FUNCTION INT main() {
+	exit_tester(10);
+
+	// expected exit code: -1
+	RETURN 0;
+}
