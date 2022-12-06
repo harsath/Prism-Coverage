@@ -34,4 +34,9 @@ public class ExitFunctionCallExpression implements Expression {
         public void setIsExecuted(boolean value) {
                 this.executed = value;
         }
+        
+        @Override
+        public String toString() {
+        	return "EXIT(" + this.getExitCode() + ");";
+        }
 }
