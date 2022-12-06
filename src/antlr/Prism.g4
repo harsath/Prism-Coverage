@@ -19,6 +19,7 @@ NEW         :       'NEW';
 CONTINUE    :       'CONTINUE';
 BREAK       :       'BREAK';
 INSERT      :       'INSERT';
+INSERTAT    :       'INSERTAT';
 AT          :       'AT';
 SIZE        :       'SIZE';
 REMOVEAT    :       'REMOVEAT';
@@ -146,13 +147,13 @@ expr : expr '++'                   #PostfixAdditionExpr
      | LPAREN expr RPAREN          #BracketExpr
      ;
      
-array_operation_expr : ID '.' array_operations LPAREN expr? RPAREN #ArrayOperationExpression
+array_operation_expr : ID '.' array_operations LPAREN expr_list? RPAREN #ArrayOperationExpression
                      ;
 
 array_creation_expr : NEW type
                     ;
      
-array_operations : INSERT | AT | SIZE | REMOVEAT | REMOVEALL
+array_operations : INSERT | INSERTAT | AT | SIZE | REMOVEAT | REMOVEALL
                  ;
      
 builtin_function_call_expr : MAX LPAREN expr ',' expr RPAREN #MaxFunctionCallExpression

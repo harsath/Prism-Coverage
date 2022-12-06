@@ -249,7 +249,8 @@ public class ExpressionVisitor extends PrismBaseVisitor<Expression> {
 		String array_operation = ctx.getChild(2).getChild(0).getText();
 		ArrayOperationExpression returner = new ArrayOperationExpression(id, array_operation);
 		if (ctx.getChildCount() > 5) {
-			returner.setExpression(visit(ctx.getChild(4)));
+			Expression expr = visit(ctx.getChild(4));
+			returner.setParamListExpression((FunctionParamListExpression) expr);
 		}
 		return returner;
 	}

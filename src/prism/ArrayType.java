@@ -42,6 +42,10 @@ public class ArrayType implements AtomType, Serializable {
                 internal_array.add(item);
         }
 
+        public void putItemAt(int index, AtomType item) {
+                internal_array.add(index, item);
+        }
+
         public AtomType removeAt(int i) throws Exception {
                 if (i >= internal_array.size()) {
                         throw new RuntimeException("Index out ouf bound for REMOVEAT");
