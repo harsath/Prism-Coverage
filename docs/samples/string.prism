@@ -1,0 +1,4 @@
+FUNCTION STRING main()  {
+	STRING result="HelloWorld";
+	RETURN result;
+}
