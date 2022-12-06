@@ -43,6 +43,7 @@ Following operations are supported over an array:
 * `.AT(<INDEX>)` - returns the element at index `<INDEX>`. The type of `<INDEX>` must be an integer.
 * `.REMOVEAT(<INDEX>)` - removes the element at index `<INDEX>`.
 * `.REMOVEALL()` - removes every element of the array.
+* `.INSERTAT(<INDEX>, <VALUE>)` - inserts `<VALUE>` at index `<INDEX>`.
 
 ```
 array.INSERT(10);
