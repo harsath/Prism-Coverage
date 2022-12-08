@@ -1,4 +1,4 @@
-package test_runner;
+package tests;
 
 public class TestHelpers {
         public static void assertTrue(boolean value, String message) {
